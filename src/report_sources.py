@@ -2,6 +2,9 @@
 # AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 """List every configuration entry as SOURCED or ASSUMPTION (markdown, for README → Data & sources).
 
+Sources checked after the configs were frozen live in config/sources_extra.yaml (the frozen files
+must not change); they are listed in a second table, and rows they confirm are marked in the first.
+
 Usage:
     python -m src.report_sources > outputs/results/config_sources.md
 """
@@ -33,12 +36,31 @@ def entries(node, path: str = ""):
                 yield from entries(child, f"{path}[{i}]")
 
 
+def extra_sources() -> list[dict]:
+    """Entries of config/sources_extra.yaml (sources checked after the freeze), or [] without it."""
+    path = CONFIG_DIR / "sources_extra.yaml"
+    return load_yaml(path).get("entries", []) if path.exists() else []
+
+
 def table() -> str:
-    """Markdown table over simulation.yaml, rules.yaml and ui.yaml."""
+    """Markdown table over simulation.yaml, rules.yaml and ui.yaml, plus the post-freeze sources."""
+    extra = extra_sources()
+    confirmed = {(e["file"], e["entry"]): e for e in extra if e["verdict"] == "confirmed"}
     lines = ["| Config entry | Status | Source / note |", "|---|---|---|"]
     for name in ["simulation.yaml", "rules.yaml", "ui.yaml"]:
         for path, _, status, note in entries(load_yaml(CONFIG_DIR / name)):
+            hit = confirmed.get((name, path))
+            if hit and status == "ASSUMPTION":
+                status = "PARTLY SOURCED"
+                note = f"{hit['key']} = {hit['value']} confirmed after the freeze (table below); other parameters are assumptions."
             lines.append(f"| `{name}` {path} | {status} | {str(note).replace('|', '/')} |")
+    if extra:
+        lines += ["", "### Sources checked after the configs were frozen (config/sources_extra.yaml)", "",
+                  "Values are unchanged: the frozen configs belong to the recorded hold-out result.", "",
+                  "| Config value | Verdict | What the source says | Source |", "|---|---|---|---|"]
+        for e in extra:
+            lines.append(f"| `{e['file']}` {e['entry']}.{e['key']} = {e['value']} | {e['verdict']} | "
+                         f"{str(e['source_says']).replace('|', '/')} | {str(e.get('source') or '—').replace('|', '/')} |")
     return "\n".join(lines)
 
 

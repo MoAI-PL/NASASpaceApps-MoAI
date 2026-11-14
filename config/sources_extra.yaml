@@ -1,0 +1,63 @@
+# Astrobalance — NASA Space Apps Challenge 2026
+# AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
+#
+# Sources checked AFTER the configs were frozen for the one-time hold-out test (2026-11-14).
+# config/simulation.yaml, rules.yaml and model.yaml must not change: their hashes are recorded in
+# outputs/results/final_test.json (tests/test_holdout.py checks this). So no value is changed here:
+# each entry points to an existing config value and says what a verified source reports for it.
+#
+# verdict: confirmed      — the source reports the same value
+#          close          — the source reports a similar value; ours is kept and stays an assumption
+#          not_verified   — a candidate source was found but its primary text could not be checked;
+#                           the value stays an assumption and no source is claimed
+#          partly         — a comparison with real data agrees only in part (see README)
+# Every quoted figure below was read in the primary source (abstract or full text) on 2026-11-14.
+
+entries:
+  - file: simulation.yaml
+    entry: features.temp
+    key: pop_mean
+    value: 36.6
+    verdict: confirmed
+    source_says: "Mean temperature 36.6 °C (95% range 35.7–37.3 °C) in 35 488 patients without infection (243 506 measurements)."
+    source: "Obermeyer Z., Samra J.K., Mullainathan S. (2017) Individual differences in normal body temperature: longitudinal big data analysis of patient records. BMJ 359:j5468. https://pubmed.ncbi.nlm.nih.gov/29237616/"
+
+  - file: simulation.yaml
+    entry: features.hr
+    key: pop_mean
+    value: 65
+    verdict: confirmed
+    source_says: "Mean daily resting heart rate 65 bpm (range 40–109 bpm) in 92 457 adults wearing a heart-rate tracker."
+    source: "Quer G., Gouda P., Galarnyk M., Topol E.J., Steinhubl S.R. (2020) Inter- and intraindividual variability in daily resting heart rate. PLOS ONE 15(2):e0227709. https://doi.org/10.1371/journal.pone.0227709"
+
+  - file: simulation.yaml
+    entry: features.hr
+    key: day_sd
+    value: 3.5
+    verdict: close
+    source_says: "Average standard deviation of an individual's daily resting heart rate over time: 3.03 bpm."
+    source: "Quer G. et al. (2020) PLOS ONE 15(2):e0227709. https://doi.org/10.1371/journal.pone.0227709"
+
+  - file: simulation.yaml
+    entry: features.glucose
+    key: pop_mean
+    value: 90
+    verdict: partly
+    source_says: "Inspiration4 crew, pre-flight draws: mean 75.3 mg/dL (range 56–100), inside 90 ± 2×8 but 14.7 lower (README 7.6)."
+    source: "NASA OSDR OSD-575 (Overbey E.G. et al. 2024, Nature, doi:10.1038/s41586-024-07639-y); comparison in outputs/results/osdr_check.md"
+
+  - file: simulation.yaml
+    entry: radiation.baseline_mGy_per_day
+    key: value
+    value: 0.5
+    verdict: not_verified
+    source_says: "Secondary sources cite MSL/RAD absorbed dose rates in cruise to Mars of roughly 0.46–0.48 mGy/day; the primary papers (Zeitlin et al. 2013, Science; Guo et al. 2015, A&A 577:A58) could not be read in full here, so no source is claimed."
+    source: null
+
+  - file: simulation.yaml
+    entry: cabin_co2.baseline_mmHg
+    key: value
+    value: 2.3
+    verdict: not_verified
+    source_says: "NASA OCHMO gives the limit (3 mmHg, 1-hour average) and an ISS range of about 1–9 mmHg, not a typical value of 2.3."
+    source: null
