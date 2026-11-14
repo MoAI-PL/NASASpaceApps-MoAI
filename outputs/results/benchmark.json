@@ -419,7 +419,7 @@
       "method": "Classical Mahalanobis, 7-day window",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 93.09040933468489,
+      "threshold": 93.09040933468492,
       "false_alarms_per_week": 0.047,
       "early_detection": 0.555,
       "detection": 0.761,
@@ -465,7 +465,7 @@
       "method": "Classical Mahalanobis, 7-day window",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 84.57966774688313,
+      "threshold": 84.5796677468831,
       "false_alarms_per_week": 0.099,
       "early_detection": 0.689,
       "detection": 0.889,
@@ -557,7 +557,7 @@
       "method": "Classical Mahalanobis, 7-day window",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 80.43070652335722,
+      "threshold": 80.43070652335724,
       "false_alarms_per_week": 0.099,
       "early_detection": 0.733,
       "detection": 0.917,
@@ -603,7 +603,7 @@
       "method": "Classical Mahalanobis, 7-day mean (drift)",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 19.135759766578467,
+      "threshold": 19.13575976657847,
       "false_alarms_per_week": 0.049,
       "early_detection": 0.783,
       "detection": 0.95,
@@ -649,7 +649,7 @@
       "method": "Classical Mahalanobis, 7-day mean (drift)",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 16.503478926437893,
+      "threshold": 16.503478926437904,
       "false_alarms_per_week": 0.099,
       "early_detection": 0.872,
       "detection": 0.972,
@@ -695,7 +695,7 @@
       "method": "Classical Mahalanobis, 7-day mean (drift)",
       "persistence": 3,
       "budget": 0.05,
-      "threshold": 16.796994852731746,
+      "threshold": 16.79699485273175,
       "false_alarms_per_week": 0.048,
       "early_detection": 0.817,
       "detection": 0.961,
@@ -741,7 +741,7 @@
       "method": "Classical Mahalanobis, 7-day mean (drift)",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 14.749626823777877,
+      "threshold": 14.749626823777879,
       "false_alarms_per_week": 0.1,
       "early_detection": 0.856,
       "detection": 0.972,
@@ -787,7 +787,7 @@
       "method": "Classical Mahalanobis, 7-day mean, 3-day smoothed",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 18.46510203865122,
+      "threshold": 18.465102038651217,
       "false_alarms_per_week": 0.045,
       "early_detection": 0.789,
       "detection": 0.944,
@@ -833,7 +833,7 @@
       "method": "Classical Mahalanobis, 7-day mean, 3-day smoothed",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 15.652752391212859,
+      "threshold": 15.652752391212871,
       "false_alarms_per_week": 0.1,
       "early_detection": 0.872,
       "detection": 0.989,
@@ -879,7 +879,7 @@
       "method": "Classical Mahalanobis, 7-day mean, 3-day smoothed",
       "persistence": 3,
       "budget": 0.05,
-      "threshold": 16.807680478119085,
+      "threshold": 16.807680478119092,
       "false_alarms_per_week": 0.049,
       "early_detection": 0.817,
       "detection": 0.956,
@@ -925,7 +925,7 @@
       "method": "Classical Mahalanobis, 7-day mean, 3-day smoothed",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 14.590531370487541,
+      "threshold": 14.590531370487547,
       "false_alarms_per_week": 0.099,
       "early_detection": 0.872,
       "detection": 0.989,
@@ -971,44 +971,44 @@
       "method": "AE v2 (current: w7 b8, 60 train)",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 3.206159161974145,
-      "false_alarms_per_week": 0.048,
-      "early_detection": 0.556,
-      "detection": 0.806,
-      "mean_median_delay": 18.2,
+      "threshold": 3.219219289084742,
+      "false_alarms_per_week": 0.049,
+      "early_detection": 0.533,
+      "detection": 0.789,
+      "mean_median_delay": 18.9,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.6,
-            "early": 0.2,
-            "median_delay": 24.5
+            "detected": 0.567,
+            "early": 0.167,
+            "median_delay": 27.0
           },
           "S2": {
-            "detected": 0.667,
-            "early": 0.4,
-            "median_delay": 19.5
-          },
-          "S3": {
             "detected": 0.633,
             "early": 0.367,
-            "median_delay": 19.0
+            "median_delay": 20.0
+          },
+          "S3": {
+            "detected": 0.6,
+            "early": 0.367,
+            "median_delay": 18.5
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
             "early": 0.767,
-            "median_delay": 19.0
+            "median_delay": 20.0
           },
           "S2": {
             "detected": 0.967,
-            "early": 0.833,
+            "early": 0.8,
             "median_delay": 14.0
           },
           "S3": {
             "detected": 0.967,
-            "early": 0.767,
-            "median_delay": 13.0
+            "early": 0.733,
+            "median_delay": 14.0
           }
         }
       }
@@ -1017,17 +1017,17 @@
       "method": "AE v2 (current: w7 b8, 60 train)",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 2.9683677814156604,
+      "threshold": 2.9871411062952458,
       "false_alarms_per_week": 0.1,
-      "early_detection": 0.639,
-      "detection": 0.878,
-      "mean_median_delay": 17.0,
+      "early_detection": 0.633,
+      "detection": 0.872,
+      "mean_median_delay": 17.2,
       "by_scale": {
         "0.5": {
           "S1": {
             "detected": 0.733,
             "early": 0.267,
-            "median_delay": 24.0
+            "median_delay": 25.0
           },
           "S2": {
             "detected": 0.767,
@@ -1035,16 +1035,16 @@
             "median_delay": 19.0
           },
           "S3": {
-            "detected": 0.767,
-            "early": 0.533,
-            "median_delay": 16.0
+            "detected": 0.733,
+            "early": 0.5,
+            "median_delay": 15.5
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
             "early": 0.833,
-            "median_delay": 18.0
+            "median_delay": 18.5
           },
           "S2": {
             "detected": 1.0,
@@ -1054,7 +1054,7 @@
           "S3": {
             "detected": 1.0,
             "early": 0.833,
-            "median_delay": 11.5
+            "median_delay": 12.0
           }
         }
       }
@@ -1063,17 +1063,17 @@
       "method": "AE v2 (current: w7 b8, 60 train)",
       "persistence": 3,
       "budget": 0.05,
-      "threshold": 3.048942503874179,
-      "false_alarms_per_week": 0.049,
-      "early_detection": 0.539,
-      "detection": 0.805,
-      "mean_median_delay": 18.8,
+      "threshold": 3.050215744097116,
+      "false_alarms_per_week": 0.048,
+      "early_detection": 0.533,
+      "detection": 0.806,
+      "mean_median_delay": 19.2,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.6,
+            "detected": 0.567,
             "early": 0.2,
-            "median_delay": 25.5
+            "median_delay": 26.0
           },
           "S2": {
             "detected": 0.7,
@@ -1083,24 +1083,24 @@
           "S3": {
             "detected": 0.633,
             "early": 0.433,
-            "median_delay": 18.0
+            "median_delay": 19.0
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
-            "early": 0.667,
+            "early": 0.633,
             "median_delay": 20.0
           },
           "S2": {
-            "detected": 0.933,
+            "detected": 0.967,
             "early": 0.767,
             "median_delay": 15.0
           },
           "S3": {
             "detected": 0.967,
             "early": 0.767,
-            "median_delay": 14.0
+            "median_delay": 15.0
           }
         }
       }
@@ -1109,10 +1109,10 @@
       "method": "AE v2 (current: w7 b8, 60 train)",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 2.7399970743958457,
-      "false_alarms_per_week": 0.1,
-      "early_detection": 0.683,
-      "detection": 0.883,
+      "threshold": 2.724072533283402,
+      "false_alarms_per_week": 0.099,
+      "early_detection": 0.678,
+      "detection": 0.889,
       "mean_median_delay": 16.8,
       "by_scale": {
         "0.5": {
@@ -1122,13 +1122,13 @@
             "median_delay": 21.0
           },
           "S2": {
-            "detected": 0.8,
+            "detected": 0.833,
             "early": 0.533,
-            "median_delay": 18.5
+            "median_delay": 18.0
           },
           "S3": {
             "detected": 0.8,
-            "early": 0.533,
+            "early": 0.5,
             "median_delay": 17.0
           }
         },
@@ -1155,27 +1155,27 @@
       "method": "AE w7 b8, 300 train",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 3.645003732354401,
+      "threshold": 3.6643890820448806,
       "false_alarms_per_week": 0.049,
-      "early_detection": 0.455,
-      "detection": 0.722,
-      "mean_median_delay": 20.2,
+      "early_detection": 0.467,
+      "detection": 0.733,
+      "mean_median_delay": 21.6,
       "by_scale": {
         "0.5": {
           "S1": {
             "detected": 0.633,
-            "early": 0.333,
-            "median_delay": 21.0
+            "early": 0.3,
+            "median_delay": 22.0
           },
           "S2": {
-            "detected": 0.367,
-            "early": 0.2,
-            "median_delay": 21.0
+            "detected": 0.433,
+            "early": 0.267,
+            "median_delay": 20.0
           },
           "S3": {
             "detected": 0.567,
-            "early": 0.2,
-            "median_delay": 28.0
+            "early": 0.167,
+            "median_delay": 37.0
           }
         },
         "1.0": {
@@ -1186,13 +1186,13 @@
           },
           "S2": {
             "detected": 0.767,
-            "early": 0.467,
-            "median_delay": 20.0
+            "early": 0.533,
+            "median_delay": 19.0
           },
           "S3": {
             "detected": 1.0,
             "early": 0.7,
-            "median_delay": 14.5
+            "median_delay": 15.0
           }
         }
       }
@@ -1201,39 +1201,39 @@
       "method": "AE w7 b8, 300 train",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 3.235280696074272,
-      "false_alarms_per_week": 0.1,
-      "early_detection": 0.583,
-      "detection": 0.839,
-      "mean_median_delay": 17.5,
+      "threshold": 3.1922770718322995,
+      "false_alarms_per_week": 0.099,
+      "early_detection": 0.611,
+      "detection": 0.867,
+      "mean_median_delay": 17.8,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.8,
-            "early": 0.467,
-            "median_delay": 20.0
+            "detected": 0.833,
+            "early": 0.5,
+            "median_delay": 21.0
           },
           "S2": {
-            "detected": 0.533,
-            "early": 0.267,
-            "median_delay": 20.0
+            "detected": 0.6,
+            "early": 0.3,
+            "median_delay": 21.5
           },
           "S3": {
-            "detected": 0.767,
-            "early": 0.433,
+            "detected": 0.8,
+            "early": 0.467,
             "median_delay": 20.0
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
-            "early": 0.9,
+            "early": 0.933,
             "median_delay": 12.5
           },
           "S2": {
-            "detected": 0.933,
-            "early": 0.6,
-            "median_delay": 19.5
+            "detected": 0.967,
+            "early": 0.633,
+            "median_delay": 19.0
           },
           "S3": {
             "detected": 1.0,
@@ -1247,39 +1247,39 @@
       "method": "AE w7 b8, 300 train",
       "persistence": 3,
       "budget": 0.05,
-      "threshold": 3.235280696074272,
+      "threshold": 3.2267055814650103,
       "false_alarms_per_week": 0.049,
-      "early_detection": 0.489,
-      "detection": 0.744,
-      "mean_median_delay": 18.6,
+      "early_detection": 0.478,
+      "detection": 0.733,
+      "mean_median_delay": 19.8,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.733,
+            "detected": 0.7,
             "early": 0.333,
             "median_delay": 22.0
           },
           "S2": {
-            "detected": 0.433,
-            "early": 0.267,
-            "median_delay": 16.0
+            "detected": 0.367,
+            "early": 0.2,
+            "median_delay": 19.0
           },
           "S3": {
-            "detected": 0.567,
-            "early": 0.233,
-            "median_delay": 24.0
+            "detected": 0.6,
+            "early": 0.2,
+            "median_delay": 28.5
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
-            "early": 0.867,
+            "early": 0.9,
             "median_delay": 16.0
           },
           "S2": {
             "detected": 0.733,
             "early": 0.5,
-            "median_delay": 19.5
+            "median_delay": 19.0
           },
           "S3": {
             "detected": 1.0,
@@ -1293,27 +1293,27 @@
       "method": "AE w7 b8, 300 train",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 2.8258013479756134,
-      "false_alarms_per_week": 0.1,
-      "early_detection": 0.633,
-      "detection": 0.878,
-      "mean_median_delay": 15.8,
+      "threshold": 2.8264249767667278,
+      "false_alarms_per_week": 0.099,
+      "early_detection": 0.622,
+      "detection": 0.867,
+      "mean_median_delay": 16.0,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.933,
-            "early": 0.467,
-            "median_delay": 21.0
+            "detected": 0.9,
+            "early": 0.5,
+            "median_delay": 20.0
           },
           "S2": {
-            "detected": 0.667,
-            "early": 0.367,
-            "median_delay": 16.0
+            "detected": 0.633,
+            "early": 0.333,
+            "median_delay": 19.0
           },
           "S3": {
-            "detected": 0.8,
-            "early": 0.5,
-            "median_delay": 16.5
+            "detected": 0.767,
+            "early": 0.467,
+            "median_delay": 15.0
           }
         },
         "1.0": {
@@ -1323,13 +1323,13 @@
             "median_delay": 13.0
           },
           "S2": {
-            "detected": 0.867,
+            "detected": 0.9,
             "early": 0.7,
-            "median_delay": 16.5
+            "median_delay": 17.0
           },
           "S3": {
             "detected": 1.0,
-            "early": 0.833,
+            "early": 0.8,
             "median_delay": 12.0
           }
         }
@@ -1339,11 +1339,11 @@
       "method": "AE w7 b8, 300 train, reconstruction only",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 1.5683826348651078,
-      "false_alarms_per_week": 0.048,
-      "early_detection": 0.433,
+      "threshold": 1.5667210689447435,
+      "false_alarms_per_week": 0.049,
+      "early_detection": 0.439,
       "detection": 0.678,
-      "mean_median_delay": 18.9,
+      "mean_median_delay": 18.4,
       "by_scale": {
         "0.5": {
           "S1": {
@@ -1357,26 +1357,26 @@
             "median_delay": 18.5
           },
           "S3": {
-            "detected": 0.667,
-            "early": 0.3,
-            "median_delay": 23.5
+            "detected": 0.633,
+            "early": 0.367,
+            "median_delay": 19.0
           }
         },
         "1.0": {
           "S1": {
             "detected": 0.933,
             "early": 0.5,
-            "median_delay": 19.0
+            "median_delay": 20.0
           },
           "S2": {
-            "detected": 0.533,
-            "early": 0.333,
-            "median_delay": 19.5
+            "detected": 0.567,
+            "early": 0.3,
+            "median_delay": 21.0
           },
           "S3": {
             "detected": 0.967,
             "early": 0.9,
-            "median_delay": 14.0
+            "median_delay": 13.0
           }
         }
       }
@@ -1385,11 +1385,11 @@
       "method": "AE w7 b8, 300 train, reconstruction only",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 1.4425061068747513,
+      "threshold": 1.43615894291185,
       "false_alarms_per_week": 0.1,
       "early_detection": 0.567,
-      "detection": 0.8,
-      "mean_median_delay": 15.7,
+      "detection": 0.811,
+      "mean_median_delay": 15.8,
       "by_scale": {
         "0.5": {
           "S1": {
@@ -1398,13 +1398,13 @@
             "median_delay": 17.0
           },
           "S2": {
-            "detected": 0.6,
-            "early": 0.433,
-            "median_delay": 15.0
+            "detected": 0.633,
+            "early": 0.4,
+            "median_delay": 16.0
           },
           "S3": {
-            "detected": 0.833,
-            "early": 0.5,
+            "detected": 0.867,
+            "early": 0.533,
             "median_delay": 17.0
           }
         },
@@ -1422,7 +1422,7 @@
           "S3": {
             "detected": 1.0,
             "early": 0.933,
-            "median_delay": 12.0
+            "median_delay": 11.5
           }
         }
       }
@@ -1431,11 +1431,11 @@
       "method": "AE w7 b8, 300 train, reconstruction only",
       "persistence": 3,
       "budget": 0.05,
-      "threshold": 1.472916841625233,
+      "threshold": 1.4731768095198663,
       "false_alarms_per_week": 0.049,
       "early_detection": 0.445,
-      "detection": 0.666,
-      "mean_median_delay": 18.3,
+      "detection": 0.661,
+      "mean_median_delay": 18.1,
       "by_scale": {
         "0.5": {
           "S1": {
@@ -1444,13 +1444,13 @@
             "median_delay": 18.5
           },
           "S2": {
-            "detected": 0.433,
+            "detected": 0.4,
             "early": 0.267,
-            "median_delay": 20.0
+            "median_delay": 18.5
           },
           "S3": {
             "detected": 0.533,
-            "early": 0.367,
+            "early": 0.333,
             "median_delay": 17.0
           }
         },
@@ -1467,7 +1467,7 @@
           },
           "S3": {
             "detected": 0.967,
-            "early": 0.833,
+            "early": 0.867,
             "median_delay": 14.0
           }
         }
@@ -1477,11 +1477,11 @@
       "method": "AE w7 b8, 300 train, reconstruction only",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 1.3481005637245032,
-      "false_alarms_per_week": 0.099,
+      "threshold": 1.3462137988671494,
+      "false_alarms_per_week": 0.1,
       "early_detection": 0.55,
-      "detection": 0.789,
-      "mean_median_delay": 17.2,
+      "detection": 0.794,
+      "mean_median_delay": 17.3,
       "by_scale": {
         "0.5": {
           "S1": {
@@ -1490,9 +1490,9 @@
             "median_delay": 19.0
           },
           "S2": {
-            "detected": 0.6,
+            "detected": 0.567,
             "early": 0.4,
-            "median_delay": 18.0
+            "median_delay": 17.0
           },
           "S3": {
             "detected": 0.8,
@@ -1507,9 +1507,9 @@
             "median_delay": 19.0
           },
           "S2": {
-            "detected": 0.7,
+            "detected": 0.767,
             "early": 0.533,
-            "median_delay": 17.0
+            "median_delay": 19.0
           },
           "S3": {
             "detected": 1.0,
@@ -1523,44 +1523,44 @@
       "method": "AE w7 b8, 300 train, latent only",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 2.4688072749534204,
+      "threshold": 2.4871038348215024,
       "false_alarms_per_week": 0.049,
       "early_detection": 0.433,
-      "detection": 0.728,
-      "mean_median_delay": 22.3,
+      "detection": 0.744,
+      "mean_median_delay": 23.8,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.667,
+            "detected": 0.7,
             "early": 0.267,
             "median_delay": 24.0
           },
           "S2": {
-            "detected": 0.333,
+            "detected": 0.367,
             "early": 0.2,
-            "median_delay": 19.5
+            "median_delay": 21.0
           },
           "S3": {
             "detected": 0.633,
-            "early": 0.233,
-            "median_delay": 36.0
+            "early": 0.2,
+            "median_delay": 43.0
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
-            "early": 0.833,
-            "median_delay": 17.5
+            "early": 0.9,
+            "median_delay": 16.5
           },
           "S2": {
-            "detected": 0.8,
-            "early": 0.467,
+            "detected": 0.833,
+            "early": 0.5,
             "median_delay": 20.0
           },
           "S3": {
             "detected": 0.933,
-            "early": 0.6,
-            "median_delay": 17.0
+            "early": 0.533,
+            "median_delay": 18.5
           }
         }
       }
@@ -1569,11 +1569,11 @@
       "method": "AE w7 b8, 300 train, latent only",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 2.1154715895274427,
-      "false_alarms_per_week": 0.098,
-      "early_detection": 0.544,
-      "detection": 0.85,
-      "mean_median_delay": 18.8,
+      "threshold": 2.1122954157731915,
+      "false_alarms_per_week": 0.099,
+      "early_detection": 0.555,
+      "detection": 0.861,
+      "mean_median_delay": 19.0,
       "by_scale": {
         "0.5": {
           "S1": {
@@ -1582,9 +1582,9 @@
             "median_delay": 23.0
           },
           "S2": {
-            "detected": 0.5,
+            "detected": 0.533,
             "early": 0.333,
-            "median_delay": 18.0
+            "median_delay": 19.0
           },
           "S3": {
             "detected": 0.767,
@@ -1599,14 +1599,14 @@
             "median_delay": 12.5
           },
           "S2": {
-            "detected": 0.933,
-            "early": 0.567,
-            "median_delay": 20.0
+            "detected": 1.0,
+            "early": 0.667,
+            "median_delay": 19.5
           },
           "S3": {
-            "detected": 1.0,
-            "early": 0.7,
-            "median_delay": 14.0
+            "detected": 0.967,
+            "early": 0.667,
+            "median_delay": 15.0
           }
         }
       }
@@ -1615,25 +1615,25 @@
       "method": "AE w7 b8, 300 train, latent only",
       "persistence": 3,
       "budget": 0.05,
-      "threshold": 2.0438811834383843,
+      "threshold": 2.0611249955355273,
       "false_alarms_per_week": 0.049,
-      "early_detection": 0.445,
-      "detection": 0.756,
-      "mean_median_delay": 22.2,
+      "early_detection": 0.422,
+      "detection": 0.722,
+      "mean_median_delay": 22.4,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.8,
+            "detected": 0.767,
             "early": 0.267,
-            "median_delay": 29.5
+            "median_delay": 28.0
           },
           "S2": {
-            "detected": 0.433,
-            "early": 0.267,
+            "detected": 0.333,
+            "early": 0.2,
             "median_delay": 19.0
           },
           "S3": {
-            "detected": 0.633,
+            "detected": 0.6,
             "early": 0.167,
             "median_delay": 33.0
           }
@@ -1645,14 +1645,14 @@
             "median_delay": 16.0
           },
           "S2": {
-            "detected": 0.767,
-            "early": 0.5,
-            "median_delay": 20.0
+            "detected": 0.733,
+            "early": 0.467,
+            "median_delay": 20.5
           },
           "S3": {
             "detected": 0.9,
-            "early": 0.567,
-            "median_delay": 16.0
+            "early": 0.533,
+            "median_delay": 18.0
           }
         }
       }
@@ -1661,27 +1661,27 @@
       "method": "AE w7 b8, 300 train, latent only",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 1.6909297789500055,
+      "threshold": 1.6717951869268477,
       "false_alarms_per_week": 0.099,
-      "early_detection": 0.589,
-      "detection": 0.867,
-      "mean_median_delay": 18.8,
+      "early_detection": 0.617,
+      "detection": 0.878,
+      "mean_median_delay": 18.3,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.867,
+            "detected": 0.9,
             "early": 0.5,
             "median_delay": 20.0
           },
           "S2": {
             "detected": 0.633,
-            "early": 0.367,
+            "early": 0.4,
             "median_delay": 19.0
           },
           "S3": {
             "detected": 0.833,
-            "early": 0.367,
-            "median_delay": 25.0
+            "early": 0.4,
+            "median_delay": 24.0
           }
         },
         "1.0": {
@@ -1691,13 +1691,13 @@
             "median_delay": 14.5
           },
           "S2": {
-            "detected": 0.9,
-            "early": 0.7,
-            "median_delay": 19.0
+            "detected": 0.933,
+            "early": 0.767,
+            "median_delay": 17.5
           },
           "S3": {
             "detected": 0.967,
-            "early": 0.667,
+            "early": 0.7,
             "median_delay": 15.0
           }
         }
@@ -1707,27 +1707,27 @@
       "method": "AE w7 b4, 300 train",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 4.077657618063953,
+      "threshold": 4.078898063975848,
       "false_alarms_per_week": 0.049,
       "early_detection": 0.633,
-      "detection": 0.889,
-      "mean_median_delay": 19.2,
+      "detection": 0.905,
+      "mean_median_delay": 19.6,
       "by_scale": {
         "0.5": {
           "S1": {
             "detected": 0.933,
-            "early": 0.433,
-            "median_delay": 22.5
+            "early": 0.4,
+            "median_delay": 23.5
           },
           "S2": {
             "detected": 0.733,
-            "early": 0.467,
-            "median_delay": 18.5
+            "early": 0.5,
+            "median_delay": 17.5
           },
           "S3": {
-            "detected": 0.733,
+            "detected": 0.767,
             "early": 0.267,
-            "median_delay": 30.0
+            "median_delay": 32.0
           }
         },
         "1.0": {
@@ -1742,7 +1742,7 @@
             "median_delay": 14.0
           },
           "S3": {
-            "detected": 0.933,
+            "detected": 1.0,
             "early": 0.767,
             "median_delay": 15.5
           }
@@ -1753,11 +1753,11 @@
       "method": "AE w7 b4, 300 train",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 3.4690811514159368,
-      "false_alarms_per_week": 0.099,
-      "early_detection": 0.733,
+      "threshold": 3.4070472108447882,
+      "false_alarms_per_week": 0.1,
+      "early_detection": 0.761,
       "detection": 0.939,
-      "mean_median_delay": 16.8,
+      "mean_median_delay": 15.3,
       "by_scale": {
         "0.5": {
           "S1": {
@@ -1767,30 +1767,30 @@
           },
           "S2": {
             "detected": 0.867,
-            "early": 0.633,
-            "median_delay": 16.0
+            "early": 0.7,
+            "median_delay": 15.5
           },
           "S3": {
             "detected": 0.8,
-            "early": 0.333,
-            "median_delay": 28.0
+            "early": 0.4,
+            "median_delay": 21.0
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
-            "early": 1.0,
-            "median_delay": 12.0
+            "early": 0.967,
+            "median_delay": 11.5
           },
           "S2": {
             "detected": 1.0,
-            "early": 0.933,
+            "early": 0.967,
             "median_delay": 13.0
           },
           "S3": {
             "detected": 1.0,
-            "early": 0.8,
-            "median_delay": 14.5
+            "early": 0.833,
+            "median_delay": 14.0
           }
         }
       }
@@ -1799,20 +1799,20 @@
       "method": "AE w7 b4, 300 train",
       "persistence": 3,
       "budget": 0.05,
-      "threshold": 3.4506650789621585,
-      "false_alarms_per_week": 0.049,
-      "early_detection": 0.594,
-      "detection": 0.861,
-      "mean_median_delay": 20.3,
+      "threshold": 3.4547375434344536,
+      "false_alarms_per_week": 0.048,
+      "early_detection": 0.595,
+      "detection": 0.867,
+      "mean_median_delay": 20.4,
       "by_scale": {
         "0.5": {
           "S1": {
             "detected": 0.8,
             "early": 0.367,
-            "median_delay": 22.0
+            "median_delay": 23.0
           },
           "S2": {
-            "detected": 0.767,
+            "detected": 0.8,
             "early": 0.467,
             "median_delay": 19.0
           },
@@ -1825,18 +1825,18 @@
         "1.0": {
           "S1": {
             "detected": 1.0,
-            "early": 0.833,
+            "early": 0.8,
             "median_delay": 17.0
           },
           "S2": {
             "detected": 1.0,
-            "early": 0.933,
-            "median_delay": 14.0
+            "early": 0.967,
+            "median_delay": 14.5
           },
           "S3": {
             "detected": 0.967,
             "early": 0.767,
-            "median_delay": 16.0
+            "median_delay": 15.0
           }
         }
       }
@@ -1845,310 +1845,34 @@
       "method": "AE w7 b4, 300 train",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 2.849639486713216,
-      "false_alarms_per_week": 0.1,
-      "early_detection": 0.75,
-      "detection": 0.939,
-      "mean_median_delay": 15.0,
-      "by_scale": {
-        "0.5": {
-          "S1": {
-            "detected": 1.0,
-            "early": 0.667,
-            "median_delay": 18.0
-          },
-          "S2": {
-            "detected": 0.833,
-            "early": 0.667,
-            "median_delay": 16.0
-          },
-          "S3": {
-            "detected": 0.8,
-            "early": 0.433,
-            "median_delay": 17.5
-          }
-        },
-        "1.0": {
-          "S1": {
-            "detected": 1.0,
-            "early": 0.967,
-            "median_delay": 12.5
-          },
-          "S2": {
-            "detected": 1.0,
-            "early": 1.0,
-            "median_delay": 13.0
-          },
-          "S3": {
-            "detected": 1.0,
-            "early": 0.767,
-            "median_delay": 13.0
-          }
-        }
-      }
-    },
-    {
-      "method": "AE w7 b16, 300 train",
-      "persistence": 2,
-      "budget": 0.05,
-      "threshold": 3.152748348865789,
-      "false_alarms_per_week": 0.049,
-      "early_detection": 0.606,
-      "detection": 0.8,
-      "mean_median_delay": 17.8,
-      "by_scale": {
-        "0.5": {
-          "S1": {
-            "detected": 0.733,
-            "early": 0.3,
-            "median_delay": 24.5
-          },
-          "S2": {
-            "detected": 0.567,
-            "early": 0.3,
-            "median_delay": 20.0
-          },
-          "S3": {
-            "detected": 0.6,
-            "early": 0.4,
-            "median_delay": 17.5
-          }
-        },
-        "1.0": {
-          "S1": {
-            "detected": 1.0,
-            "early": 0.933,
-            "median_delay": 17.5
-          },
-          "S2": {
-            "detected": 0.9,
-            "early": 0.733,
-            "median_delay": 15.0
-          },
-          "S3": {
-            "detected": 1.0,
-            "early": 0.967,
-            "median_delay": 12.0
-          }
-        }
-      }
-    },
-    {
-      "method": "AE w7 b16, 300 train",
-      "persistence": 2,
-      "budget": 0.1,
-      "threshold": 2.8936707828728596,
-      "false_alarms_per_week": 0.097,
-      "early_detection": 0.717,
-      "detection": 0.906,
-      "mean_median_delay": 15.3,
-      "by_scale": {
-        "0.5": {
-          "S1": {
-            "detected": 0.867,
-            "early": 0.433,
-            "median_delay": 21.0
-          },
-          "S2": {
-            "detected": 0.767,
-            "early": 0.467,
-            "median_delay": 18.0
-          },
-          "S3": {
-            "detected": 0.8,
-            "early": 0.667,
-            "median_delay": 14.0
-          }
-        },
-        "1.0": {
-          "S1": {
-            "detected": 1.0,
-            "early": 0.933,
-            "median_delay": 13.5
-          },
-          "S2": {
-            "detected": 1.0,
-            "early": 0.833,
-            "median_delay": 14.5
-          },
-          "S3": {
-            "detected": 1.0,
-            "early": 0.967,
-            "median_delay": 11.0
-          }
-        }
-      }
-    },
-    {
-      "method": "AE w7 b16, 300 train",
-      "persistence": 3,
-      "budget": 0.05,
-      "threshold": 2.908903015119638,
-      "false_alarms_per_week": 0.048,
-      "early_detection": 0.622,
-      "detection": 0.833,
-      "mean_median_delay": 17.9,
-      "by_scale": {
-        "0.5": {
-          "S1": {
-            "detected": 0.767,
-            "early": 0.367,
-            "median_delay": 23.0
-          },
-          "S2": {
-            "detected": 0.6,
-            "early": 0.333,
-            "median_delay": 20.5
-          },
-          "S3": {
-            "detected": 0.667,
-            "early": 0.467,
-            "median_delay": 18.5
-          }
-        },
-        "1.0": {
-          "S1": {
-            "detected": 1.0,
-            "early": 0.9,
-            "median_delay": 17.5
-          },
-          "S2": {
-            "detected": 0.967,
-            "early": 0.733,
-            "median_delay": 16.0
-          },
-          "S3": {
-            "detected": 1.0,
-            "early": 0.933,
-            "median_delay": 12.0
-          }
-        }
-      }
-    },
-    {
-      "method": "AE w7 b16, 300 train",
-      "persistence": 3,
-      "budget": 0.1,
-      "threshold": 2.578287006893295,
-      "false_alarms_per_week": 0.099,
-      "early_detection": 0.755,
-      "detection": 0.928,
+      "threshold": 2.8621385704631184,
+      "false_alarms_per_week": 0.098,
+      "early_detection": 0.739,
+      "detection": 0.933,
       "mean_median_delay": 14.8,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.9,
-            "early": 0.533,
-            "median_delay": 20.0
+            "detected": 0.967,
+            "early": 0.633,
+            "median_delay": 18.0
           },
           "S2": {
-            "detected": 0.767,
-            "early": 0.533,
+            "detected": 0.833,
+            "early": 0.633,
             "median_delay": 16.0
           },
           "S3": {
-            "detected": 0.9,
-            "early": 0.7,
-            "median_delay": 14.0
+            "detected": 0.8,
+            "early": 0.433,
+            "median_delay": 17.5
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
             "early": 0.933,
-            "median_delay": 13.0
-          },
-          "S2": {
-            "detected": 1.0,
-            "early": 0.867,
-            "median_delay": 15.0
-          },
-          "S3": {
-            "detected": 1.0,
-            "early": 0.967,
-            "median_delay": 11.0
-          }
-        }
-      }
-    },
-    {
-      "method": "AE w14 b8, 300 train",
-      "persistence": 2,
-      "budget": 0.05,
-      "threshold": 3.26352531342925,
-      "false_alarms_per_week": 0.049,
-      "early_detection": 0.644,
-      "detection": 0.889,
-      "mean_median_delay": 18.2,
-      "by_scale": {
-        "0.5": {
-          "S1": {
-            "detected": 0.967,
-            "early": 0.467,
-            "median_delay": 23.0
-          },
-          "S2": {
-            "detected": 0.733,
-            "early": 0.533,
-            "median_delay": 18.0
-          },
-          "S3": {
-            "detected": 0.667,
-            "early": 0.3,
-            "median_delay": 22.0
-          }
-        },
-        "1.0": {
-          "S1": {
-            "detected": 1.0,
-            "early": 0.933,
-            "median_delay": 15.0
-          },
-          "S2": {
-            "detected": 1.0,
-            "early": 0.967,
-            "median_delay": 13.5
-          },
-          "S3": {
-            "detected": 0.967,
-            "early": 0.667,
-            "median_delay": 18.0
-          }
-        }
-      }
-    },
-    {
-      "method": "AE w14 b8, 300 train",
-      "persistence": 2,
-      "budget": 0.1,
-      "threshold": 2.9374248596608097,
-      "false_alarms_per_week": 0.099,
-      "early_detection": 0.744,
-      "detection": 0.939,
-      "mean_median_delay": 16.3,
-      "by_scale": {
-        "0.5": {
-          "S1": {
-            "detected": 1.0,
-            "early": 0.5,
-            "median_delay": 21.5
-          },
-          "S2": {
-            "detected": 0.9,
-            "early": 0.667,
-            "median_delay": 16.0
-          },
-          "S3": {
-            "detected": 0.767,
-            "early": 0.5,
-            "median_delay": 20.0
-          }
-        },
-        "1.0": {
-          "S1": {
-            "detected": 1.0,
-            "early": 1.0,
-            "median_delay": 14.5
+            "median_delay": 12.5
           },
           "S2": {
             "detected": 1.0,
@@ -2156,159 +1880,67 @@
             "median_delay": 12.0
           },
           "S3": {
-            "detected": 0.967,
+            "detected": 1.0,
             "early": 0.833,
-            "median_delay": 14.0
-          }
-        }
-      }
-    },
-    {
-      "method": "AE w14 b8, 300 train",
-      "persistence": 3,
-      "budget": 0.05,
-      "threshold": 2.996586240950279,
-      "false_alarms_per_week": 0.048,
-      "early_detection": 0.65,
-      "detection": 0.922,
-      "mean_median_delay": 18.2,
-      "by_scale": {
-        "0.5": {
-          "S1": {
-            "detected": 1.0,
-            "early": 0.467,
-            "median_delay": 22.5
-          },
-          "S2": {
-            "detected": 0.9,
-            "early": 0.567,
-            "median_delay": 18.0
-          },
-          "S3": {
-            "detected": 0.667,
-            "early": 0.267,
-            "median_delay": 22.0
-          }
-        },
-        "1.0": {
-          "S1": {
-            "detected": 1.0,
-            "early": 0.967,
-            "median_delay": 16.0
-          },
-          "S2": {
-            "detected": 1.0,
-            "early": 0.933,
-            "median_delay": 13.5
-          },
-          "S3": {
-            "detected": 0.967,
-            "early": 0.7,
-            "median_delay": 17.0
-          }
-        }
-      }
-    },
-    {
-      "method": "AE w14 b8, 300 train",
-      "persistence": 3,
-      "budget": 0.1,
-      "threshold": 2.7171112343854023,
-      "false_alarms_per_week": 0.1,
-      "early_detection": 0.728,
-      "detection": 0.945,
-      "mean_median_delay": 16.8,
-      "by_scale": {
-        "0.5": {
-          "S1": {
-            "detected": 1.0,
-            "early": 0.533,
-            "median_delay": 21.0
-          },
-          "S2": {
-            "detected": 0.9,
-            "early": 0.733,
-            "median_delay": 15.0
-          },
-          "S3": {
-            "detected": 0.767,
-            "early": 0.367,
-            "median_delay": 22.0
-          }
-        },
-        "1.0": {
-          "S1": {
-            "detected": 1.0,
-            "early": 0.967,
-            "median_delay": 15.0
-          },
-          "S2": {
-            "detected": 1.0,
-            "early": 0.967,
             "median_delay": 13.0
-          },
-          "S3": {
-            "detected": 1.0,
-            "early": 0.8,
-            "median_delay": 15.0
           }
         }
       }
     },
     {
-      "method": "AE w7 b8, 300 train, 3-day smoothed",
+      "method": "AE w7 b16, 300 train",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 3.4269351761351916,
-      "false_alarms_per_week": 0.049,
-      "early_detection": 0.483,
-      "detection": 0.733,
-      "mean_median_delay": 18.9,
+      "threshold": 3.1562595427857834,
+      "false_alarms_per_week": 0.047,
+      "early_detection": 0.583,
+      "detection": 0.806,
+      "mean_median_delay": 19.2,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.667,
-            "early": 0.367,
-            "median_delay": 20.5
+            "detected": 0.767,
+            "early": 0.3,
+            "median_delay": 25.0
           },
           "S2": {
-            "detected": 0.4,
+            "detected": 0.533,
             "early": 0.233,
-            "median_delay": 18.5
+            "median_delay": 26.0
           },
           "S3": {
-            "detected": 0.567,
-            "early": 0.233,
-            "median_delay": 25.0
+            "detected": 0.667,
+            "early": 0.4,
+            "median_delay": 18.5
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
             "early": 0.9,
-            "median_delay": 15.5
+            "median_delay": 18.5
           },
           "S2": {
-            "detected": 0.767,
-            "early": 0.467,
-            "median_delay": 21.0
+            "detected": 0.867,
+            "early": 0.733,
+            "median_delay": 15.0
           },
           "S3": {
             "detected": 1.0,
-            "early": 0.7,
-            "median_delay": 13.0
+            "early": 0.933,
+            "median_delay": 12.0
           }
         }
       }
     },
     {
-      "method": "AE w7 b8, 300 train, 3-day smoothed",
+      "method": "AE w7 b16, 300 train",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 3.0455546311793973,
-      "false_alarms_per_week": 0.1,
-      "early_detection": 0.633,
-      "detection": 0.856,
+      "threshold": 2.9006095059882284,
+      "false_alarms_per_week": 0.097,
+      "early_detection": 0.711,
+      "detection": 0.883,
       "mean_median_delay": 15.1,
       "by_scale": {
         "0.5": {
@@ -2318,105 +1950,105 @@
             "median_delay": 20.0
           },
           "S2": {
-            "detected": 0.633,
-            "early": 0.4,
-            "median_delay": 13.0
-          },
-          "S3": {
-            "detected": 0.733,
-            "early": 0.533,
-            "median_delay": 14.0
-          }
-        },
-        "1.0": {
-          "S1": {
-            "detected": 1.0,
-            "early": 0.933,
-            "median_delay": 13.0
-          },
-          "S2": {
-            "detected": 0.967,
-            "early": 0.667,
-            "median_delay": 18.0
-          },
-          "S3": {
-            "detected": 1.0,
-            "early": 0.833,
-            "median_delay": 12.5
-          }
-        }
-      }
-    },
-    {
-      "method": "AE w7 b8, 300 train, 3-day smoothed",
-      "persistence": 3,
-      "budget": 0.05,
-      "threshold": 3.269820658304556,
-      "false_alarms_per_week": 0.049,
-      "early_detection": 0.483,
-      "detection": 0.755,
-      "mean_median_delay": 19.2,
-      "by_scale": {
-        "0.5": {
-          "S1": {
             "detected": 0.7,
-            "early": 0.3,
-            "median_delay": 24.0
-          },
-          "S2": {
-            "detected": 0.5,
-            "early": 0.3,
-            "median_delay": 18.0
-          },
-          "S3": {
-            "detected": 0.6,
-            "early": 0.233,
-            "median_delay": 26.5
-          }
-        },
-        "1.0": {
-          "S1": {
-            "detected": 1.0,
-            "early": 0.867,
-            "median_delay": 15.0
-          },
-          "S2": {
-            "detected": 0.733,
             "early": 0.467,
             "median_delay": 18.0
           },
           "S3": {
+            "detected": 0.8,
+            "early": 0.667,
+            "median_delay": 12.5
+          }
+        },
+        "1.0": {
+          "S1": {
             "detected": 1.0,
-            "early": 0.733,
-            "median_delay": 14.0
+            "early": 0.933,
+            "median_delay": 15.5
+          },
+          "S2": {
+            "detected": 1.0,
+            "early": 0.8,
+            "median_delay": 14.5
+          },
+          "S3": {
+            "detected": 1.0,
+            "early": 0.967,
+            "median_delay": 10.0
           }
         }
       }
     },
     {
-      "method": "AE w7 b8, 300 train, 3-day smoothed",
+      "method": "AE w7 b16, 300 train",
+      "persistence": 3,
+      "budget": 0.05,
+      "threshold": 2.8337416814587306,
+      "false_alarms_per_week": 0.049,
+      "early_detection": 0.656,
+      "detection": 0.839,
+      "mean_median_delay": 16.2,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "detected": 0.767,
+            "early": 0.367,
+            "median_delay": 22.0
+          },
+          "S2": {
+            "detected": 0.533,
+            "early": 0.333,
+            "median_delay": 17.5
+          },
+          "S3": {
+            "detected": 0.767,
+            "early": 0.633,
+            "median_delay": 14.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "detected": 1.0,
+            "early": 0.9,
+            "median_delay": 16.0
+          },
+          "S2": {
+            "detected": 0.967,
+            "early": 0.733,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "detected": 1.0,
+            "early": 0.967,
+            "median_delay": 12.0
+          }
+        }
+      }
+    },
+    {
+      "method": "AE w7 b16, 300 train",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 2.8398468632129528,
-      "false_alarms_per_week": 0.098,
-      "early_detection": 0.672,
-      "detection": 0.878,
-      "mean_median_delay": 14.8,
+      "threshold": 2.5623736756512336,
+      "false_alarms_per_week": 0.1,
+      "early_detection": 0.739,
+      "detection": 0.945,
+      "mean_median_delay": 14.9,
       "by_scale": {
         "0.5": {
           "S1": {
             "detected": 0.9,
-            "early": 0.533,
-            "median_delay": 19.0
+            "early": 0.5,
+            "median_delay": 20.0
           },
           "S2": {
-            "detected": 0.667,
-            "early": 0.433,
-            "median_delay": 12.5
+            "detected": 0.8,
+            "early": 0.533,
+            "median_delay": 16.5
           },
           "S3": {
-            "detected": 0.733,
-            "early": 0.6,
+            "detected": 0.967,
+            "early": 0.733,
             "median_delay": 14.0
           }
         },
@@ -2424,46 +2056,230 @@
           "S1": {
             "detected": 1.0,
             "early": 0.933,
-            "median_delay": 13.0
+            "median_delay": 13.5
           },
           "S2": {
-            "detected": 0.967,
-            "early": 0.667,
-            "median_delay": 18.0
+            "detected": 1.0,
+            "early": 0.767,
+            "median_delay": 15.0
           },
           "S3": {
             "detected": 1.0,
-            "early": 0.867,
-            "median_delay": 12.5
+            "early": 0.967,
+            "median_delay": 10.5
           }
         }
       }
     },
     {
-      "method": "AE w7 b8, 300 train, 5-day smoothed",
+      "method": "AE w14 b8, 300 train",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 3.2076489115733553,
+      "threshold": 3.167171749307491,
       "false_alarms_per_week": 0.049,
-      "early_detection": 0.5,
-      "detection": 0.767,
-      "mean_median_delay": 18.8,
+      "early_detection": 0.667,
+      "detection": 0.911,
+      "mean_median_delay": 17.4,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.733,
-            "early": 0.3,
-            "median_delay": 24.0
+            "detected": 1.0,
+            "early": 0.467,
+            "median_delay": 22.0
           },
           "S2": {
-            "detected": 0.533,
+            "detected": 0.8,
+            "early": 0.533,
+            "median_delay": 17.5
+          },
+          "S3": {
+            "detected": 0.7,
             "early": 0.333,
+            "median_delay": 22.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "detected": 1.0,
+            "early": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "detected": 1.0,
+            "early": 0.967,
+            "median_delay": 13.0
+          },
+          "S3": {
+            "detected": 0.967,
+            "early": 0.7,
+            "median_delay": 15.0
+          }
+        }
+      }
+    },
+    {
+      "method": "AE w14 b8, 300 train",
+      "persistence": 2,
+      "budget": 0.1,
+      "threshold": 2.9335791407193303,
+      "false_alarms_per_week": 0.1,
+      "early_detection": 0.739,
+      "detection": 0.928,
+      "mean_median_delay": 16.1,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "detected": 1.0,
+            "early": 0.533,
+            "median_delay": 20.5
+          },
+          "S2": {
+            "detected": 0.9,
+            "early": 0.633,
             "median_delay": 17.0
           },
           "S3": {
-            "detected": 0.6,
+            "detected": 0.7,
+            "early": 0.5,
+            "median_delay": 19.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "detected": 1.0,
+            "early": 1.0,
+            "median_delay": 14.0
+          },
+          "S2": {
+            "detected": 1.0,
+            "early": 0.967,
+            "median_delay": 12.0
+          },
+          "S3": {
+            "detected": 0.967,
+            "early": 0.8,
+            "median_delay": 14.0
+          }
+        }
+      }
+    },
+    {
+      "method": "AE w14 b8, 300 train",
+      "persistence": 3,
+      "budget": 0.05,
+      "threshold": 2.9638043279363604,
+      "false_alarms_per_week": 0.049,
+      "early_detection": 0.65,
+      "detection": 0.911,
+      "mean_median_delay": 18.2,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "detected": 1.0,
+            "early": 0.467,
+            "median_delay": 22.5
+          },
+          "S2": {
+            "detected": 0.867,
+            "early": 0.567,
+            "median_delay": 18.0
+          },
+          "S3": {
+            "detected": 0.633,
             "early": 0.267,
-            "median_delay": 24.0
+            "median_delay": 22.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "detected": 1.0,
+            "early": 0.967,
+            "median_delay": 15.5
+          },
+          "S2": {
+            "detected": 1.0,
+            "early": 0.933,
+            "median_delay": 14.5
+          },
+          "S3": {
+            "detected": 0.967,
+            "early": 0.7,
+            "median_delay": 17.0
+          }
+        }
+      }
+    },
+    {
+      "method": "AE w14 b8, 300 train",
+      "persistence": 3,
+      "budget": 0.1,
+      "threshold": 2.706712333875017,
+      "false_alarms_per_week": 0.1,
+      "early_detection": 0.739,
+      "detection": 0.945,
+      "mean_median_delay": 16.5,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "detected": 1.0,
+            "early": 0.6,
+            "median_delay": 20.0
+          },
+          "S2": {
+            "detected": 0.9,
+            "early": 0.7,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "detected": 0.767,
+            "early": 0.4,
+            "median_delay": 21.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "detected": 1.0,
+            "early": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "detected": 1.0,
+            "early": 0.933,
+            "median_delay": 13.0
+          },
+          "S3": {
+            "detected": 1.0,
+            "early": 0.8,
+            "median_delay": 15.0
+          }
+        }
+      }
+    },
+    {
+      "method": "AE w7 b8, 300 train, 3-day smoothed",
+      "persistence": 2,
+      "budget": 0.05,
+      "threshold": 3.476830213256404,
+      "false_alarms_per_week": 0.048,
+      "early_detection": 0.472,
+      "detection": 0.733,
+      "mean_median_delay": 20.8,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "detected": 0.667,
+            "early": 0.333,
+            "median_delay": 22.0
+          },
+          "S2": {
+            "detected": 0.4,
+            "early": 0.233,
+            "median_delay": 18.5
+          },
+          "S3": {
+            "detected": 0.567,
+            "early": 0.2,
+            "median_delay": 33.0
           }
         },
         "1.0": {
@@ -2473,73 +2289,73 @@
             "median_delay": 16.5
           },
           "S2": {
-            "detected": 0.733,
-            "early": 0.5,
-            "median_delay": 17.5
+            "detected": 0.767,
+            "early": 0.467,
+            "median_delay": 20.0
           },
           "S3": {
             "detected": 1.0,
             "early": 0.733,
-            "median_delay": 14.0
+            "median_delay": 15.0
           }
         }
       }
     },
     {
-      "method": "AE w7 b8, 300 train, 5-day smoothed",
+      "method": "AE w7 b8, 300 train, 3-day smoothed",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 2.831202026648168,
+      "threshold": 3.0111042994096433,
       "false_alarms_per_week": 0.1,
-      "early_detection": 0.678,
-      "detection": 0.878,
-      "mean_median_delay": 13.9,
+      "early_detection": 0.655,
+      "detection": 0.872,
+      "mean_median_delay": 16.1,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.9,
+            "detected": 0.833,
             "early": 0.5,
             "median_delay": 19.0
           },
           "S2": {
-            "detected": 0.667,
-            "early": 0.467,
-            "median_delay": 9.0
+            "detected": 0.633,
+            "early": 0.367,
+            "median_delay": 19.0
           },
           "S3": {
-            "detected": 0.733,
-            "early": 0.633,
-            "median_delay": 13.5
+            "detected": 0.767,
+            "early": 0.567,
+            "median_delay": 15.0
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
-            "early": 0.9,
-            "median_delay": 13.0
+            "early": 0.933,
+            "median_delay": 12.0
           },
           "S2": {
-            "detected": 0.967,
-            "early": 0.7,
-            "median_delay": 17.0
+            "detected": 1.0,
+            "early": 0.733,
+            "median_delay": 18.5
           },
           "S3": {
             "detected": 1.0,
-            "early": 0.867,
-            "median_delay": 12.0
+            "early": 0.833,
+            "median_delay": 13.0
           }
         }
       }
     },
     {
-      "method": "AE w7 b8, 300 train, 5-day smoothed",
+      "method": "AE w7 b8, 300 train, 3-day smoothed",
       "persistence": 3,
       "budget": 0.05,
-      "threshold": 3.0929678376192857,
+      "threshold": 3.2378418100732724,
       "false_alarms_per_week": 0.049,
-      "early_detection": 0.517,
-      "detection": 0.778,
-      "mean_median_delay": 18.1,
+      "early_detection": 0.489,
+      "detection": 0.761,
+      "mean_median_delay": 19.8,
       "by_scale": {
         "0.5": {
           "S1": {
@@ -2549,30 +2365,214 @@
           },
           "S2": {
             "detected": 0.5,
-            "early": 0.333,
-            "median_delay": 14.0
+            "early": 0.3,
+            "median_delay": 18.0
           },
           "S3": {
+            "detected": 0.567,
+            "early": 0.233,
+            "median_delay": 28.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "detected": 1.0,
+            "early": 0.867,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "detected": 0.767,
+            "early": 0.5,
+            "median_delay": 19.0
+          },
+          "S3": {
+            "detected": 1.0,
+            "early": 0.733,
+            "median_delay": 15.5
+          }
+        }
+      }
+    },
+    {
+      "method": "AE w7 b8, 300 train, 3-day smoothed",
+      "persistence": 3,
+      "budget": 0.1,
+      "threshold": 2.839246625339912,
+      "false_alarms_per_week": 0.1,
+      "early_detection": 0.683,
+      "detection": 0.883,
+      "mean_median_delay": 14.8,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "detected": 0.9,
+            "early": 0.567,
+            "median_delay": 19.0
+          },
+          "S2": {
             "detected": 0.667,
+            "early": 0.433,
+            "median_delay": 12.5
+          },
+          "S3": {
+            "detected": 0.733,
+            "early": 0.567,
+            "median_delay": 14.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "detected": 1.0,
+            "early": 0.933,
+            "median_delay": 13.0
+          },
+          "S2": {
+            "detected": 1.0,
+            "early": 0.733,
+            "median_delay": 18.0
+          },
+          "S3": {
+            "detected": 1.0,
+            "early": 0.867,
+            "median_delay": 12.5
+          }
+        }
+      }
+    },
+    {
+      "method": "AE w7 b8, 300 train, 5-day smoothed",
+      "persistence": 2,
+      "budget": 0.05,
+      "threshold": 3.234431846987307,
+      "false_alarms_per_week": 0.047,
+      "early_detection": 0.489,
+      "detection": 0.767,
+      "mean_median_delay": 20.0,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "detected": 0.733,
             "early": 0.3,
-            "median_delay": 24.5
+            "median_delay": 23.5
+          },
+          "S2": {
+            "detected": 0.533,
+            "early": 0.333,
+            "median_delay": 17.0
+          },
+          "S3": {
+            "detected": 0.6,
+            "early": 0.233,
+            "median_delay": 30.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "detected": 1.0,
+            "early": 0.867,
+            "median_delay": 16.0
+          },
+          "S2": {
+            "detected": 0.733,
+            "early": 0.5,
+            "median_delay": 17.5
+          },
+          "S3": {
+            "detected": 1.0,
+            "early": 0.7,
+            "median_delay": 15.5
+          }
+        }
+      }
+    },
+    {
+      "method": "AE w7 b8, 300 train, 5-day smoothed",
+      "persistence": 2,
+      "budget": 0.1,
+      "threshold": 2.854211544050435,
+      "false_alarms_per_week": 0.099,
+      "early_detection": 0.672,
+      "detection": 0.872,
+      "mean_median_delay": 14.7,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "detected": 0.867,
+            "early": 0.5,
+            "median_delay": 20.0
+          },
+          "S2": {
+            "detected": 0.667,
+            "early": 0.4,
+            "median_delay": 11.5
+          },
+          "S3": {
+            "detected": 0.733,
+            "early": 0.6,
+            "median_delay": 13.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "detected": 1.0,
+            "early": 0.933,
+            "median_delay": 12.5
+          },
+          "S2": {
+            "detected": 0.967,
+            "early": 0.733,
+            "median_delay": 18.0
+          },
+          "S3": {
+            "detected": 1.0,
+            "early": 0.867,
+            "median_delay": 12.5
+          }
+        }
+      }
+    },
+    {
+      "method": "AE w7 b8, 300 train, 5-day smoothed",
+      "persistence": 3,
+      "budget": 0.05,
+      "threshold": 3.0973383061134774,
+      "false_alarms_per_week": 0.049,
+      "early_detection": 0.517,
+      "detection": 0.783,
+      "mean_median_delay": 19.0,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "detected": 0.767,
+            "early": 0.3,
+            "median_delay": 24.0
+          },
+          "S2": {
+            "detected": 0.533,
+            "early": 0.333,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "detected": 0.567,
+            "early": 0.267,
+            "median_delay": 23.0
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
             "early": 0.9,
-            "median_delay": 15.0
+            "median_delay": 15.5
           },
           "S2": {
-            "detected": 0.767,
-            "early": 0.5,
-            "median_delay": 17.0
+            "detected": 0.833,
+            "early": 0.533,
+            "median_delay": 20.0
           },
           "S3": {
             "detected": 1.0,
             "early": 0.767,
-            "median_delay": 14.5
+            "median_delay": 15.5
           }
         }
       }
@@ -2581,27 +2581,27 @@
       "method": "AE w7 b8, 300 train, 5-day smoothed",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 2.7409139334082573,
+      "threshold": 2.7294906864591257,
       "false_alarms_per_week": 0.1,
-      "early_detection": 0.661,
-      "detection": 0.894,
-      "mean_median_delay": 14.6,
+      "early_detection": 0.656,
+      "detection": 0.9,
+      "mean_median_delay": 14.8,
       "by_scale": {
         "0.5": {
           "S1": {
             "detected": 0.933,
             "early": 0.5,
-            "median_delay": 18.5
+            "median_delay": 18.0
           },
           "S2": {
-            "detected": 0.7,
+            "detected": 0.733,
             "early": 0.467,
-            "median_delay": 11.0
+            "median_delay": 12.5
           },
           "S3": {
-            "detected": 0.767,
-            "early": 0.533,
-            "median_delay": 15.0
+            "detected": 0.733,
+            "early": 0.5,
+            "median_delay": 14.5
           }
         },
         "1.0": {
@@ -2611,9 +2611,9 @@
             "median_delay": 13.0
           },
           "S2": {
-            "detected": 0.967,
+            "detected": 1.0,
             "early": 0.7,
-            "median_delay": 17.0
+            "median_delay": 17.5
           },
           "S3": {
             "detected": 1.0,
@@ -2627,27 +2627,27 @@
       "method": "AE ensemble x5, 300 train",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 3.3770130618698895,
+      "threshold": 3.3357857920678606,
       "false_alarms_per_week": 0.049,
-      "early_detection": 0.667,
-      "detection": 0.856,
-      "mean_median_delay": 17.3,
+      "early_detection": 0.672,
+      "detection": 0.861,
+      "mean_median_delay": 16.9,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.9,
+            "detected": 0.867,
             "early": 0.6,
-            "median_delay": 20.0
+            "median_delay": 19.5
           },
           "S2": {
-            "detected": 0.667,
-            "early": 0.467,
-            "median_delay": 18.0
+            "detected": 0.7,
+            "early": 0.5,
+            "median_delay": 19.0
           },
           "S3": {
-            "detected": 0.567,
-            "early": 0.267,
-            "median_delay": 27.0
+            "detected": 0.6,
+            "early": 0.3,
+            "median_delay": 23.5
           }
         },
         "1.0": {
@@ -2663,8 +2663,8 @@
           },
           "S3": {
             "detected": 1.0,
-            "early": 0.833,
-            "median_delay": 13.0
+            "early": 0.8,
+            "median_delay": 13.5
           }
         }
       }
@@ -2673,11 +2673,11 @@
       "method": "AE ensemble x5, 300 train",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 2.9256577309029166,
+      "threshold": 2.9287064580165696,
       "false_alarms_per_week": 0.1,
-      "early_detection": 0.817,
-      "detection": 0.956,
-      "mean_median_delay": 13.9,
+      "early_detection": 0.8,
+      "detection": 0.944,
+      "mean_median_delay": 14.1,
       "by_scale": {
         "0.5": {
           "S1": {
@@ -2691,8 +2691,8 @@
             "median_delay": 15.0
           },
           "S3": {
-            "detected": 0.9,
-            "early": 0.533,
+            "detected": 0.833,
+            "early": 0.433,
             "median_delay": 19.0
           }
         },
@@ -2705,7 +2705,7 @@
           "S2": {
             "detected": 1.0,
             "early": 0.967,
-            "median_delay": 11.5
+            "median_delay": 12.5
           },
           "S3": {
             "detected": 1.0,
@@ -2719,34 +2719,34 @@
       "method": "AE ensemble x5, 300 train",
       "persistence": 3,
       "budget": 0.05,
-      "threshold": 3.1870047522714824,
-      "false_alarms_per_week": 0.046,
-      "early_detection": 0.645,
-      "detection": 0.85,
-      "mean_median_delay": 17.5,
+      "threshold": 3.1007352308613445,
+      "false_alarms_per_week": 0.049,
+      "early_detection": 0.655,
+      "detection": 0.872,
+      "mean_median_delay": 17.0,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.9,
-            "early": 0.5,
-            "median_delay": 21.0
+            "detected": 0.933,
+            "early": 0.533,
+            "median_delay": 20.5
           },
           "S2": {
-            "detected": 0.667,
-            "early": 0.467,
-            "median_delay": 17.0
+            "detected": 0.733,
+            "early": 0.5,
+            "median_delay": 19.5
           },
           "S3": {
-            "detected": 0.533,
-            "early": 0.267,
-            "median_delay": 24.5
+            "detected": 0.567,
+            "early": 0.3,
+            "median_delay": 20.0
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
             "early": 0.967,
-            "median_delay": 13.5
+            "median_delay": 13.0
           },
           "S2": {
             "detected": 1.0,
@@ -2755,7 +2755,7 @@
           },
           "S3": {
             "detected": 1.0,
-            "early": 0.767,
+            "early": 0.733,
             "median_delay": 14.5
           }
         }
@@ -2765,11 +2765,11 @@
       "method": "AE ensemble x5, 300 train",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 2.757995957752685,
+      "threshold": 2.7437734437495447,
       "false_alarms_per_week": 0.099,
-      "early_detection": 0.817,
-      "detection": 0.961,
-      "mean_median_delay": 14.4,
+      "early_detection": 0.822,
+      "detection": 0.956,
+      "mean_median_delay": 14.6,
       "by_scale": {
         "0.5": {
           "S1": {
@@ -2778,13 +2778,13 @@
             "median_delay": 19.5
           },
           "S2": {
-            "detected": 0.9,
+            "detected": 0.867,
             "early": 0.733,
-            "median_delay": 15.0
+            "median_delay": 15.5
           },
           "S3": {
             "detected": 0.867,
-            "early": 0.533,
+            "early": 0.567,
             "median_delay": 16.5
           }
         },
@@ -2792,12 +2792,12 @@
           "S1": {
             "detected": 1.0,
             "early": 1.0,
-            "median_delay": 11.0
+            "median_delay": 10.5
           },
           "S2": {
             "detected": 1.0,
             "early": 1.0,
-            "median_delay": 12.5
+            "median_delay": 13.5
           },
           "S3": {
             "detected": 1.0,
@@ -2811,11 +2811,11 @@
       "method": "AE ensemble x5, 300 train, 3-day smoothed",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 3.272894268087754,
+      "threshold": 3.269546314775641,
       "false_alarms_per_week": 0.049,
-      "early_detection": 0.661,
+      "early_detection": 0.656,
       "detection": 0.861,
-      "mean_median_delay": 18.1,
+      "mean_median_delay": 18.2,
       "by_scale": {
         "0.5": {
           "S1": {
@@ -2843,12 +2843,12 @@
           "S2": {
             "detected": 1.0,
             "early": 0.9,
-            "median_delay": 14.5
+            "median_delay": 15.0
           },
           "S3": {
             "detected": 1.0,
-            "early": 0.8,
-            "median_delay": 14.0
+            "early": 0.767,
+            "median_delay": 14.5
           }
         }
       }
@@ -2857,26 +2857,26 @@
       "method": "AE ensemble x5, 300 train, 3-day smoothed",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 2.8470393909869185,
-      "false_alarms_per_week": 0.099,
-      "early_detection": 0.828,
-      "detection": 0.972,
-      "mean_median_delay": 13.7,
+      "threshold": 2.8613508645889367,
+      "false_alarms_per_week": 0.097,
+      "early_detection": 0.822,
+      "detection": 0.967,
+      "mean_median_delay": 14.1,
       "by_scale": {
         "0.5": {
           "S1": {
             "detected": 1.0,
-            "early": 0.767,
-            "median_delay": 16.5
+            "early": 0.733,
+            "median_delay": 18.5
           },
           "S2": {
-            "detected": 0.933,
+            "detected": 0.9,
             "early": 0.733,
-            "median_delay": 15.5
+            "median_delay": 16.0
           },
           "S3": {
             "detected": 0.9,
-            "early": 0.567,
+            "early": 0.6,
             "median_delay": 15.0
           }
         },
@@ -2888,7 +2888,7 @@
           },
           "S2": {
             "detected": 1.0,
-            "early": 1.0,
+            "early": 0.967,
             "median_delay": 12.0
           },
           "S3": {
@@ -2903,34 +2903,34 @@
       "method": "AE ensemble x5, 300 train, 3-day smoothed",
       "persistence": 3,
       "budget": 0.05,
-      "threshold": 3.0760055330921996,
-      "false_alarms_per_week": 0.048,
-      "early_detection": 0.678,
-      "detection": 0.872,
-      "mean_median_delay": 16.8,
+      "threshold": 3.0537505655409065,
+      "false_alarms_per_week": 0.049,
+      "early_detection": 0.683,
+      "detection": 0.889,
+      "mean_median_delay": 17.0,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.933,
+            "detected": 0.967,
             "early": 0.5,
             "median_delay": 21.0
           },
           "S2": {
-            "detected": 0.733,
+            "detected": 0.767,
             "early": 0.533,
-            "median_delay": 17.0
+            "median_delay": 18.0
           },
           "S3": {
-            "detected": 0.567,
-            "early": 0.3,
-            "median_delay": 20.0
+            "detected": 0.6,
+            "early": 0.333,
+            "median_delay": 20.5
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
             "early": 0.967,
-            "median_delay": 14.0
+            "median_delay": 13.5
           },
           "S2": {
             "detected": 1.0,
@@ -2949,11 +2949,11 @@
       "method": "AE ensemble x5, 300 train, 3-day smoothed",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 2.755490736415462,
-      "false_alarms_per_week": 0.097,
-      "early_detection": 0.822,
+      "threshold": 2.733471873322901,
+      "false_alarms_per_week": 0.098,
+      "early_detection": 0.828,
       "detection": 0.961,
-      "mean_median_delay": 13.8,
+      "mean_median_delay": 14.0,
       "by_scale": {
         "0.5": {
           "S1": {
@@ -2964,12 +2964,12 @@
           "S2": {
             "detected": 0.867,
             "early": 0.733,
-            "median_delay": 14.0
+            "median_delay": 16.0
           },
           "S3": {
             "detected": 0.9,
-            "early": 0.6,
-            "median_delay": 14.0
+            "early": 0.633,
+            "median_delay": 13.0
           }
         },
         "1.0": {
@@ -2981,7 +2981,7 @@
           "S2": {
             "detected": 1.0,
             "early": 0.967,
-            "median_delay": 12.5
+            "median_delay": 13.0
           },
           "S3": {
             "detected": 1.0,
@@ -2995,44 +2995,44 @@
       "method": "AE w7 b8, 300 train + personal fine-tuning",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 3.6543532280891964,
+      "threshold": 3.7518990828748024,
       "false_alarms_per_week": 0.049,
-      "early_detection": 0.455,
-      "detection": 0.722,
-      "mean_median_delay": 20.2,
+      "early_detection": 0.45,
+      "detection": 0.711,
+      "mean_median_delay": 22.8,
       "by_scale": {
         "0.5": {
           "S1": {
             "detected": 0.633,
-            "early": 0.333,
-            "median_delay": 21.0
+            "early": 0.3,
+            "median_delay": 22.0
           },
           "S2": {
-            "detected": 0.367,
+            "detected": 0.4,
             "early": 0.2,
-            "median_delay": 21.0
+            "median_delay": 23.0
           },
           "S3": {
-            "detected": 0.567,
-            "early": 0.2,
-            "median_delay": 28.0
+            "detected": 0.533,
+            "early": 0.167,
+            "median_delay": 40.0
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
             "early": 0.833,
-            "median_delay": 16.5
+            "median_delay": 17.0
           },
           "S2": {
-            "detected": 0.767,
-            "early": 0.467,
-            "median_delay": 20.0
+            "detected": 0.733,
+            "early": 0.533,
+            "median_delay": 19.5
           },
           "S3": {
-            "detected": 1.0,
-            "early": 0.7,
-            "median_delay": 14.5
+            "detected": 0.967,
+            "early": 0.667,
+            "median_delay": 15.0
           }
         }
       }
@@ -3041,37 +3041,37 @@
       "method": "AE w7 b8, 300 train + personal fine-tuning",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 3.228825453532493,
-      "false_alarms_per_week": 0.1,
+      "threshold": 3.2133249380984217,
+      "false_alarms_per_week": 0.098,
       "early_detection": 0.594,
-      "detection": 0.839,
-      "mean_median_delay": 17.4,
+      "detection": 0.867,
+      "mean_median_delay": 17.8,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.8,
-            "early": 0.467,
-            "median_delay": 20.0
+            "detected": 0.833,
+            "early": 0.433,
+            "median_delay": 21.0
           },
           "S2": {
-            "detected": 0.533,
+            "detected": 0.6,
             "early": 0.3,
-            "median_delay": 20.5
+            "median_delay": 21.5
           },
           "S3": {
-            "detected": 0.767,
+            "detected": 0.8,
             "early": 0.433,
-            "median_delay": 20.0
+            "median_delay": 20.5
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
-            "early": 0.9,
+            "early": 0.933,
             "median_delay": 12.0
           },
           "S2": {
-            "detected": 0.933,
+            "detected": 0.967,
             "early": 0.633,
             "median_delay": 19.0
           },
@@ -3087,39 +3087,39 @@
       "method": "AE w7 b8, 300 train + personal fine-tuning",
       "persistence": 3,
       "budget": 0.05,
-      "threshold": 3.250176254152693,
-      "false_alarms_per_week": 0.049,
+      "threshold": 3.2133249380984217,
+      "false_alarms_per_week": 0.048,
       "early_detection": 0.478,
-      "detection": 0.739,
-      "mean_median_delay": 19.5,
+      "detection": 0.745,
+      "mean_median_delay": 19.8,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.733,
+            "detected": 0.767,
             "early": 0.333,
             "median_delay": 22.0
           },
           "S2": {
-            "detected": 0.4,
-            "early": 0.233,
-            "median_delay": 17.5
+            "detected": 0.367,
+            "early": 0.2,
+            "median_delay": 19.0
           },
           "S3": {
-            "detected": 0.567,
+            "detected": 0.6,
             "early": 0.2,
-            "median_delay": 28.0
+            "median_delay": 28.5
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
-            "early": 0.867,
+            "early": 0.9,
             "median_delay": 16.0
           },
           "S2": {
             "detected": 0.733,
             "early": 0.5,
-            "median_delay": 19.5
+            "median_delay": 19.0
           },
           "S3": {
             "detected": 1.0,
@@ -3133,22 +3133,22 @@
       "method": "AE w7 b8, 300 train + personal fine-tuning",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 2.8349747082770107,
-      "false_alarms_per_week": 0.099,
+      "threshold": 2.8249989545885903,
+      "false_alarms_per_week": 0.1,
       "early_detection": 0.622,
       "detection": 0.861,
-      "mean_median_delay": 15.6,
+      "mean_median_delay": 15.1,
       "by_scale": {
         "0.5": {
           "S1": {
             "detected": 0.867,
-            "early": 0.433,
-            "median_delay": 21.0
+            "early": 0.467,
+            "median_delay": 20.5
           },
           "S2": {
-            "detected": 0.667,
+            "detected": 0.633,
             "early": 0.367,
-            "median_delay": 16.0
+            "median_delay": 13.0
           },
           "S3": {
             "detected": 0.767,
@@ -3163,13 +3163,13 @@
             "median_delay": 13.0
           },
           "S2": {
-            "detected": 0.867,
+            "detected": 0.9,
             "early": 0.7,
-            "median_delay": 16.5
+            "median_delay": 17.0
           },
           "S3": {
             "detected": 1.0,
-            "early": 0.833,
+            "early": 0.8,
             "median_delay": 12.0
           }
         }
@@ -3179,7 +3179,7 @@
       "method": "Classical Mahalanobis, 14-day mean (drift)",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 18.13422036383804,
+      "threshold": 18.134220363838043,
       "false_alarms_per_week": 0.048,
       "early_detection": 0.811,
       "detection": 0.961,
@@ -3225,7 +3225,7 @@
       "method": "Classical Mahalanobis, 14-day mean (drift)",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 15.489237337306232,
+      "threshold": 15.489237337306227,
       "false_alarms_per_week": 0.097,
       "early_detection": 0.878,
       "detection": 0.989,
@@ -3317,7 +3317,7 @@
       "method": "Classical Mahalanobis, 14-day mean (drift)",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 13.909949659322379,
+      "threshold": 13.90994965932237,
       "false_alarms_per_week": 0.099,
       "early_detection": 0.872,
       "detection": 0.989,
@@ -3363,10 +3363,10 @@
       "method": "Combined: Mahalanobis 7-day mean + AE ensemble",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 3.7343191417939434,
-      "false_alarms_per_week": 0.048,
+      "threshold": 3.7421200646762567,
+      "false_alarms_per_week": 0.049,
       "early_detection": 0.794,
-      "detection": 0.933,
+      "detection": 0.928,
       "mean_median_delay": 14.8,
       "by_scale": {
         "0.5": {
@@ -3381,7 +3381,7 @@
             "median_delay": 18.0
           },
           "S3": {
-            "detected": 0.9,
+            "detected": 0.867,
             "early": 0.633,
             "median_delay": 16.0
           }
@@ -3409,25 +3409,25 @@
       "method": "Combined: Mahalanobis 7-day mean + AE ensemble",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 3.2885887884729983,
-      "false_alarms_per_week": 0.098,
-      "early_detection": 0.872,
-      "detection": 0.967,
-      "mean_median_delay": 12.3,
+      "threshold": 3.303036833286503,
+      "false_alarms_per_week": 0.097,
+      "early_detection": 0.861,
+      "detection": 0.961,
+      "mean_median_delay": 12.9,
       "by_scale": {
         "0.5": {
           "S1": {
             "detected": 1.0,
             "early": 0.833,
-            "median_delay": 13.0
+            "median_delay": 15.5
           },
           "S2": {
             "detected": 0.833,
-            "early": 0.7,
-            "median_delay": 15.0
+            "early": 0.633,
+            "median_delay": 16.0
           },
           "S3": {
-            "detected": 0.967,
+            "detected": 0.933,
             "early": 0.733,
             "median_delay": 14.0
           }
@@ -3455,22 +3455,22 @@
       "method": "Combined: Mahalanobis 7-day mean + AE ensemble",
       "persistence": 3,
       "budget": 0.05,
-      "threshold": 3.3679329863752008,
-      "false_alarms_per_week": 0.049,
-      "early_detection": 0.817,
-      "detection": 0.939,
-      "mean_median_delay": 14.9,
+      "threshold": 3.3791438133714515,
+      "false_alarms_per_week": 0.048,
+      "early_detection": 0.811,
+      "detection": 0.933,
+      "mean_median_delay": 15.2,
       "by_scale": {
         "0.5": {
           "S1": {
             "detected": 1.0,
-            "early": 0.767,
-            "median_delay": 19.0
+            "early": 0.733,
+            "median_delay": 19.5
           },
           "S2": {
-            "detected": 0.733,
-            "early": 0.6,
-            "median_delay": 17.0
+            "detected": 0.7,
+            "early": 0.567,
+            "median_delay": 18.0
           },
           "S3": {
             "detected": 0.9,
@@ -3481,7 +3481,7 @@
         "1.0": {
           "S1": {
             "detected": 1.0,
-            "early": 0.967,
+            "early": 1.0,
             "median_delay": 11.0
           },
           "S2": {
@@ -3501,11 +3501,11 @@
       "method": "Combined: Mahalanobis 7-day mean + AE ensemble",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 2.9608822145137066,
-      "false_alarms_per_week": 0.097,
-      "early_detection": 0.878,
+      "threshold": 2.9576398217316733,
+      "false_alarms_per_week": 0.099,
+      "early_detection": 0.872,
       "detection": 0.989,
-      "mean_median_delay": 12.4,
+      "mean_median_delay": 12.3,
       "by_scale": {
         "0.5": {
           "S1": {
@@ -3521,7 +3521,7 @@
           "S3": {
             "detected": 1.0,
             "early": 0.767,
-            "median_delay": 14.5
+            "median_delay": 14.0
           }
         },
         "1.0": {
@@ -3532,7 +3532,7 @@
           },
           "S2": {
             "detected": 1.0,
-            "early": 0.967,
+            "early": 0.933,
             "median_delay": 12.5
           },
           "S3": {
@@ -3547,22 +3547,22 @@
       "method": "Hybrid: max(AE, B2) percentile",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 0.9741935483870968,
-      "false_alarms_per_week": 0.047,
-      "early_detection": 0.5,
-      "detection": 0.767,
-      "mean_median_delay": 20.9,
+      "threshold": 0.975268817204301,
+      "false_alarms_per_week": 0.046,
+      "early_detection": 0.517,
+      "detection": 0.783,
+      "mean_median_delay": 21.0,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.633,
-            "early": 0.267,
-            "median_delay": 23.0
+            "detected": 0.733,
+            "early": 0.333,
+            "median_delay": 24.0
           },
           "S2": {
-            "detected": 0.5,
-            "early": 0.267,
-            "median_delay": 20.0
+            "detected": 0.533,
+            "early": 0.3,
+            "median_delay": 20.5
           },
           "S3": {
             "detected": 0.567,
@@ -3574,7 +3574,7 @@
           "S1": {
             "detected": 1.0,
             "early": 0.9,
-            "median_delay": 18.0
+            "median_delay": 16.5
           },
           "S2": {
             "detected": 0.9,
@@ -3582,9 +3582,9 @@
             "median_delay": 14.0
           },
           "S3": {
-            "detected": 1.0,
+            "detected": 0.967,
             "early": 0.667,
-            "median_delay": 13.5
+            "median_delay": 14.0
           }
         }
       }
@@ -3593,17 +3593,17 @@
       "method": "Hybrid: max(AE, B2) percentile",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 0.9483870967741935,
-      "false_alarms_per_week": 0.099,
-      "early_detection": 0.683,
-      "detection": 0.878,
-      "mean_median_delay": 14.8,
+      "threshold": 0.9484848484848485,
+      "false_alarms_per_week": 0.098,
+      "early_detection": 0.678,
+      "detection": 0.889,
+      "mean_median_delay": 15.1,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.8,
+            "detected": 0.867,
             "early": 0.5,
-            "median_delay": 19.0
+            "median_delay": 20.0
           },
           "S2": {
             "detected": 0.7,
@@ -3629,8 +3629,8 @@
           },
           "S3": {
             "detected": 1.0,
-            "early": 0.867,
-            "median_delay": 11.0
+            "early": 0.833,
+            "median_delay": 12.0
           }
         }
       }
@@ -3639,17 +3639,17 @@
       "method": "Hybrid: max(AE, B2) percentile",
       "persistence": 3,
       "budget": 0.05,
-      "threshold": 0.9494560675883245,
-      "false_alarms_per_week": 0.048,
-      "early_detection": 0.506,
+      "threshold": 0.9474439393939394,
+      "false_alarms_per_week": 0.049,
+      "early_detection": 0.522,
       "detection": 0.772,
-      "mean_median_delay": 19.8,
+      "mean_median_delay": 20.2,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.733,
+            "detected": 0.7,
             "early": 0.333,
-            "median_delay": 23.0
+            "median_delay": 22.0
           },
           "S2": {
             "detected": 0.5,
@@ -3659,23 +3659,23 @@
           "S3": {
             "detected": 0.567,
             "early": 0.167,
-            "median_delay": 29.0
+            "median_delay": 33.0
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
-            "early": 0.9,
-            "median_delay": 15.5
+            "early": 0.933,
+            "median_delay": 14.5
           },
           "S2": {
-            "detected": 0.833,
-            "early": 0.567,
-            "median_delay": 15.0
+            "detected": 0.867,
+            "early": 0.667,
+            "median_delay": 15.5
           },
           "S3": {
             "detected": 1.0,
-            "early": 0.833,
+            "early": 0.8,
             "median_delay": 14.0
           }
         }
@@ -3685,34 +3685,34 @@
       "method": "Hybrid: max(AE, B2) percentile",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 0.8999795093795102,
+      "threshold": 0.9,
       "false_alarms_per_week": 0.1,
       "early_detection": 0.672,
-      "detection": 0.894,
-      "mean_median_delay": 15.3,
+      "detection": 0.9,
+      "mean_median_delay": 15.7,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.833,
+            "detected": 0.867,
             "early": 0.4,
-            "median_delay": 22.0
+            "median_delay": 23.0
           },
           "S2": {
             "detected": 0.733,
-            "early": 0.467,
-            "median_delay": 16.0
+            "early": 0.5,
+            "median_delay": 15.5
           },
           "S3": {
             "detected": 0.8,
-            "early": 0.5,
-            "median_delay": 16.0
+            "early": 0.467,
+            "median_delay": 18.5
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
             "early": 0.933,
-            "median_delay": 13.5
+            "median_delay": 13.0
           },
           "S2": {
             "detected": 1.0,
@@ -3722,7 +3722,7 @@
           "S3": {
             "detected": 1.0,
             "early": 0.867,
-            "median_delay": 12.0
+            "median_delay": 11.5
           }
         }
       }
@@ -3731,17 +3731,17 @@
       "method": "Hybrid: max(AE 3-day smoothed, B2) percentile",
       "persistence": 2,
       "budget": 0.05,
-      "threshold": 0.9707070707070707,
-      "false_alarms_per_week": 0.047,
-      "early_detection": 0.533,
+      "threshold": 0.9698924731182795,
+      "false_alarms_per_week": 0.048,
+      "early_detection": 0.544,
       "detection": 0.805,
-      "mean_median_delay": 19.6,
+      "mean_median_delay": 19.0,
       "by_scale": {
         "0.5": {
           "S1": {
             "detected": 0.733,
-            "early": 0.333,
-            "median_delay": 24.0
+            "early": 0.367,
+            "median_delay": 22.0
           },
           "S2": {
             "detected": 0.567,
@@ -3758,7 +3758,7 @@
           "S1": {
             "detected": 1.0,
             "early": 0.9,
-            "median_delay": 17.0
+            "median_delay": 15.5
           },
           "S2": {
             "detected": 0.933,
@@ -3767,7 +3767,7 @@
           },
           "S3": {
             "detected": 1.0,
-            "early": 0.7,
+            "early": 0.733,
             "median_delay": 14.0
           }
         }
@@ -3777,11 +3777,11 @@
       "method": "Hybrid: max(AE 3-day smoothed, B2) percentile",
       "persistence": 2,
       "budget": 0.1,
-      "threshold": 0.9419354838709677,
-      "false_alarms_per_week": 0.1,
-      "early_detection": 0.694,
+      "threshold": 0.9440860215053763,
+      "false_alarms_per_week": 0.098,
+      "early_detection": 0.683,
       "detection": 0.894,
-      "mean_median_delay": 14.8,
+      "mean_median_delay": 15.2,
       "by_scale": {
         "0.5": {
           "S1": {
@@ -3796,8 +3796,8 @@
           },
           "S3": {
             "detected": 0.8,
-            "early": 0.567,
-            "median_delay": 15.5
+            "early": 0.5,
+            "median_delay": 18.0
           }
         },
         "1.0": {
@@ -3823,11 +3823,11 @@
       "method": "Hybrid: max(AE 3-day smoothed, B2) percentile",
       "persistence": 3,
       "budget": 0.05,
-      "threshold": 0.9541155034213108,
+      "threshold": 0.9548387096774194,
       "false_alarms_per_week": 0.048,
-      "early_detection": 0.505,
-      "detection": 0.755,
-      "mean_median_delay": 20.2,
+      "early_detection": 0.506,
+      "detection": 0.761,
+      "mean_median_delay": 19.6,
       "by_scale": {
         "0.5": {
           "S1": {
@@ -3836,30 +3836,30 @@
             "median_delay": 24.0
           },
           "S2": {
-            "detected": 0.433,
-            "early": 0.233,
+            "detected": 0.5,
+            "early": 0.267,
             "median_delay": 21.0
           },
           "S3": {
-            "detected": 0.6,
+            "detected": 0.567,
             "early": 0.233,
-            "median_delay": 30.5
+            "median_delay": 28.0
           }
         },
         "1.0": {
           "S1": {
             "detected": 1.0,
-            "early": 0.9,
+            "early": 0.933,
             "median_delay": 15.5
           },
           "S2": {
             "detected": 0.833,
             "early": 0.6,
-            "median_delay": 16.0
+            "median_delay": 15.0
           },
           "S3": {
             "detected": 0.967,
-            "early": 0.767,
+            "early": 0.7,
             "median_delay": 14.0
           }
         }
@@ -3869,17 +3869,17 @@
       "method": "Hybrid: max(AE 3-day smoothed, B2) percentile",
       "persistence": 3,
       "budget": 0.1,
-      "threshold": 0.9171717171717172,
+      "threshold": 0.9172043010752688,
       "false_alarms_per_week": 0.1,
-      "early_detection": 0.705,
-      "detection": 0.883,
-      "mean_median_delay": 14.0,
+      "early_detection": 0.683,
+      "detection": 0.894,
+      "mean_median_delay": 15.1,
       "by_scale": {
         "0.5": {
           "S1": {
-            "detected": 0.833,
+            "detected": 0.9,
             "early": 0.533,
-            "median_delay": 19.0
+            "median_delay": 20.0
           },
           "S2": {
             "detected": 0.7,
@@ -3888,8 +3888,8 @@
           },
           "S3": {
             "detected": 0.767,
-            "early": 0.567,
-            "median_delay": 14.0
+            "early": 0.533,
+            "median_delay": 18.0
           }
         },
         "1.0": {
@@ -3905,8 +3905,8 @@
           },
           "S3": {
             "detected": 1.0,
-            "early": 0.933,
-            "median_delay": 11.5
+            "early": 0.833,
+            "median_delay": 13.0
           }
         }
       }

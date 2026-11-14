@@ -109,13 +109,13 @@ Every configuration value is either sourced or flagged as an assumption: full li
 | Method family (best variant) | Scenarios detected within 21 days | Detected at all |
 |---|---|---|
 | **Multivariate personal-drift model (chosen)** | **82 %** | **96 %** |
-| Autoencoder ensemble ×5 (300 training astronauts) | 68 % | 87 % |
-| Autoencoder, single model (best architecture: 14-day window) | 65 % | 92 % |
+| Autoencoder ensemble ×5 (300 training astronauts) | 68 % | 89 % |
+| Autoencoder, single model (best architecture: 14-day window) | 67 % | 91 % |
 | Personal single-indicator thresholds (B2) | 64 % | 88 % |
 | Autoencoder + per-astronaut fine-tuning | 48 % | 74 % |
 | Fixed clinical thresholds (B1, own false-alarm rate 0.084) | 39 % | 58 % |
 
-38 configurations in total (architecture, training-set size, score components, smoothing, persistence, ensembles, fine-tuning, hybrids): [`outputs/results/benchmark.md`](outputs/results/benchmark.md). Combining the drift model with the autoencoder ensemble gave no gain (82 %), so the simpler model was chosen. Larger training sets *hurt* single autoencoders (they learn to reconstruct shifts too), and fine-tuning on 15 calibration windows overfits.
+38 configurations in total (architecture, training-set size, score components, smoothing, persistence, ensembles, fine-tuning, hybrids): [`outputs/results/benchmark.md`](outputs/results/benchmark.md). Combining the drift model with the autoencoder ensemble gave no gain (81 %), so the simpler model was chosen. Larger training sets *hurt* single autoencoders (they learn to reconstruct shifts too), and fine-tuning on 15 calibration windows overfits.
 
 ### 7.2 Confirmation split (thresholds frozen)
 
@@ -146,6 +146,14 @@ S5 was never seen during development and was evaluated once (`outputs/results/fi
 - The simulator is linear-Gaussian and the scenarios are gradual mean shifts — conditions that favour a Gaussian drift model. On real crew data with non-linear structure the ranking could change; the benchmark is built to be rerun on such data.
 
 **Development history (kept for transparency).** v1 autoencoder (reconstruction only) missed 40 % of S2 on dev; v2 added a latent distance; the benchmark then replaced the autoencoder with the drift model. Earlier results: `outputs/results/history/`.
+
+### 7.4 Timeline and re-run during the event (kept for transparency)
+
+- **13 November 2026, evening (before the event):** the team drafted the approach to test it: the first version of the simulator, the detector, the benchmark and the UI scaffold (git commits `c3e2924` … `6aaaa8b`). The one-time hold-out test (S5) was also run in this draft, at commit `c8723c2` (`outputs/results/final_test.json`, timestamp 2026-11-13 19:59 UTC). These commits are kept in the history with their real dates.
+- **14 November 2026 (during the event):** the team re-ran the whole development pipeline (`python -m src.run_all --benchmark`, Python 3.11, CPU; the trained models are not stored in git, so they were fitted again) and did the main work on the crew app, the rules and scenario exports for the UI, and the documentation.
+- **What the re-run showed:** the synthetic data, the drift model's results, the tuned threshold (P_yellow = 92), the confirmation-split metrics and the UI exports are identical to the draft. The model and simulation configuration hashes match the ones recorded in the hold-out file, so the hold-out result in 7.3 applies to the model that ships. Only the autoencoder-based rows of the benchmark moved, by up to 3 percentage points (PyTorch training is not bit-exact across library versions); the ranking and the choice of the drift model did not change.
+- **Not repeated:** the hold-out test. Our own rule allows it once, so the 13 November result is reported as it is and `final_test.json` is not overwritten.
+- **Known issues in the hold-out record:** its `model_hash` is the hash of an earlier autoencoder file, not of the drift model actually used (fixed in `src/evaluate.py` on 14 November; the record itself is left unchanged). `config/rules.yaml` was extended on 14 November (UI rules export); this does not affect the detector or its metrics.
 
 Figures (1600 × 900, slide-ready): `benchmark.png`, `lead_time_test.png`, `lead_time_dev.png`, `timeline_demo.png` (Crew Member Bravo: model alarm on day 58, fixed clinical thresholds on day 76; one false alarm on day 36 is marked), `healthy_check.png`.
 

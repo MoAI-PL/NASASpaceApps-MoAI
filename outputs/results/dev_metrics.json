@@ -446,11 +446,12 @@
       "start": -1
     }
   ],
-  "model_hash": "93efaf7cc2af",
+  "model_file": "drift_model.json",
+  "model_hash": "e13bbf2ac3ce",
   "config_hashes": {
     "model": "d3ea1e748f00",
     "sim": "c5ed3d25abf5",
-    "rules": "afcd217c10cd"
+    "rules": "6ab45285286a"
   },
   "sensitivity": {
     "0.5": {

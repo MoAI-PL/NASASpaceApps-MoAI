@@ -2,7 +2,7 @@
   "source": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/SEP",
   "start": "2024-05-01",
   "days": 120,
-  "retrieved": "2026-11-13T20:33:09+00:00",
+  "retrieved": "2026-11-14T19:05:03+00:00",
   "events": [
     {
       "sepID": "2024-05-09T13:59:00-SEP-001",
