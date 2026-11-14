@@ -4,11 +4,11 @@
 
 **NASA Space Apps Challenge 2026 · Challenge: _Create Health Monitoring Software for Astronauts on Space Missions_ (author: Brazilian Space Agency)**
 
-**Team MoAI:** Jan Domański (backend developer) · Kamila Bąk (frontend developer) · Zuzanna Marciniak (UX/UI designer)
+**Team CosmoMyszki:** Jan Domański (backend developer) · Kamila Bąk (frontend developer) · Zuzanna Marciniak (UX/UI designer)
 
 **▶ Live app (works offline after the first visit, no login): https://moai-pl.github.io/NASASpaceApps-MoAI/**
 
-**▶ Demo (7 slides, PDF): [`docs/demo/Astrobalance-demo-slides.pdf`](docs/demo/Astrobalance-demo-slides.pdf)**
+**▶ Demo (7 slides, PDF): [`docs/demo/Astrobalance-demo-slides.pdf`](docs/demo/Astrobalance-demo-slides.pdf)** (source: [`docs/demo/slides/index.html`](docs/demo/slides/index.html))
 
 > **Prototype — not medical advice.** Model results come from synthetic data calibrated on published sources, plus one alarm-rate check on real everyday data (PMData) and a plausibility check against real astronaut blood tests (NASA OSDR, Inspiration4) — proof of concept, not clinical validation. Not a medical device.
 
