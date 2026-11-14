@@ -147,7 +147,7 @@ export default function NextStep({ record, records, onOpenCheckin, onOpenSystem,
         <div>
           <p className="text-ink-2 text-lg">Do this now</p>
           <ol className="mt-2 grid gap-2">
-            {steps.slice(0, 3).map((s, i) => <Step key={s.key} n={i + 1} {...s} />)}
+            {steps.slice(0, 3).map(({ key, ...step }, i) => <Step key={key} n={i + 1} {...step} />)}
           </ol>
         </div>
       </div>
