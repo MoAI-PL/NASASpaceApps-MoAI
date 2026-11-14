@@ -205,7 +205,10 @@ if __name__ == "__main__":
 
     p_yellow = float(cfgs["model"]["scoring"]["p_yellow"])
     result = compute_metrics(sigs, p_yellow, k, calib)
-    result["model_hash"] = file_hash(MODELS_DIR / "ae.pt")
+    # Hash the file of the detector actually in use (drift: drift_model.json; autoencoder: ae.pt).
+    detector = cfgs["model"].get("detector", "autoencoder")
+    result["model_file"] = "drift_model.json" if detector == "drift" else "ae.pt"
+    result["model_hash"] = file_hash(MODELS_DIR / result["model_file"])
     result["config_hashes"] = {name: config_hash(c) for name, c in cfgs.items()}
 
     if args.split == "test":

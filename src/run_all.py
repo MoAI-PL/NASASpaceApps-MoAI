@@ -12,6 +12,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import os
 import subprocess
 import sys
 
@@ -40,7 +41,8 @@ if __name__ == "__main__":
         if step[1] == "src.train" and args.device:
             cmd += ["--device", args.device]
         print("\n$ python " + " ".join(step), flush=True)
-        result = subprocess.run(cmd)
+        # UTF-8 output: the tables print symbols such as "≤", which a Windows console codepage cannot encode.
+        result = subprocess.run(cmd, env={**os.environ, "PYTHONUTF8": "1"})
         if result.returncode != 0 and step[1] != "src.donki":   # DONKI may fail offline; cache fallback
             sys.exit(result.returncode)
     print("\nDone. Hold-out test NOT run (python -m src.evaluate --split test --final, once).")
