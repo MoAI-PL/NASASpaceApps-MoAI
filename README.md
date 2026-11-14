@@ -4,11 +4,11 @@
 
 **NASA Space Apps Challenge 2026 · Challenge: _Create Health Monitoring Software for Astronauts on Space Missions_ (author: Brazilian Space Agency)**
 
-**Team MoAI:** Jan Domański (backend developer) · Kamila Bąk (frontend developer) · Zuzanna Marciniak (UX/UI designer)
+**Team CosmoMyszki:** Jan Domański (backend developer) · Kamila Bąk (frontend developer) · Zuzanna Marciniak (UX/UI designer)
 
 **▶ Live app (works offline after the first visit, no login): https://moai-pl.github.io/NASASpaceApps-MoAI/**
 
-**▶ Demo (7 slides, PDF): [`docs/demo/Astrobalance-demo-slides.pdf`](docs/demo/Astrobalance-demo-slides.pdf)**
+**▶ Demo (7 slides, PDF): [`docs/demo/Astrobalance-demo-slides.pdf`](docs/demo/Astrobalance-demo-slides.pdf)** (source: [`docs/demo/slides/index.html`](docs/demo/slides/index.html))
 
 > **Prototype — not medical advice.** Model results come from synthetic data calibrated on published sources, plus one alarm-rate check on real everyday data (PMData) and a plausibility check against real astronaut blood tests (NASA OSDR, Inspiration4) — proof of concept, not clinical validation. Not a medical device.
 
@@ -302,7 +302,7 @@ Software (open-source licenses)
 - Methods: Mahalanobis distance / Hotelling T² statistic (classical multivariate statistics); autoencoders for anomaly detection (benchmarked alternative).
 - Python packages: NumPy (BSD-3-Clause), pandas (BSD-3-Clause), PyTorch (BSD-3-Clause), Matplotlib (Matplotlib license, PSF-based), PyYAML (MIT), Requests (Apache-2.0), jsonschema (MIT), pytest (MIT).
 - Concept UI: React and ReactDOM 18 (MIT, bundled in `ui/concept/vendor/`), Tailwind CSS 3 (MIT, build time), Babel (MIT, build time).
-- Demo slides (`docs/demo/`): Inter typeface (SIL Open Font License 1.1), embedded in the PDF; screenshots of our own app and our own backdrop image.
+- Demo slides (`docs/demo/`, source `docs/demo/slides/index.html`): Inter typeface (SIL Open Font License 1.1), embedded in the PDF; screenshots of our own app; background drawn in CSS; QR code to the live app generated with python-qrcode 8.2 (BSD license, used as a tool, not bundled): https://github.com/lincolnloop/python-qrcode
 - UI app (`ui/app/`): React and ReactDOM 18 (MIT, bundled into the build), Vite 6 (MIT, build time), @vitejs/plugin-react (MIT, build time), Tailwind CSS 4 and @tailwindcss/vite (MIT, build time). No web fonts, icons or images from third parties: system fonts and our own SVG.
 
 ## 12. License and disclaimer

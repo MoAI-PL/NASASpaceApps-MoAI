@@ -1,0 +1,275 @@
+<!doctype html>
+<!--
+  Astrobalance — NASA Space Apps Challenge 2026
+  AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
+
+  Demo slides (7, 1440 × 810). Source of docs/demo/Astrobalance-demo-slides.pdf.
+  Rebuild the PDF from the repository root (Chrome or Edge, headless):
+    chrome --headless=new --no-pdf-header-footer --virtual-time-budget=6000
+           --print-to-pdf=docs/demo/Astrobalance-demo-slides.pdf docs/demo/slides/index.html
+  Images: screenshots of our own app (docs/demo/slides/img). Background drawn in CSS.
+  Font: Inter (SIL Open Font License 1.1), from Google Fonts. QR code (img/qr-app.svg) generated with the
+  python-qrcode library (BSD). No NASA logos, no AI images.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Astrobalance — demo slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  @page { size: 1440px 810px; margin: 0; }
+  :root {
+    --bg: #05060b; --ink: #f0efec; --ink-2: #b9b8b0; --muted: #8b8a84;
+    --line: rgb(255 255 255 / 0.11); --glass: rgb(255 255 255 / 0.045);
+    --accent: #56b4e9; --warn: #e8a317; --red: #d03b3b; --good: #19a974;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); font-family: Inter, system-ui, sans-serif; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .slide {
+    position: relative; width: 1440px; height: 810px; overflow: hidden; page-break-after: always;
+    padding: 54px 72px; display: flex; flex-direction: column; gap: 22px;
+    background:
+      radial-gradient(520px 320px at 88% 4%, rgb(44 104 140 / 0.38), transparent 70%),
+      radial-gradient(560px 360px at 6% 100%, rgb(88 52 150 / 0.34), transparent 70%),
+      radial-gradient(420px 260px at 40% 18%, rgb(30 50 110 / 0.22), transparent 70%),
+      var(--bg);
+  }
+  .slide:last-child { page-break-after: auto; }
+  /* Stars: three layers of tiny dots on different grids. */
+  .slide::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.55;
+    background-image:
+      radial-gradient(1px 1px at 20px 30px, #fff, transparent),
+      radial-gradient(1px 1px at 140px 90px, #cfe6ff, transparent),
+      radial-gradient(1.4px 1.4px at 260px 170px, #fff, transparent),
+      radial-gradient(1px 1px at 330px 40px, #fff, transparent);
+    background-size: 380px 230px, 300px 260px, 520px 340px, 410px 300px;
+  }
+  .slide > * { position: relative; }
+
+  .glass { background: var(--glass); border: 1px solid var(--line); border-radius: 22px;
+           box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06); }
+  .head { display: flex; justify-content: space-between; align-items: flex-start; padding: 22px 26px; }
+  .head h2 { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .head p { margin-top: 6px; font-size: 19px; color: var(--ink-2); }
+  .page { font-size: 16px; color: var(--ink-2); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; white-space: nowrap; }
+  .foot { margin-top: auto; font-size: 17px; color: var(--muted); line-height: 1.45; }
+  .shot { border-radius: 18px; border: 1px solid var(--line); overflow: hidden; background: #0c0e16; }
+  .shot.fit img { object-fit: contain; object-position: center; }
+  .shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+  .row { display: flex; gap: 22px; min-height: 0; }
+  .card { padding: 16px 20px; }
+  .card h3 { font-size: 21px; font-weight: 700; }
+  .card p { margin-top: 4px; font-size: 17px; color: var(--ink-2); line-height: 1.35; }
+  .num { font-size: 34px; font-weight: 800; color: var(--accent); white-space: nowrap; }
+  .stat { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .accent { color: var(--accent); }
+
+  /* ----- 1 title ----- */
+  .s1 { flex-direction: row; align-items: center; gap: 56px; }
+  .s1 .left { flex: 1; display: flex; flex-direction: column; gap: 18px; }
+  .logo { display: flex; align-items: center; gap: 26px; }
+  .logo .mark { width: 86px; height: 86px; border-radius: 22px; display: grid; place-items: center;
+                background: #101219; border: 1px solid var(--line); }
+  .logo h1 { font-size: 92px; font-weight: 800; letter-spacing: -0.035em; line-height: 1; }
+  .tag { font-size: 26px; color: var(--ink-2); }
+  .lead { font-size: 27px; line-height: 1.35; }
+  .challenge { padding: 16px 22px; }
+  .challenge small { font-size: 18px; color: var(--ink-2); }
+  .challenge div { font-size: 22px; font-weight: 700; margin-top: 4px; }
+  .team-label { font-size: 18px; color: var(--ink-2); }
+  .team-label b { color: var(--ink); font-weight: 700; }
+  .members { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .members .glass { padding: 14px 18px; }
+  .members b { font-size: 21px; font-weight: 700; display: block; }
+  .members span { font-size: 17px; color: var(--ink-2); }
+  .phone { width: 300px; height: 600px; border-radius: 40px; padding: 8px; background: #0b0d14;
+           border: 1px solid rgb(255 255 255 / 0.16); box-shadow: 0 30px 80px -20px rgb(86 180 233 / 0.35); }
+  .phone img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 32px; display: block; }
+  .s1 .foot { position: absolute; left: 72px; bottom: 34px; }
+
+  /* ----- 2 problem ----- */
+  .card .quote { font-size: 34px; color: var(--ink); font-weight: 700; line-height: 1.25; }
+  .quote-src { font-size: 17px; color: var(--ink-2); margin-top: 10px; }
+
+  /* ----- 3 how ----- */
+  .steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .step { display: flex; gap: 16px; align-items: flex-start; padding: 18px 20px; }
+  .step .n { flex: none; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+             background: rgb(86 180 233 / 0.16); color: var(--accent); font-weight: 800; font-size: 20px; }
+
+  /* ----- 4 legend ----- */
+  .legend { display: flex; gap: 12px; flex-wrap: wrap; }
+  .pill { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px;
+          border: 1px solid var(--line); background: var(--glass); font-size: 18px; font-weight: 600; }
+  .dot { width: 18px; height: 18px; display: inline-block; }
+  .tri { width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 18px solid var(--warn); }
+
+  /* ----- 6 hazards ----- */
+  .haz { display: grid; grid-template-columns: 165px 1fr; align-items: center; gap: 14px; padding: 11px 18px; }
+  .haz b { font-size: 20px; }
+  .haz span { font-size: 17px; color: var(--ink-2); line-height: 1.35; }
+
+  /* ----- 7 next ----- */
+  .links { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .link { padding: 18px 22px; }
+  .link small { font-size: 17px; color: var(--ink-2); }
+  .link div { font-size: 24px; font-weight: 700; margin-top: 4px; color: var(--accent); }
+  ul.clean { list-style: none; display: grid; gap: 8px; margin-top: 8px; }
+  ul.clean li { font-size: 19px; color: var(--ink-2); padding-left: 20px; position: relative; }
+  ul.clean li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- ===== 1. Title: product, challenge, team ===== -->
+<section class="slide s1">
+  <div class="left">
+    <div class="logo">
+      <div class="mark">
+        <svg width="56" height="56" viewBox="0 0 32 32" fill="none" stroke-linecap="round" aria-hidden="true">
+          <path d="M6 22 A10 10 0 0 1 26 22" stroke="#56b4e9" stroke-width="4" /><circle cx="16" cy="22" r="3" fill="#f0efec" />
+        </svg>
+      </div>
+      <h1>Astrobalance</h1>
+    </div>
+    <div class="tag">Your health and beyond</div>
+    <p class="lead">An offline health app for long missions. It learns what is normal for each astronaut and warns early, before a single value crosses a limit.</p>
+    <div class="glass challenge">
+      <small>Challenge · Brazilian Space Agency</small>
+      <div>Create Health Monitoring Software for Astronauts on Space Missions</div>
+    </div>
+    <div class="team-label">Team <b>CosmoMyszki</b></div>
+    <div class="members">
+      <div class="glass"><b>Jan Domański</b><span>Backend developer</span></div>
+      <div class="glass"><b>Kamila Bąk</b><span>Frontend developer</span></div>
+      <div class="glass"><b>Zuzanna Marciniak</b><span>UX/UI designer</span></div>
+    </div>
+  </div>
+  <div class="phone"><img src="img/phone-today.jpg" alt="Astrobalance on a phone: mission day 80, crew member Bravo on a Mars rover, status Act" /></div>
+  <p class="foot">NASA Space Apps Challenge 2026 · Rzeszów · Synthetic data calibrated on published sources; proof of concept, not a medical device.</p>
+</section>
+
+<!-- ===== 2. Problem ===== -->
+<section class="slide">
+  <div class="glass head"><div><h2>Halfway to Mars, nobody on board is a doctor</h2><p>The scenario from the challenge video, Brazilian Space Agency</p></div><span class="page">2 / 7</span></div>
+  <div class="row" style="flex:1">
+    <div style="flex:1; display:flex; flex-direction:column; gap:16px">
+      <div class="glass card" style="padding:24px 26px"><p class="quote">“Your fellow crew mate feels a sharp pain in the chest and collapses.”</p></div>
+      <div class="glass card"><h3>Earth is 12–22 minutes away on the way to Mars</h3><p>Any answer takes the round trip (NASA ASCEND; the real delay of each day from NASA/JPL Horizons)</p></div>
+      <div class="glass card"><h3>Limits are made for an average person</h3><p>A slow change can stay inside them for weeks</p></div>
+      <div class="glass card"><h3>Five NASA hazards at once</h3><p>Radiation, isolation, distance, gravity, closed cabin</p></div>
+      <p style="font-size:24px; font-weight:700">So we measure each astronaut against <span class="accent">their own normal</span>.</p>
+    </div>
+    <div style="width:500px; display:flex; flex-direction:column; gap:12px">
+      <div class="shot" style="aspect-ratio:1400/1260"><img src="img/emergency.jpg" alt="Emergency guide in the app" /></div>
+      <p style="font-size:17px; color:var(--ink-2)">Emergency guide in the app, one tap away. It shows the delay to Earth.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3. How it works ===== -->
+<section class="slide">
+  <div class="glass head"><div><h2>Two minutes every morning</h2><p>A guided check-in, one measurement at a time; the app does the maths</p></div><span class="page">3 / 7</span></div>
+  <div class="row" style="flex:1">
+    <div class="shot" style="width:700px; align-self:flex-start; aspect-ratio:2880/1800"><img src="img/check-in.jpg" alt="Guided check-in screen" /></div>
+    <div style="flex:1; display:flex; flex-direction:column; gap:14px">
+      <div class="steps" style="grid-template-columns:1fr">
+        <div class="glass step"><span class="n">1</span><div class="card" style="padding:0"><h3>Check in</h3><p>Blood pressure, heart rate, temperature, glucose, sleep, mood, reaction test</p></div></div>
+        <div class="glass step"><span class="n">2</span><div class="card" style="padding:0"><h3>Learn your normal</h3><p>Days 1–21, then it follows slow, healthy change</p></div></div>
+        <div class="glass step"><span class="n">3</span><div class="card" style="padding:0"><h3>Watch the drift</h3><p>All values together over 14 days; no illness labels needed</p></div></div>
+        <div class="glass step"><span class="n">4</span><div class="card" style="padding:0"><h3>One index, 0–100</h3><p>Watch or Act, what moved, and the next step</p></div></div>
+      </div>
+      <p style="font-size:20px; font-weight:600">Critical limits and the emergency guide work <span class="accent">without the model</span>, from day 1.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4. The app ===== -->
+<section class="slide">
+  <div class="glass head"><div><h2>How am I, what do I do, and why</h2><p>Crew Member Bravo · mission day 80</p></div><span class="page">4 / 7</span></div>
+  <div class="row" style="height:330px">
+    <div style="flex:1; display:flex; flex-direction:column; gap:10px"><div class="shot" style="flex:1"><img src="img/today.jpg" alt="Today screen" /></div>
+      <p style="font-size:17px; color:var(--ink-2)"><b style="color:var(--ink)">Today</b> — the status, up to three next steps, and the reason in plain words.</p></div>
+    <div style="flex:1; display:flex; flex-direction:column; gap:10px"><div class="shot" style="flex:1"><img src="img/body.jpg" alt="Body screen" /></div>
+      <p style="font-size:17px; color:var(--ink-2)"><b style="color:var(--ink)">Body</b> — which system moved, with each value next to your own normal range.</p></div>
+  </div>
+  <div class="row">
+    <div class="glass card" style="flex:1"><h3>Ready for critical tasks?</h3><p>Compares how you feel with your reaction test: “feels fine” is not always “is fine” before a spacewalk.</p></div>
+    <div class="glass card" style="flex:1"><h3>Is it me or the habitat?</h3><p>The same change in several crew members points to the cabin (CO<sub style="font-size:0.7em">2</sub>, food, schedule), not to one person.</p></div>
+  </div>
+  <div class="legend">
+    <span class="pill"><span class="dot" style="background:var(--good); border-radius:50%"></span>Nominal</span>
+    <span class="pill"><span class="tri"></span>Watch</span>
+    <span class="pill"><span class="dot" style="background:var(--warn); transform:rotate(45deg)"></span>Act</span>
+    <span class="pill"><span class="dot" style="background:var(--red)"></span>Critical</span>
+    <span style="font-size:17px; color:var(--ink-2); align-self:center">Every state has a colour, a shape and a word, so it reads at a glance.</span>
+  </div>
+</section>
+
+<!-- ===== 5. Evidence ===== -->
+<section class="slide">
+  <div class="glass head"><div><h2>Earlier warnings, fewer false alarms</h2><p>Synthetic crews, one test on an illness the model never saw, and real everyday data</p></div><span class="page">5 / 7</span></div>
+  <div class="row" style="flex:1">
+    <div style="flex:1; display:flex; flex-direction:column; gap:14px">
+      <div class="shot" style="height:330px"><img src="img/trends.jpg" alt="Trends: who noticed first" /></div>
+      <p style="font-size:19px; color:var(--ink-2); line-height:1.4">Bravo’s change starts on day 50. Astrobalance warns on day 65, clinical limits on day 72. Single-value limits react on day 57; both they and Astrobalance also raised one false alarm earlier.</p>
+    </div>
+    <div style="width:620px; display:flex; flex-direction:column; gap:12px">
+      <div class="glass card stat"><div><h3>Unseen illness, tested once</h3><p>infection onset · clinical limits 9 of 10</p></div><span class="num">10 of 10</span></div>
+      <div class="glass card stat"><div><h3>Earlier than clinical limits</h3><p>median, same test</p></div><span class="num">+5 days</span></div>
+      <div class="glass card stat"><div><h3>False alarms per crew member-week</h3><p>clinical 0.121 · single-value 0.241</p></div><span class="num">0.055</span></div>
+      <div class="glass card stat"><div><h3>Real data, 280 person-weeks</h3><p>PMData, 16 people · single-value 0.068/week</p></div><span class="num">0 alarms</span></div>
+      <div class="glass card stat"><div><h3>Caught within 21 days, fair contest</h3><p>42 setups · autoencoders at most 59% · clinical 44%</p></div><span class="num">71%</span></div>
+    </div>
+  </div>
+  <p class="foot">Single-value limits were 3.5 days faster on infections, with 4.4× the false alarms. 72 automated tests run on every change. Synthetic data calibrated on published sources: proof of concept, not clinical validation.</p>
+</section>
+
+<!-- ===== 6. NASA data and hazards ===== -->
+<section class="slide">
+  <div class="glass head"><div><h2>Built on real NASA data, for every NASA hazard</h2><p>DONKI solar events · JPL Horizons Earth–Mars delay · Inspiration4 blood tests (NASA OSDR)</p></div><span class="page">6 / 7</span></div>
+  <div class="row" style="flex:1">
+    <div style="width:580px; display:flex; flex-direction:column; gap:12px">
+      <div class="shot" style="aspect-ratio:2246/364"><img src="img/timeline.jpg" alt="Mission timeline with real NASA DONKI solar particle events" /></div>
+      <div class="shot" style="aspect-ratio:1572/1048"><img src="img/earth-link-mars-rover.jpg" alt="Earth link for a crew on a Mars rover: about 14 minutes today, from NASA/JPL Horizons" /></div>
+    </div>
+    <div style="flex:1; display:flex; flex-direction:column; gap:10px">
+      <div class="glass haz"><b>Radiation</b><span>Real NASA DONKI solar particle events on the timeline · CSA radiation monitoring</span></div>
+      <div class="glass haz"><b>Isolation</b><span>Sleep, mood, reaction test (NASA ISS reaction self-test)</span></div>
+      <div class="glass haz"><b>Distance</b><span>Real delay of each day from NASA/JPL Horizons · SBAR report · blackout mode</span></div>
+      <div class="glass haz"><b>Gravity · cabin</b><span>Blood pressure, heart rate · cabin CO<sub style="font-size:0.7em">2</sub> against the NASA OCHMO limit</span></div>
+      <div class="glass haz"><b>Simulator check</b><span>Glucose vs Inspiration4 crew (NASA OSDR OSD-575): partly consistent, reported as it is</span></div>
+    </div>
+  </div>
+  <p class="foot" style="margin-top:0">Astronaut records are private, so the crews are synthetic; real people (PMData, 16, CC BY 4.0) set the noise and test the alarm rate. Sources: README.</p>
+</section>
+
+<!-- ===== 7. Earth spin-off, next steps, links ===== -->
+<section class="slide">
+  <div class="glass head"><div><h2>From Mars transit to an Antarctic winter</h2><p>The same offline monitoring for isolated crews on Earth</p></div><span class="page">7 / 7</span></div>
+  <div class="row">
+    <div class="glass card" style="flex:1.2; padding:22px 26px"><h3>On Earth</h3><p style="font-size:20px">Antarctic stations in winter, remote communities with little access to care, long voyages at sea. A personal normal needs no patient database and no constant connection.</p></div>
+    <div class="glass card" style="flex:1; padding:22px 26px"><h3>Next</h3>
+      <ul class="clean"><li>Real crew and analog-mission data</li><li>Values straight from wearables</li><li>Usability tests with crews</li></ul></div>
+  </div>
+  <div class="row" style="align-items:stretch">
+    <div style="flex:1; display:flex; flex-direction:column; gap:16px">
+      <div class="glass link"><small>Try it on your phone · no login · works offline</small><div>moai-pl.github.io/NASASpaceApps-MoAI</div></div>
+      <div class="glass link"><small>Open-source code, results and every source · Apache-2.0 · tests on Linux and Windows</small><div>github.com/MoAI-PL/NASASpaceApps-MoAI</div></div>
+    </div>
+    <div class="glass" style="display:flex; align-items:center; gap:18px; padding:16px 22px">
+      <img src="img/qr-app.svg" alt="QR code: link to the live app" style="width:150px; height:150px; background:#fff; border-radius:14px; padding:8px" />
+      <span style="font-size:18px; color:var(--ink-2); width:150px">Scan to open the app</span>
+    </div>
+  </div>
+  <p style="font-size:30px; font-weight:800; letter-spacing:-0.01em; margin-top:8px">Tested once on an illness it never saw: <span class="accent">10 of 10 caught, a median 5 days earlier</span> than clinical limits.</p>
+  <p class="foot">Team CosmoMyszki · Jan Domański, Kamila Bąk, Zuzanna Marciniak · Code and texts drafted with AI assistance (Claude) and reviewed by us; no AI images.</p>
+</section>
+
+</body>
+</html>
