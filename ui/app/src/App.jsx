@@ -45,7 +45,7 @@ function NavButton({ screen, active, onClick, vertical = false }) {
 }
 
 /** Floating glass sidebar for wide screens (like a native app's source list). */
-function Sidebar({ screen, onScreen, onHelp, astronaut, onAstronaut, env, onEnv }) {
+function Sidebar({ screen, onScreen, onHelp, astronaut, onAstronaut, env, onEnv, day }) {
   return (
     <aside className="panel hidden lg:flex flex-col gap-1 p-3 w-64 shrink-0 sticky top-4 h-[calc(100vh-2rem)] ml-4 my-4"
            aria-label="Astrobalance">
@@ -66,7 +66,7 @@ function Sidebar({ screen, onScreen, onHelp, astronaut, onAstronaut, env, onEnv 
       <div className="mt-auto pt-3 border-t border-line flex flex-col gap-2">
         <NavButton screen={{ label: "Help", icon: "nav_help" }} active={false} onClick={onHelp} vertical />
         {/* Crew member and where the crew is, in the bottom-left corner. */}
-        <SidebarPicker astronaut={astronaut} onAstronaut={onAstronaut} env={env} onEnv={onEnv} />
+        <SidebarPicker astronaut={astronaut} onAstronaut={onAstronaut} env={env} onEnv={onEnv} day={day} />
       </div>
     </aside>
   );
@@ -121,7 +121,7 @@ export default function App() {
 
   return (
     <div className="lg:flex lg:items-start">
-      <Sidebar screen={screen} onScreen={setScreen} onHelp={() => setHelp(true)} astronaut={astronaut} onAstronaut={setAstronaut} env={env} onEnv={setEnv} />
+      <Sidebar screen={screen} onScreen={setScreen} onHelp={() => setHelp(true)} astronaut={astronaut} onAstronaut={setAstronaut} env={env} onEnv={setEnv} day={record.day} />
 
       <div className="flex-1 min-w-0 max-w-7xl mx-auto p-4 md:p-6">
       {/* Floating glass header: the Emergency button is always visible and never covers content. */}
@@ -158,7 +158,7 @@ export default function App() {
 
       {/* Demo control: scrub through the precomputed 120-day mission. */}
       <MissionTimeline records={records} day={record.day} onDay={setDay} astronaut={astronaut}
-                       controls={<DemoControls astronaut={astronaut} onAstronaut={setAstronaut} env={env} onEnv={setEnv} />} />
+                       controls={<DemoControls astronaut={astronaut} onAstronaut={setAstronaut} env={env} onEnv={setEnv} day={record.day} />} />
 
       {/* Phones and tablets: one row of glass pills that scrolls sideways inside the bar (the page
           itself never does). Wide screens use the sidebar instead. */}

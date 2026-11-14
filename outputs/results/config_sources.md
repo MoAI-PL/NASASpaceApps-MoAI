@@ -7,9 +7,9 @@
 | `simulation.yaml` mission.scenario_start_range | ASSUMPTION |  |
 | `simulation.yaml` features.sys | ASSUMPTION |  |
 | `simulation.yaml` features.dia | ASSUMPTION |  |
-| `simulation.yaml` features.hr | ASSUMPTION |  |
+| `simulation.yaml` features.hr | PARTLY SOURCED | pop_mean = 65 confirmed after the freeze (table below); other parameters are assumptions. |
 | `simulation.yaml` features.glucose | ASSUMPTION |  |
-| `simulation.yaml` features.temp | ASSUMPTION |  |
+| `simulation.yaml` features.temp | PARTLY SOURCED | pop_mean = 36.6 confirmed after the freeze (table below); other parameters are assumptions. |
 | `simulation.yaml` features.sleep_h | SOURCED | Barger L.K. et al., The Lancet Neurology (2014): ISS crew averaged 6.09 h of sleep per night (pop_mean). pop_sd and day_sd are assumptions. https://www.eurekalert.org/news-releases/595450 |
 | `simulation.yaml` features.mood | ASSUMPTION |  |
 | `simulation.yaml` features.reaction_ms | ASSUMPTION |  |
@@ -62,3 +62,16 @@
 | `ui.yaml` environments.mars_transit | SOURCED | NASA ASCEND paper: Earth–Mars one-way delays vary from 0 to 22 minutes over a mission. https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf |
 | `ui.yaml` environments.mars_rover | SOURCED | NASA ASCEND paper: Earth–Mars one-way delays vary from 0 to 22 minutes over a mission (a pressurized rover on Mars reaches Earth through the surface base or an orbiter; that relay is a team assumption). https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf |
 | `ui.yaml` escalation | ASSUMPTION | Escalation ladder thresholds chosen by the team; to be reviewed with a flight-medicine source. |
+
+### Sources checked after the configs were frozen (config/sources_extra.yaml)
+
+Values are unchanged: the frozen configs belong to the recorded hold-out result.
+
+| Config value | Verdict | What the source says | Source |
+|---|---|---|---|
+| `simulation.yaml` features.temp.pop_mean = 36.6 | confirmed | Mean temperature 36.6 °C (95% range 35.7–37.3 °C) in 35 488 patients without infection (243 506 measurements). | Obermeyer Z., Samra J.K., Mullainathan S. (2017) Individual differences in normal body temperature: longitudinal big data analysis of patient records. BMJ 359:j5468. https://pubmed.ncbi.nlm.nih.gov/29237616/ |
+| `simulation.yaml` features.hr.pop_mean = 65 | confirmed | Mean daily resting heart rate 65 bpm (range 40–109 bpm) in 92 457 adults wearing a heart-rate tracker. | Quer G., Gouda P., Galarnyk M., Topol E.J., Steinhubl S.R. (2020) Inter- and intraindividual variability in daily resting heart rate. PLOS ONE 15(2):e0227709. https://doi.org/10.1371/journal.pone.0227709 |
+| `simulation.yaml` features.hr.day_sd = 3.5 | close | Average standard deviation of an individual's daily resting heart rate over time: 3.03 bpm. | Quer G. et al. (2020) PLOS ONE 15(2):e0227709. https://doi.org/10.1371/journal.pone.0227709 |
+| `simulation.yaml` features.glucose.pop_mean = 90 | partly | Inspiration4 crew, pre-flight draws: mean 75.3 mg/dL (range 56–100), inside 90 ± 2×8 but 14.7 lower (README 7.6). | NASA OSDR OSD-575 (Overbey E.G. et al. 2024, Nature, doi:10.1038/s41586-024-07639-y); comparison in outputs/results/osdr_check.md |
+| `simulation.yaml` radiation.baseline_mGy_per_day.value = 0.5 | not_verified | Secondary sources cite MSL/RAD absorbed dose rates in cruise to Mars of roughly 0.46–0.48 mGy/day; the primary papers (Zeitlin et al. 2013, Science; Guo et al. 2015, A&A 577:A58) could not be read in full here, so no source is claimed. | — |
+| `simulation.yaml` cabin_co2.baseline_mmHg.value = 2.3 | not_verified | NASA OCHMO gives the limit (3 mmHg, 1-hour average) and an ISS range of about 1–9 mmHg, not a typical value of 2.3. | — |

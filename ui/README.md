@@ -37,9 +37,10 @@ content is visible in the demo until it is written.
 - [x] Final body figure (own SVG) in `src/components/BodyMap.jsx`.
 - [x] Check contrast (WCAG AA) and colour-blind safety of the palette in `src/styles.css`
       (Okabe–Ito based; ratios listed next to the tokens). Shapes + words already carry every state.
-- [ ] Deploy `dist/` as a public static site (no login) and put the link in the main README.
-- [ ] Keep the disclaimer visible: "Prototype — synthetic data — not medical advice".
-- [ ] No NASA logos or branding; no third-party images without an open license.
+- [x] Deploy `dist/` as a public static site (no login) and put the link in the main README:
+      https://moai-pl.github.io/NASASpaceApps-MoAI/ (GitHub Pages, `.github/workflows/pages.yml`).
+- [x] Keep the disclaimer visible: "Prototype — synthetic data — not medical advice" (page footer).
+- [x] No NASA logos or branding; no third-party images without an open license (own SVG icons and figure).
 
 Data contract: `../schemas/day_record.schema.json`. Never edit files in `../outputs/ui/` by hand;
 if the UI needs a new field, ask the ML side (contract changes are logged in `../PLAN.md`).

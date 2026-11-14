@@ -2,7 +2,7 @@
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
 import { useState } from "react";
-import { EARTH_REPORTS, META, roundTripText } from "../data.js";
+import { EARTH_REPORTS, META, oneWayText, realDelaySeconds, roundTripText } from "../data.js";
 import { BLACKOUT, ESCALATION_TEXT, EVENT_TEXT, PROMPTS, SBAR, STATUS_LABEL } from "../content/texts.js";
 import { Glyph, StatusIcon } from "../components/icons.jsx";
 import { Panel, SourceLink, TapButton } from "../components/ui.jsx";
@@ -81,8 +81,11 @@ export default function EarthLink({ astronaut, day, env, record, records, queued
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 gap-3 mt-3 text-lg">
-            <div className="p-3 rounded-xl bg-panel-2"><div className="text-ink-2 text-base">Report reaches Earth after</div>{e.one_way_delay_text}</div>
-            <div className="p-3 rounded-xl bg-panel-2"><div className="text-ink-2 text-base">Earliest possible reply</div>{roundTripText(env)} round trip, plus review time</div>
+            <div className="p-3 rounded-xl bg-panel-2"><div className="text-ink-2 text-base">Report reaches Earth after</div>{oneWayText(env, day)}</div>
+            <div className="p-3 rounded-xl bg-panel-2"><div className="text-ink-2 text-base">Earliest possible reply</div>{roundTripText(env, day)} round trip, plus review time</div>
+            {realDelaySeconds(env, day) != null && (
+              <p className="sm:col-span-2 text-sm text-ink-2">Today’s Earth–Mars distance from <a href={META.mars_delay.link} target="_blank" rel="noreferrer" className="underline underline-offset-2">NASA/JPL Horizons</a>, divided by the speed of light.</p>
+            )}
           </div>
         )}
         <TapButton onClick={() => onQueue(reportFromRecord(record, records))} className="mt-4 bg-model! text-on-status font-semibold">

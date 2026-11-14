@@ -1,6 +1,6 @@
 # Astrobalance — NASA Space Apps Challenge 2026
 # AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
-"""Reference methods the autoencoder is compared against, plus the critical safety net.
+"""Reference methods the detector (personal-drift model or autoencoder) is compared against, plus the critical safety net.
 
 B1: fixed clinical thresholds (config/rules.yaml), with persistence.
 B2: personal univariate thresholds — any single indicator beyond 3 personal sd, with persistence.

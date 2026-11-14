@@ -1,0 +1,42 @@
+{
+  "study": "OSD-575",
+  "study_url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-575",
+  "citation": "Overbey E.G. et al. (2024) The Space Omics and Medical Atlas (SOMA) and international astronaut biobank. Nature. doi:10.1038/s41586-024-07639-y",
+  "crew": 4,
+  "preflight_draws": 12,
+  "real_preflight": {
+    "mean": 75.3,
+    "min": 56.0,
+    "max": 100.0,
+    "within_person_sd": 12.6,
+    "between_person_sd": 3.8
+  },
+  "simulator": {
+    "pop_mean": 90.0,
+    "pop_sd": 8.0,
+    "day_sd": 6.0
+  },
+  "checks": {
+    "real_mean_inside_simulated_population_2sd": true,
+    "real_mean_minus_simulated_mean": -14.7,
+    "within_person_sd_ratio_real_to_sim": 2.1
+  },
+  "postflight_flagged_below_50": [
+    {
+      "subject": "C002",
+      "timepoint": "R+45",
+      "value": 44.0
+    },
+    {
+      "subject": "C004",
+      "timepoint": "R+45",
+      "value": 43.0
+    },
+    {
+      "subject": "C003",
+      "timepoint": "R+45",
+      "value": 36.0
+    }
+  ],
+  "note": "Comparison only; the simulator was not calibrated on these data. n = 4 crew, 3 pre-flight draws each; fasting state of the draws is not stated in the table."
+}

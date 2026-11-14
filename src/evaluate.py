@@ -1,6 +1,7 @@
 # Astrobalance — NASA Space Apps Challenge 2026
 # AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
-"""Evaluate the autoencoder against baselines B1 (fixed thresholds) and B2 (personal univariate).
+"""Evaluate the configured detector (production: the personal-drift model; alternative: the autoencoder)
+against baselines B1 (fixed thresholds) and B2 (personal univariate).
 
 Usage:
     python -m src.evaluate --split dev --tune      # tune P_yellow on dev only, then evaluate dev
@@ -16,6 +17,7 @@ import datetime as dt
 import re
 import subprocess
 import sys
+from pathlib import Path
 from statistics import median
 
 import numpy as np
@@ -32,6 +34,22 @@ from src.simulate import build_split, load_split
 METHODS = ["AE", "B1", "B2"]
 YELLOW_GRID = [90, 92, 94, 95, 96, 97, 98, 99]   # SAI is an integer percentile
 FINAL_PATH = RESULTS_DIR / "final_test.json"
+
+
+# ===== Hold-out discipline =====
+def holdout_guard(split: str, final: bool, tune: bool, final_path: Path) -> str | None:
+    """Reason to refuse this run, or None when it is allowed (CLAUDE.md rule 7).
+
+    The test split (S5) needs --final, runs only while `final_path` does not exist (so it can never
+    be re-run), and is never used for tuning; tuning is allowed on the selection splits only.
+    """
+    if split == "test" and not final:
+        return "The test split is the one-time hold-out. Run with --final, once, after freezing the configs."
+    if split == "test" and Path(final_path).exists():
+        return f"{final_path} already exists: the hold-out test has been run. It must not be re-run."
+    if tune and split not in ("bench", "dev"):
+        return "Tuning is allowed on the selection splits only (bench, dev)."
+    return None
 
 
 # ===== Per-astronaut signals =====
@@ -173,19 +191,16 @@ def git_commit() -> str:
 
 # ===== Main =====
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Evaluate the autoencoder against B1 and B2.")
+    parser = argparse.ArgumentParser(description="Evaluate the configured detector against B1 and B2.")
     parser.add_argument("--split", default="dev", choices=["bench", "dev", "dev_s4", "test"])
     parser.add_argument("--tune", action="store_true", help="Tune P_yellow on dev and write it to config/model.yaml.")
     parser.add_argument("--final", action="store_true", help="Required for the one-time hold-out test.")
     parser.add_argument("--no-sensitivity", action="store_true")
     args = parser.parse_args()
 
-    if args.split == "test" and not args.final:
-        sys.exit("The test split is the one-time hold-out. Run with --final, once, after freezing the configs.")
-    if args.split == "test" and FINAL_PATH.exists():
-        sys.exit(f"{FINAL_PATH} already exists: the hold-out test has been run. It must not be re-run.")
-    if args.tune and args.split not in ("bench", "dev"):
-        sys.exit("Tuning is allowed on the selection splits only (bench, dev).")
+    refusal = holdout_guard(args.split, args.final, args.tune, FINAL_PATH)
+    if refusal:
+        sys.exit(refusal)
 
     model_path = CONFIG_DIR / "model.yaml"
     cfgs = {"model": load_yaml(model_path), "sim": load_yaml(CONFIG_DIR / "simulation.yaml"),

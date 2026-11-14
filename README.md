@@ -1,5 +1,7 @@
 # Astrobalance — personal-baseline health monitoring for deep-space crews
 
+[![Tests](https://github.com/MoAI-PL/NASASpaceApps-MoAI/actions/workflows/tests.yml/badge.svg)](https://github.com/MoAI-PL/NASASpaceApps-MoAI/actions/workflows/tests.yml)
+
 **NASA Space Apps Challenge 2026 · Challenge: _Create Health Monitoring Software for Astronauts on Space Missions_ (author: Brazilian Space Agency)**
 
 **Team MoAI:** Jan Domański (backend developer) · Kamila Bąk (frontend developer) · Zuzanna Marciniak (UX/UI designer)
@@ -8,7 +10,21 @@
 
 **▶ Demo (7 slides, PDF): [`docs/demo/Astrobalance-demo-slides.pdf`](docs/demo/Astrobalance-demo-slides.pdf)**
 
-> **Prototype — not medical advice.** Model results come from synthetic data calibrated on published sources, plus one alarm-rate check on real everyday data (PMData) — proof of concept, not clinical validation. Not a medical device.
+> **Prototype — not medical advice.** Model results come from synthetic data calibrated on published sources, plus one alarm-rate check on real everyday data (PMData) and a plausibility check against real astronaut blood tests (NASA OSDR, Inspiration4) — proof of concept, not clinical validation. Not a medical device.
+
+
+## For judges — the 2-minute path
+
+| | |
+|---|---|
+| **Try it** | Live app (offline after the first visit, no login): https://moai-pl.github.io/NASASpaceApps-MoAI/ |
+| **Main result** — hold-out S5 (infection onset), a scenario type never seen in development, **run once** | Model detected **10 of 10**, median **+5 days earlier** than fixed clinical limits, with **0.055** false alarms per astronaut-week (clinical limits 0.121). Record: [`final_test.json`](outputs/results/final_test.json) (timestamp, commit, config hashes) · table: [`final_test.md`](outputs/results/final_test.md) · figure: [`lead_time_test.png`](outputs/figures/lead_time_test.png) · discussion: [7.3](#73-hold-out-test--infection-onset-s5-evaluated-once) |
+| **Model choice** | Benchmark of 42 configurations at one false-alarm budget: the chosen model catches **71%** of simulated changes within 21 days (autoencoders ≤ 59%, clinical limits 44%); 65% → 71% is explained in [7.1](#71-model-selection-benchmark) |
+| **Where it does not win** | Personal single-value limits alarm ~3.5 days earlier on S5 but with 4.4× the false alarms ([7.3](#73-hold-out-test--infection-onset-s5-evaluated-once)) |
+| **Real data** | No alarm in 280 person-weeks of real everyday data (PMData, [7.4](#74-real-data-check--alarm-rate-on-real-everyday-data-pmdata)) · real NASA DONKI solar events · real Earth–Mars delay per day (NASA/JPL Horizons) · simulator checked against Inspiration4 blood tests (NASA OSDR, [7.6](#76-plausibility-check--simulated-glucose-vs-real-astronaut-blood-tests-nasa-osdr-inspiration4)) |
+| **Every number's source** | [`config_sources.md`](outputs/results/config_sources.md): each config value is SOURCED or an ASSUMPTION; later-verified sources in [`config/sources_extra.yaml`](config/sources_extra.yaml) |
+| **Reproduce everything** | `python -m src.run_all` (simulate → fit → tune on the selection split → confirm on dev → export → figures; the hold-out is excluded) · `pytest -q` (runs in CI on Linux and Windows, badge above) |
+| **Hold-out discipline** | `src.evaluate --split test --final` refuses a second run; tests check that refusal and that the configs still hash to the values recorded with the result ([`tests/test_holdout.py`](tests/test_holdout.py)). The recorded commit `0fc28fe` is in the team's first repository, which is not public; the config hashes are the check you can run here (7.3) |
 
 ---
 
@@ -27,7 +43,7 @@ Every NASA Human Research Program hazard is visible in the product:
 |---|---|---|
 | Space radiation | daily and cumulative absorbed dose, alerts on solar particle events | real NASA DONKI SEP events + assumed dose model |
 | Isolation & confinement | mind & sleep system (sleep, mood, reaction time); the model detects joint drift | synthetic |
-| Distance from Earth | escalation ladder and Earth-report queue use the one-way communication delay; reports to Earth in SBAR form; comms-blackout mode for Mars solar conjunction | config per environment |
+| Distance from Earth | escalation ladder and Earth-report queue use the one-way communication delay (for a crew on Mars: the real Earth–Mars light time of each mission day from NASA/JPL Horizons); reports to Earth in SBAR form; comms-blackout mode for Mars solar conjunction | config per environment |
 | Gravity fields | heart & circulation system (blood pressure, heart rate, exercise) | synthetic |
 | Hostile & closed environment | cabin CO₂ against the NASA limit; infection onset via temperature and heart rate | synthetic |
 
@@ -36,8 +52,9 @@ Bone loss cannot be tracked with daily self-measurements and is out of scope (se
 ## 2. Quick start
 
 ```bash
-conda env create -f environment.yml && conda activate spaceapps
+conda env create -f environment.yml && conda activate spaceapps   # or, without conda: python -m pip install -r requirements.txt
 python -m src.donki --start 2024-05-01 --days 120   # needs internet once: caches real NASA DONKI SEP events
+python -m src.horizons --start 2024-05-01 --days 120  # needs internet once: caches the real Earth–Mars delay (JPL Horizons)
 python -m src.run_all                               # simulate → fit → tune on bench → confirm on dev → export → figures
 python -m src.run_all --benchmark                   # same, plus the model-selection benchmark (~5 min on CPU)
 python -m src.robust_bench --window 14              # robustness benchmark: synthetic detection vs real-data alarms (7.5)
@@ -82,6 +99,20 @@ flowchart LR
   H --> J[Earth report queue<br/>delayed downlink]
 ```
 
+### Where things are
+
+| Folder | What is in it |
+|---|---|
+| `src/` | Python pipeline: `simulate` (synthetic crews), `train` (fit the detector), `evaluate` (selection, confirmation, one-time hold-out), `export` (JSON for the app), `figures`; real-data checks `realdata` (PMData), `osdr` (NASA OSDR), `horizons` and `donki` (NASA data caches) |
+| `config/` | Every number with its `source` or `assumption: true` (frozen for the hold-out); `sources_extra.yaml` holds sources checked afterwards |
+| `data/` | `raw/` cached NASA data (DONKI, Horizons, OSDR) · `real/` PMData daily table · `synthetic/demo/` the three demo crew members |
+| `outputs/results/` | Every result as JSON and Markdown, including `final_test.json` (hold-out, run once) and `config_sources.md` |
+| `outputs/figures/` | Slide-ready figures |
+| `outputs/ui/` | The JSON contract the app reads (schema in `schemas/`) |
+| `ui/app/` | The offline web app (React, Vite, Tailwind), published on GitHub Pages |
+| `tests/` | pytest suite, run by CI on Linux and Windows |
+| `docs/` | Demo slides and the project-page texts |
+
 ## 5. Why unsupervised
 
 There is no labelled dataset of astronaut illnesses: crews are tiny, serious events are rare and individual health records are private. A supervised classifier has nothing to learn from. A model of **each person's normal** needs no labels — it only needs healthy days, which every mission produces.
@@ -91,6 +122,7 @@ There is no labelled dataset of astronaut illnesses: crews are tiny, serious eve
 ## 6. Data & sources
 
 - **Real data:** NASA DONKI solar energetic particle events for the mission window (`python -m src.donki`). If the cache is missing, no SEP events are simulated and `meta.json` reports `space_weather.status = "missing"`.
+- **Real data:** NASA/JPL Horizons ephemeris — Earth–Mars distance for each mission day (`python -m src.horizons`, cached in `data/raw/horizons_earth_mars.json`). One-way delay = distance / speed of light: 16.4 min on day 1 falling to 12.1 min on day 120 (Mars approaching Earth); the Sun–Earth–Mars angle stays between 41° and 70°, so this window has no solar conjunction. Used only by the UI for a crew on the Mars surface; the model and simulator never read it.
 - **Real everyday data:** PMData (Thambawita et al. 2020, CC BY 4.0) — Fitbit resting heart rate, sleep and active minutes plus a daily mood rating from 16 people. The odd-numbered half calibrates the simulator's noise and drift and selects the personal-normal variant (7.5); the even-numbered half is used only to confirm; the model itself is never fitted on it.
 - **Synthetic crews (simulator 2):** individual astronaut records are privacy-protected, so every astronaut is simulated from `config/simulation.yaml`. Day-to-day variation is correlated through two latent factors (fatigue, training load); each input's own noise is autocorrelated and every healthy baseline drifts slowly, with both effects estimated from real everyday data (PMData, selection half only: resting heart rate autocorrelation 0.75, drift 0.13 personal sd per √day) and flagged as assumptions where PMData does not measure the input. Scenario sizes were fixed **before** any evaluation.
 
@@ -102,7 +134,7 @@ There is no labelled dataset of astronaut illnesses: crews are tiny, serious eve
 | S4 Sensor fault | one indicator +6 for 5 days | development (sensor-fault flag) |
 | S5 Infection onset | temperature +2.5, heart rate +2.0, sleep −1.5, mood −1.5, reaction time +1.0; 5-day ramp | **hold-out test only** |
 
-Every configuration value is either sourced or flagged as an assumption: full list in [`outputs/results/config_sources.md`](outputs/results/config_sources.md) (generated by `python -m src.report_sources`). Sourced values: ISS sleep duration (Barger et al. 2014), CO₂ limit (NASA OCHMO / NASA-STD-3001), blood-pressure categories (AHA), hypoglycaemia levels (ADA), Earth–Mars communication delay (NASA ASCEND).
+Every configuration value is either sourced or flagged as an assumption: full list in [`outputs/results/config_sources.md`](outputs/results/config_sources.md) (generated by `python -m src.report_sources`). Sourced values: ISS sleep duration (Barger et al. 2014), CO₂ limit (NASA OCHMO / NASA-STD-3001), blood-pressure categories (AHA), hypoglycaemia levels (ADA), Earth–Mars communication delay (NASA ASCEND). Sources checked after the configs were frozen are kept in `config/sources_extra.yaml` and listed in the same file, with the values unchanged (the frozen configs belong to the recorded hold-out result): mean body temperature 36.6 °C (Obermeyer et al. 2017) and mean resting heart rate 65 bpm (Quer et al. 2020) are confirmed; day-to-day heart-rate spread is close (3.0 vs our 3.5 bpm); the deep-space dose rate and cabin CO₂ baseline could not be verified in a primary source and stay assumptions.
 
 ## 7. Results
 
@@ -138,7 +170,7 @@ Testing on new people from the same data generator shows that a method generalis
 | Personal single-indicator thresholds (B2, smoothed) | 43 % | 74 % |
 | Fixed clinical thresholds (B1, own false-alarm rate 0.106) | 44 % | 62 % |
 
-42 configurations at the 0.05 budget (architecture, training-set size, score components, smoothing, persistence, ensembles, fine-tuning, hybrids): [`outputs/results/benchmark.md`](outputs/results/benchmark.md). The second stage (7.5) then chose how the personal normal is kept up to date; with it the chosen model reaches 71%.
+42 configurations at the 0.05 budget (architecture, training-set size, score components, smoothing, persistence, ensembles, fine-tuning, hybrids): [`outputs/results/benchmark.md`](outputs/results/benchmark.md). The second stage (7.5) then chose how the personal normal is kept up to date. The three detection figures in this README are steps on one path, not competing claims: **65%** here (stage 1, fixed 21-day normal), **66%** for the same fixed normal re-run in the stage-2 grid with its own threshold, and **71%** with the adaptive normal finally chosen.
 
 ### 7.2 Confirmation split (thresholds frozen)
 
@@ -161,7 +193,7 @@ False alarms per astronaut-week: model 0.065, B1 0.121, B2 0.183. Single-value l
 
 ![Hold-out](outputs/figures/lead_time_test.png)
 
-S5 was never seen during development and was evaluated once (`outputs/results/final_test.json`, with timestamp and commit hash). The recorded commit `0fc28fe` is from the project's first repository (MoAI-PL/NASASpaceApps-Health); the frozen content has git tree `843e3d1`.
+S5 was never seen during development and was evaluated once (`outputs/results/final_test.json`, with timestamp and commit hash). The recorded commit `0fc28fe` is from the project's first repository, which is not public, so it cannot be opened from here. What can be checked here: `final_test.json` also records a hash of each frozen config (model, simulator, rules), and the configs in this repository still produce exactly those hashes — `tests/test_holdout.py` checks this on every push (CI).
 
 **What this shows — and what it does not:**
 - Against fixed clinical thresholds the hypothesis holds on this synthetic data: earlier detection, including on a scenario type the model never saw, with half the false alarms.
@@ -196,6 +228,18 @@ Real wearable resting heart rate is smoothed (day-to-day autocorrelation ~0.75) 
 
 The chosen normal catches more changes early and raises fewer real alarms, at a somewhat higher synthetic false-alarm rate on dev. (The dev column uses each variant's own benchmark threshold; with the production threshold P_yellow = 94 the chosen model has 0.065 false alarms per astronaut-week on dev, 7.2.) Full table and protocol notes (including a missing-data fix made after the first confirmation, and the rounds in which the grid was built): [`outputs/results/robust_bench.md`](outputs/results/robust_bench.md) (`python -m src.robust_bench --window 14`).
 
+### 7.6 Plausibility check — simulated glucose vs real astronaut blood tests (NASA OSDR, Inspiration4)
+
+Real astronaut data, used only to compare, never to calibrate: the comprehensive metabolic panel of the four Inspiration4 crew members from NASA OSDR study [OSD-575](https://osdr.nasa.gov/bio/repo/data/studies/OSD-575) (Overbey et al. 2024, *Nature*). Glucose is the one of our nine inputs in that panel; the three pre-flight draws (L-92, L-44, L-3) are compared with the simulator's healthy parameters, which stay frozen.
+
+| | Real pre-flight draws (4 crew, 12 draws) | Simulator (healthy) |
+|---|---|---|
+| Mean (mg/dL) | 75.3 (range 56–100) | 90 |
+| Spread between people (sd) | 3.8 | 8 |
+| Spread within a person (sd) | 12.6 (draws weeks apart) | 6 (day to day) |
+
+**Partly consistent.** The real mean lies inside the simulated healthy population (±2 sd), but 14.7 mg/dL below the simulated mean, and a person's real values vary about twice as much as our day-to-day noise. Caveats: 4 people, 3 draws each, weeks to months apart, fasting state not stated. Post-flight draws are not a healthy baseline and are not compared; three R+45 values below 50 mg/dL are flagged as implausible for healthy people and left uncorrected. The blood count (OSD-569) has no counterpart among our daily inputs and is not used. Table and JSON: [`outputs/results/osdr_check.md`](outputs/results/osdr_check.md) (`python -m src.osdr --download`, then `python -m src.osdr`).
+
 Figures (1600 × 900, slide-ready): `benchmark.png`, `lead_time_test.png`, `lead_time_dev.png`, `timeline_demo.png` (Crew Member Bravo: one false alarm on day 37, model alarm on day 65 after the change starts on day 50, fixed clinical thresholds on day 72), `real_data_check.png`, `healthy_check.png`.
 
 ## 8. Earth spin-off
@@ -214,7 +258,7 @@ The same offline, personal-baseline monitoring fits isolated crews on Earth: Ant
 - Model selection used synthetic scenarios designed by the team; the winning model's advantage may partly reflect the linear-Gaussian simulator (see 7.3).
 - Radiation dose values are illustrative; SEP event dates are real only after `src.donki` has been run with internet access.
 
-## 10. Use of AI (Super Intelligence, SI)
+## 10. Use of AI
 
 Generative AI was used in this project, as required to be disclosed by the NASA Space Apps rules:
 - **Claude (Anthropic)**, including via Claude Code, drafted the Python code, tests, configuration files, the concept UI, the figures, this README, the demo slides and the project-page texts (`docs/submission.md`), and helped search for and verify sources. Every source file carries the header "AI-assisted: drafted with Claude (Anthropic), reviewed by the team".
@@ -230,6 +274,10 @@ Data and scientific sources
 - NASA Human Research Program — Ongoing HRP Research in Space: https://www.nasa.gov/hrp/ongoing-hrp-research/
 - Thambawita V., Hicks S.A., Borgli H., Stensland H.K., Jha D., Svensen M.K., Pettersen S.A., Johansen D., Johansen H.D., Pettersen S.D., Nordvang S., Pedersen S., Gjerdrum A., Grønli T.-M., Fredriksen P.M., Eg R., Hansen K., Fagernes S., Claudi C., Biørn-Hansen A., Nguyen D.T.D., Kupka T., Hammer H.L., Jain R., Riegler M.A., Halvorsen P. (2020), PMData: a sports logging dataset, Proc. 11th ACM Multimedia Systems Conference (MMSys'20), doi:10.1145/3339825.3394926 — dataset under CC BY 4.0: https://datasets.simula.no/pmdata (daily files read from the public mirror https://github.com/itsalamhere/sports-logs, which states PMData as its source)
 - NASA CCMC DONKI — Solar Energetic Particle events API: https://ccmc.gsfc.nasa.gov/tools/DONKI/
+- Obermeyer Z., Samra J.K., Mullainathan S. (2017), Individual differences in normal body temperature: longitudinal big data analysis of patient records, BMJ 359:j5468: https://pubmed.ncbi.nlm.nih.gov/29237616/
+- Quer G. et al. (2020), Inter- and intraindividual variability in daily resting heart rate, PLOS ONE 15(2):e0227709: https://doi.org/10.1371/journal.pone.0227709
+- NASA Open Science Data Repository — OSD-575, SpaceX Inspiration4 Blood Serum Metabolic Panel (CMP): https://osdr.nasa.gov/bio/repo/data/studies/OSD-575 · Overbey E.G. et al. (2024), The Space Omics and Medical Atlas (SOMA) and international astronaut biobank, Nature, doi:10.1038/s41586-024-07639-y
+- NASA/JPL Solar System Dynamics — Horizons System (Earth–Mars ephemeris, API): https://ssd.jpl.nasa.gov/horizons/ · API docs: https://ssd-api.jpl.nasa.gov/doc/horizons.html
 - NASA OCHMO Technical Brief OCHMO-TB-004, Carbon Dioxide: https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-004-carbon-dioxide.pdf
 - NASA ASCEND paper, Communication Delays, Disruptions, and Blackouts for Crewed Mars Missions: https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf
 - Canadian Space Agency — Monitoring Radiation for Astronaut Health: https://www.asc-csa.gc.ca/eng/news/articles/2026/2026-02-26-monitoring-radiation-astronaut-health.asp

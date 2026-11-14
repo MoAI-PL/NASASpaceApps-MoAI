@@ -21,6 +21,7 @@ from src.common import (AE_FEATURES, CONFIG_DIR, DISCLAIMER, INDICATORS, LEVELS,
                         SYSTEMS, UI_OUT_DIR, level_rank, load_yaml, read_json, schema_validator, val,
                         write_json)
 from src.donki import sep_events
+from src.horizons import delay_by_day
 from src.features import astronaut_windows, normal_bands
 from src.scoring import ae_levels, contribution_shares, system_status
 
@@ -213,6 +214,8 @@ def build_meta(cfgs: dict, crew: list[dict], bands: dict, split_meta: dict, samp
                                                int(val(sim_cfg["mission"]["days"])))},
         "rules": {"critical": [rule_out(r) for r in cfgs["rules"]["critical_rules"]],
                   "b1": [rule_out(r) for r in cfgs["rules"]["b1_rules"]]},
+        # Real Earth–Mars one-way delay per mission day (JPL Horizons cache), or null without it.
+        "mars_delay": delay_by_day(int(val(sim_cfg["mission"]["days"]))),
     }
 
 

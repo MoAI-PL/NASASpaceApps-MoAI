@@ -73,6 +73,8 @@ File header (Python):
 ```bash
 conda env create -f environment.yml && conda activate spaceapps
 python -m src.donki --start 2024-05-01 --days 120          # cache real SEP events (M1)
+python -m src.horizons --start 2024-05-01 --days 120       # cache real Earth–Mars delay (JPL Horizons, UI only)
+python -m src.osdr --download                              # Inspiration4 glucose vs simulator (NASA OSDR, comparison only)
 python -m src.simulate --config config/simulation.yaml       # synthetic crews (M1)
 python -m src.train --config config/model.yaml               # fit the configured detector (M2)
 python -m src.benchmark                                      # model-selection benchmark (bench split)
@@ -81,6 +83,7 @@ python -m src.evaluate --split dev                           # confirmation with
 python -m src.export --sample                                # contract sample for the UI (M0)
 python -m src.export --crew demo                             # JSON for the UI + ui/concept/data.js (M3)
 python -m src.realdata                                       # alarm rates of the frozen model on real data (PMData)
+python -m src.robust_bench --window 14                        # robustness benchmark of the personal normal (README 7.5)
 python -m src.figures --all                                  # slide figures (M1/M3)
 cd ui/app && npm install && npm run dev                      # UI app dev server (reads outputs/ui/)
 cd ui/app && npm run build                                   # UI app static build → ui/app/dist/

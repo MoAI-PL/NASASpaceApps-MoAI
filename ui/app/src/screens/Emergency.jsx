@@ -2,7 +2,7 @@
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
 import { useEffect, useState } from "react";
-import { META, fmt, roundTripText } from "../data.js";
+import { META, fmt, oneWayText, roundTripText } from "../data.js";
 import { EMERGENCY, EMERGENCY_START } from "../content/texts.js";
 import { StatusIcon } from "../components/icons.jsx";
 import { SourceLink, TapButton, Text } from "../components/ui.jsx";
@@ -73,7 +73,7 @@ export default function Emergency({ env, record, onClose }) {
         {node.source && <div className="mt-4"><SourceLink id={node.source} /></div>}
 
         <div className="mt-5 p-4 rounded-xl bg-panel-2 text-lg">
-          <p>Earth: {environment.name} · signal {environment.one_way_delay_text} one way. Any reply takes at least the round trip ({roundTripText(env)}).</p>
+          <p>Earth: {environment.name} · signal {oneWayText(env, record?.day)} one way. Any reply takes at least the round trip ({roundTripText(env, record?.day)}).</p>
           <p className="mt-1 text-ink-2 text-base">These steps support, never replace, your medical training and onboard procedures.</p>
         </div>
 
