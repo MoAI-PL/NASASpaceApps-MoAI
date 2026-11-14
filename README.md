@@ -99,6 +99,20 @@ flowchart LR
   H --> J[Earth report queue<br/>delayed downlink]
 ```
 
+### Where things are
+
+| Folder | What is in it |
+|---|---|
+| `src/` | Python pipeline: `simulate` (synthetic crews), `train` (fit the detector), `evaluate` (selection, confirmation, one-time hold-out), `export` (JSON for the app), `figures`; real-data checks `realdata` (PMData), `osdr` (NASA OSDR), `horizons` and `donki` (NASA data caches) |
+| `config/` | Every number with its `source` or `assumption: true` (frozen for the hold-out); `sources_extra.yaml` holds sources checked afterwards |
+| `data/` | `raw/` cached NASA data (DONKI, Horizons, OSDR) · `real/` PMData daily table · `synthetic/demo/` the three demo crew members |
+| `outputs/results/` | Every result as JSON and Markdown, including `final_test.json` (hold-out, run once) and `config_sources.md` |
+| `outputs/figures/` | Slide-ready figures |
+| `outputs/ui/` | The JSON contract the app reads (schema in `schemas/`) |
+| `ui/app/` | The offline web app (React, Vite, Tailwind), published on GitHub Pages |
+| `tests/` | pytest suite, run by CI on Linux and Windows |
+| `docs/` | Demo slides and the project-page texts |
+
 ## 5. Why unsupervised
 
 There is no labelled dataset of astronaut illnesses: crews are tiny, serious events are rare and individual health records are private. A supervised classifier has nothing to learn from. A model of **each person's normal** needs no labels — it only needs healthy days, which every mission produces.

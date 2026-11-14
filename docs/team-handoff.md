@@ -1,5 +1,7 @@
 # Team handoff — status and next steps (2026-11-14, evening)
 
+> **Archived working note.** This is the team's internal to-do list from the evening of 14 November 2026, kept for transparency. Most items are done; the current state is in the main [README](../README.md) (see "For judges"). Branch names, PR numbers and the repository description mentioned below refer to the team's first repository.
+
 Branch `zuzia` (PR #2 → `main`). Deadline: **Sunday 15 Nov, 23:59 local time** (team target: submit at 22:00).
 Rules checked against the official 2026 Project Submission Guide, Judging & Awards Guide and Participant
 Terms (pages dated Nov 2026) and the challenge author's video (https://www.youtube.com/watch?v=RERG3gEmdC8).
