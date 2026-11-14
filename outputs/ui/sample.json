@@ -1,0 +1,5385 @@
+{
+  "meta": {
+    "product": "Astrobalance",
+    "sample": true,
+    "disclaimer": "Prototype — synthetic data — not medical advice. Synthetic data calibrated on published sources — proof of concept, not clinical validation.",
+    "mission": {
+      "start_date": "2024-05-01",
+      "days": 120,
+      "calibration_days": 21
+    },
+    "index": {
+      "name": "Systemic Anomaly Index",
+      "short": "SAI",
+      "range": [
+        0,
+        100
+      ],
+      "p_yellow": 94,
+      "p_orange": 99,
+      "persistence_days": 3,
+      "release_days": 7,
+      "window_days": 14,
+      "model_version": 2
+    },
+    "features": {
+      "sys": {
+        "name": "Systolic blood pressure",
+        "unit": "mmHg",
+        "system": "heart"
+      },
+      "dia": {
+        "name": "Diastolic blood pressure",
+        "unit": "mmHg",
+        "system": "heart"
+      },
+      "hr": {
+        "name": "Resting heart rate",
+        "unit": "bpm",
+        "system": "heart"
+      },
+      "glucose": {
+        "name": "Fasting blood glucose",
+        "unit": "mg/dL",
+        "system": "metabolism"
+      },
+      "temp": {
+        "name": "Body temperature",
+        "unit": "°C",
+        "system": "immune_temp"
+      },
+      "sleep_h": {
+        "name": "Sleep",
+        "unit": "h",
+        "system": "mind_sleep"
+      },
+      "mood": {
+        "name": "Mood",
+        "unit": "1–5",
+        "system": "mind_sleep"
+      },
+      "reaction_ms": {
+        "name": "Reaction time",
+        "unit": "ms",
+        "system": "mind_sleep"
+      },
+      "exercise_min": {
+        "name": "Exercise",
+        "unit": "min",
+        "system": null
+      }
+    },
+    "systems": {
+      "heart": {
+        "name": "Heart & circulation",
+        "features": [
+          "sys",
+          "dia",
+          "hr"
+        ],
+        "hazard": "gravity"
+      },
+      "metabolism": {
+        "name": "Metabolism",
+        "features": [
+          "glucose"
+        ],
+        "hazard": null
+      },
+      "mind_sleep": {
+        "name": "Mind & sleep",
+        "features": [
+          "sleep_h",
+          "mood",
+          "reaction_ms"
+        ],
+        "hazard": "isolation"
+      },
+      "immune_temp": {
+        "name": "Immune & temperature",
+        "features": [
+          "temp"
+        ],
+        "hazard": "closed_environment"
+      }
+    },
+    "hazards": {
+      "radiation": {
+        "name": "Space radiation",
+        "source": "https://www.nasa.gov/hrp/hazards/"
+      },
+      "isolation": {
+        "name": "Isolation & confinement",
+        "source": "https://www.nasa.gov/hrp/hazards/"
+      },
+      "distance": {
+        "name": "Distance from Earth",
+        "source": "https://www.nasa.gov/hrp/hazards/"
+      },
+      "gravity": {
+        "name": "Gravity fields",
+        "source": "https://www.nasa.gov/hrp/hazards/"
+      },
+      "closed_environment": {
+        "name": "Hostile & closed environment",
+        "source": "https://www.nasa.gov/hrp/hazards/"
+      }
+    },
+    "prompts": {
+      "repeat_bp_hr_rest": {
+        "system": "heart"
+      },
+      "repeat_glucose_fasting": {
+        "system": "metabolism"
+      },
+      "reaction_test_mood_checkin": {
+        "system": "mind_sleep"
+      },
+      "repeat_temperature_evening": {
+        "system": "immune_temp"
+      }
+    },
+    "environments": {
+      "iss": {
+        "name": "Space station (low Earth orbit)",
+        "one_way_delay_text": "near real-time",
+        "one_way_delay_s": [
+          0,
+          1
+        ]
+      },
+      "lunar_base": {
+        "name": "Lunar surface base",
+        "one_way_delay_text": "~1.3 s",
+        "one_way_delay_s": [
+          1.2,
+          1.4
+        ],
+        "source": "Light travel time over the mean Earth–Moon distance (~384,400 km / c ≈ 1.28 s); NASA ASCEND paper describes few-second maximum delays just beyond the Moon. https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf"
+      },
+      "mars_transit": {
+        "name": "Mars transit",
+        "one_way_delay_text": "up to ~22 min",
+        "one_way_delay_s": [
+          0,
+          1320
+        ],
+        "source": "NASA ASCEND paper: Earth–Mars one-way delays vary from 0 to 22 minutes over a mission. https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf"
+      },
+      "mars_rover": {
+        "name": "Mars surface rover",
+        "one_way_delay_text": "up to ~22 min",
+        "one_way_delay_s": [
+          0,
+          1320
+        ],
+        "source": "NASA ASCEND paper: Earth–Mars one-way delays vary from 0 to 22 minutes over a mission (a pressurized rover on Mars reaches Earth through the surface base or an orbiter; that relay is a team assumption). https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf"
+      }
+    },
+    "default_environment": "mars_transit",
+    "levels": [
+      "green",
+      "yellow",
+      "orange",
+      "red"
+    ],
+    "crew": [
+      {
+        "id": "A1",
+        "display_name": "Crew Member Alpha",
+        "scenario": null
+      },
+      {
+        "id": "A2",
+        "display_name": "Crew Member Bravo",
+        "scenario": {
+          "id": "S1",
+          "name": "Cardiovascular deconditioning",
+          "start_day": 50
+        }
+      },
+      {
+        "id": "A3",
+        "display_name": "Crew Member Charlie",
+        "scenario": {
+          "id": "S2",
+          "name": "Isolation and stress",
+          "start_day": 70
+        }
+      }
+    ],
+    "normal_bands": {
+      "A1": {
+        "sys": [
+          107.18,
+          126.82
+        ],
+        "dia": [
+          60.53,
+          73.09
+        ],
+        "hr": [
+          67.72,
+          74.91
+        ],
+        "glucose": [
+          87.33,
+          108.29
+        ],
+        "temp": [
+          36.0,
+          36.48
+        ],
+        "sleep_h": [
+          4.46,
+          6.31
+        ],
+        "mood": [
+          2.98,
+          4.62
+        ],
+        "reaction_ms": [
+          244.32,
+          304.78
+        ],
+        "exercise_min": [
+          19.8,
+          187.06
+        ]
+      },
+      "A2": {
+        "sys": [
+          107.6,
+          121.1
+        ],
+        "dia": [
+          68.45,
+          90.41
+        ],
+        "hr": [
+          57.87,
+          66.53
+        ],
+        "glucose": [
+          74.59,
+          92.84
+        ],
+        "temp": [
+          36.05,
+          36.51
+        ],
+        "sleep_h": [
+          5.95,
+          7.89
+        ],
+        "mood": [
+          2.72,
+          4.86
+        ],
+        "reaction_ms": [
+          252.35,
+          312.25
+        ],
+        "exercise_min": [
+          4.02,
+          181.02
+        ]
+      },
+      "A3": {
+        "sys": [
+          122.91,
+          139.39
+        ],
+        "dia": [
+          64.7,
+          88.07
+        ],
+        "hr": [
+          60.07,
+          71.83
+        ],
+        "glucose": [
+          80.52,
+          112.68
+        ],
+        "temp": [
+          36.56,
+          37.16
+        ],
+        "sleep_h": [
+          4.9,
+          8.03
+        ],
+        "mood": [
+          2.76,
+          5.03
+        ],
+        "reaction_ms": [
+          208.05,
+          275.95
+        ],
+        "exercise_min": [
+          4.8,
+          231.1
+        ]
+      }
+    },
+    "cabin_co2_limit_mmHg": 3.0,
+    "space_weather": {
+      "source": "NASA DONKI SEP events",
+      "status": "cached",
+      "event_days": [
+        9,
+        10,
+        11,
+        13,
+        39,
+        43,
+        84,
+        92,
+        97
+      ],
+      "events": [
+        {
+          "day": 9,
+          "time": "2024-05-09T13:59Z",
+          "id": "2024-05-09T13:59:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30609/-1"
+        },
+        {
+          "day": 9,
+          "time": "2024-05-09T14:25Z",
+          "id": "2024-05-09T14:25:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30610/-1"
+        },
+        {
+          "day": 10,
+          "time": "2024-05-10T12:59Z",
+          "id": "2024-05-10T12:59:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30675/-1"
+        },
+        {
+          "day": 10,
+          "time": "2024-05-10T13:02Z",
+          "id": "2024-05-10T13:02:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30676/-1"
+        },
+        {
+          "day": 10,
+          "time": "2024-05-10T13:35Z",
+          "id": "2024-05-10T13:35:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30677/-1"
+        },
+        {
+          "day": 10,
+          "time": "2024-05-10T14:50Z",
+          "id": "2024-05-10T14:50:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30684/-1"
+        },
+        {
+          "day": 11,
+          "time": "2024-05-11T02:10Z",
+          "id": "2024-05-11T02:10:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30714/-1"
+        },
+        {
+          "day": 11,
+          "time": "2024-05-11T04:07Z",
+          "id": "2024-05-11T04:07:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30717/-1"
+        },
+        {
+          "day": 13,
+          "time": "2024-05-13T12:44Z",
+          "id": "2024-05-13T12:44:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30811/-1"
+        },
+        {
+          "day": 13,
+          "time": "2024-05-13T13:10Z",
+          "id": "2024-05-13T13:10:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30807/-1"
+        },
+        {
+          "day": 13,
+          "time": "2024-05-13T14:00Z",
+          "id": "2024-05-13T14:00:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30817/-1"
+        },
+        {
+          "day": 13,
+          "time": "2024-05-13T16:19Z",
+          "id": "2024-05-13T16:19:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30820/-1"
+        },
+        {
+          "day": 13,
+          "time": "2024-05-13T18:07Z",
+          "id": "2024-05-13T18:07:00-SEP-002",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30825/-1"
+        },
+        {
+          "day": 13,
+          "time": "2024-05-13T18:07Z",
+          "id": "2024-05-13T18:07:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30824/-1"
+        },
+        {
+          "day": 39,
+          "time": "2024-06-08T02:25Z",
+          "id": "2024-06-08T02:25:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31338/-1"
+        },
+        {
+          "day": 39,
+          "time": "2024-06-08T02:55Z",
+          "id": "2024-06-08T02:55:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31343/-1"
+        },
+        {
+          "day": 39,
+          "time": "2024-06-08T03:09Z",
+          "id": "2024-06-08T03:09:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31359/-1"
+        },
+        {
+          "day": 39,
+          "time": "2024-06-08T03:34Z",
+          "id": "2024-06-08T03:34:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31348/-1"
+        },
+        {
+          "day": 39,
+          "time": "2024-06-08T03:36Z",
+          "id": "2024-06-08T03:36:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31349/-1"
+        },
+        {
+          "day": 39,
+          "time": "2024-06-08T04:14Z",
+          "id": "2024-06-08T04:14:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31351/-1"
+        },
+        {
+          "day": 39,
+          "time": "2024-06-08T04:14Z",
+          "id": "2024-06-08T04:14:00-SEP-002",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31360/-1"
+        },
+        {
+          "day": 39,
+          "time": "2024-06-08T04:20Z",
+          "id": "2024-06-08T04:20:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31357/-1"
+        },
+        {
+          "day": 39,
+          "time": "2024-06-08T04:48Z",
+          "id": "2024-06-08T04:48:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31358/-1"
+        },
+        {
+          "day": 43,
+          "time": "2024-06-12T00:21Z",
+          "id": "2024-06-12T00:21:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31435/-1"
+        },
+        {
+          "day": 43,
+          "time": "2024-06-12T00:30Z",
+          "id": "2024-06-12T00:30:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31437/-1"
+        },
+        {
+          "day": 43,
+          "time": "2024-06-12T02:58Z",
+          "id": "2024-06-12T02:58:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31441/-1"
+        },
+        {
+          "day": 43,
+          "time": "2024-06-12T04:03Z",
+          "id": "2024-06-12T04:03:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31452/-1"
+        },
+        {
+          "day": 84,
+          "time": "2024-07-23T01:20Z",
+          "id": "2024-07-23T01:20:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32110/-1"
+        },
+        {
+          "day": 84,
+          "time": "2024-07-23T02:05Z",
+          "id": "2024-07-23T02:05:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32115/-1"
+        },
+        {
+          "day": 84,
+          "time": "2024-07-23T02:28Z",
+          "id": "2024-07-23T02:28:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32122/-1"
+        },
+        {
+          "day": 84,
+          "time": "2024-07-23T02:32Z",
+          "id": "2024-07-23T02:32:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32121/-1"
+        },
+        {
+          "day": 84,
+          "time": "2024-07-23T02:47Z",
+          "id": "2024-07-23T02:47:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32114/-1"
+        },
+        {
+          "day": 84,
+          "time": "2024-07-23T02:55Z",
+          "id": "2024-07-23T02:55:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32138/-1"
+        },
+        {
+          "day": 84,
+          "time": "2024-07-23T03:00Z",
+          "id": "2024-07-23T03:00:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32118/-1"
+        },
+        {
+          "day": 92,
+          "time": "2024-07-31T20:10Z",
+          "id": "2024-07-31T20:10:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32396/-1"
+        },
+        {
+          "day": 92,
+          "time": "2024-07-31T20:10Z",
+          "id": "2024-07-31T20:10:00-SEP-002",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32397/-1"
+        },
+        {
+          "day": 97,
+          "time": "2024-08-05T17:26Z",
+          "id": "2024-08-05T17:26:00-SEP-001",
+          "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32560/-1"
+        }
+      ]
+    },
+    "rules": {
+      "critical": [
+        {
+          "feature": "temp",
+          "op": "ge",
+          "value": 39.5,
+          "source": null,
+          "assumption": true
+        },
+        {
+          "feature": "sys",
+          "op": "gt",
+          "value": 180,
+          "source": "American Heart Association — hypertensive crisis: systolic above 180 and/or diastolic above 120 mmHg. https://heart.org/bplevels",
+          "assumption": false
+        },
+        {
+          "feature": "dia",
+          "op": "gt",
+          "value": 120,
+          "source": "American Heart Association — hypertensive crisis. https://heart.org/bplevels",
+          "assumption": false
+        },
+        {
+          "feature": "glucose",
+          "op": "lt",
+          "value": 54,
+          "source": "American Diabetes Association — Level 2 hypoglycemia: glucose < 54 mg/dL. https://professional.diabetes.org/sites/dpro/files/2025-05/hypoglycemia-hcp-5-27-25.pdf",
+          "assumption": false
+        },
+        {
+          "feature": "hr",
+          "op": "gt",
+          "value": 130,
+          "source": null,
+          "assumption": true
+        },
+        {
+          "feature": "hr",
+          "op": "lt",
+          "value": 40,
+          "source": null,
+          "assumption": true
+        }
+      ],
+      "b1": [
+        {
+          "feature": "temp",
+          "op": "ge",
+          "value": 38.0,
+          "persistence_days": 2,
+          "source": "MedlinePlus (U.S. National Library of Medicine), Body temperature norms: a temperature over 100.4 °F (38 °C) most often means a fever. https://medlineplus.gov/ency/article/001982.htm",
+          "assumption": false
+        },
+        {
+          "feature": "hr",
+          "op": "gt",
+          "value": 100,
+          "persistence_days": 2,
+          "source": "Mayo Clinic, Heart rate: What's normal? — a normal resting heart rate for adults ranges from 60 to 100 beats per minute. https://www.mayoclinic.org/healthy-lifestyle/fitness/expert-answers/heart-rate",
+          "assumption": false
+        },
+        {
+          "feature": "sys",
+          "op": "ge",
+          "value": 140,
+          "persistence_days": 2,
+          "source": "American Heart Association, Understanding Blood Pressure Readings — Stage 2 hypertension: systolic >= 140 or diastolic >= 90 mmHg. https://heart.org/bplevels",
+          "assumption": false
+        },
+        {
+          "feature": "dia",
+          "op": "ge",
+          "value": 90,
+          "persistence_days": 2,
+          "source": "American Heart Association, Understanding Blood Pressure Readings — Stage 2 hypertension. https://heart.org/bplevels",
+          "assumption": false
+        },
+        {
+          "feature": "glucose",
+          "op": "ge",
+          "value": 126,
+          "persistence_days": 2,
+          "source": null,
+          "assumption": true
+        },
+        {
+          "feature": "glucose",
+          "op": "lt",
+          "value": 70,
+          "persistence_days": 2,
+          "source": "American Diabetes Association, Hypoglycemia (HCP) — Level 1 hypoglycemia: glucose < 70 mg/dL. https://professional.diabetes.org/sites/dpro/files/2025-05/hypoglycemia-hcp-5-27-25.pdf",
+          "assumption": false
+        },
+        {
+          "feature": "sleep_h",
+          "op": "lt",
+          "value": 5.0,
+          "persistence_days": 3,
+          "source": null,
+          "assumption": true
+        },
+        {
+          "feature": "mood",
+          "op": "le",
+          "value": 2,
+          "persistence_days": 3,
+          "source": null,
+          "assumption": true
+        }
+      ]
+    }
+  },
+  "records": [
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 1,
+      "date": "2024-05-01",
+      "env": "mars_transit",
+      "values": {
+        "sys": 117.0,
+        "dia": 62.0,
+        "hr": 71.0,
+        "glucose": 96.0,
+        "temp": 36.2,
+        "sleep_h": 4.9,
+        "mood": 4.0,
+        "reaction_ms": 290.0,
+        "exercise_min": 144.0
+      },
+      "context": {
+        "radiation_mGy": 0.507,
+        "radiation_cum_mGy": 0.51,
+        "cabin_co2_mmHg": 2.39
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 2,
+      "date": "2024-05-02",
+      "env": "mars_transit",
+      "values": {
+        "sys": 119.0,
+        "dia": 66.0,
+        "hr": 69.0,
+        "glucose": 92.0,
+        "temp": 36.3,
+        "sleep_h": 5.4,
+        "mood": 4.0,
+        "reaction_ms": 298.0,
+        "exercise_min": 165.0
+      },
+      "context": {
+        "radiation_mGy": 0.491,
+        "radiation_cum_mGy": 1.0,
+        "cabin_co2_mmHg": 1.99
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 3,
+      "date": "2024-05-03",
+      "env": "mars_transit",
+      "values": {
+        "sys": 114.0,
+        "dia": 63.0,
+        "hr": 71.0,
+        "glucose": 97.0,
+        "temp": 36.3,
+        "sleep_h": 5.0,
+        "mood": 4.0,
+        "reaction_ms": 285.0,
+        "exercise_min": 140.0
+      },
+      "context": {
+        "radiation_mGy": 0.441,
+        "radiation_cum_mGy": 1.44,
+        "cabin_co2_mmHg": 2.53
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 4,
+      "date": "2024-05-04",
+      "env": "mars_transit",
+      "values": {
+        "sys": 114.0,
+        "dia": 67.0,
+        "hr": 70.0,
+        "glucose": 95.0,
+        "temp": 36.2,
+        "sleep_h": 5.8,
+        "mood": 4.0,
+        "reaction_ms": 290.0,
+        "exercise_min": 104.0
+      },
+      "context": {
+        "radiation_mGy": 0.487,
+        "radiation_cum_mGy": 1.93,
+        "cabin_co2_mmHg": 2.58
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 5,
+      "date": "2024-05-05",
+      "env": "mars_transit",
+      "values": {
+        "sys": 115.0,
+        "dia": 68.0,
+        "hr": 73.0,
+        "glucose": 94.0,
+        "temp": 36.0,
+        "sleep_h": 5.5,
+        "mood": 4.0,
+        "reaction_ms": 266.0,
+        "exercise_min": 123.0
+      },
+      "context": {
+        "radiation_mGy": 0.477,
+        "radiation_cum_mGy": 2.4,
+        "cabin_co2_mmHg": 1.71
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 6,
+      "date": "2024-05-06",
+      "env": "mars_transit",
+      "values": {
+        "sys": 115.0,
+        "dia": 68.0,
+        "hr": 70.0,
+        "glucose": 94.0,
+        "temp": 36.4,
+        "sleep_h": 5.5,
+        "mood": 4.0,
+        "reaction_ms": 286.0,
+        "exercise_min": 120.0
+      },
+      "context": {
+        "radiation_mGy": 0.539,
+        "radiation_cum_mGy": 2.94,
+        "cabin_co2_mmHg": 1.91
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 7,
+      "date": "2024-05-07",
+      "env": "mars_transit",
+      "values": {
+        "sys": 125.0,
+        "dia": 69.0,
+        "hr": 72.0,
+        "glucose": 94.0,
+        "temp": 36.3,
+        "sleep_h": 5.1,
+        "mood": 4.0,
+        "reaction_ms": 261.0,
+        "exercise_min": 15.0
+      },
+      "context": {
+        "radiation_mGy": 0.457,
+        "radiation_cum_mGy": 3.4,
+        "cabin_co2_mmHg": 2.34
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 47,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 8,
+      "date": "2024-05-08",
+      "env": "mars_transit",
+      "values": {
+        "sys": 118.0,
+        "dia": 73.0,
+        "hr": 73.0,
+        "glucose": 107.0,
+        "temp": 36.4,
+        "sleep_h": 4.7,
+        "mood": 4.0,
+        "reaction_ms": 252.0,
+        "exercise_min": 102.0
+      },
+      "context": {
+        "radiation_mGy": 0.464,
+        "radiation_cum_mGy": 3.86,
+        "cabin_co2_mmHg": 2.21
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 44,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 9,
+      "date": "2024-05-09",
+      "env": "mars_transit",
+      "values": {
+        "sys": 124.0,
+        "dia": 72.0,
+        "hr": 72.0,
+        "glucose": 94.0,
+        "temp": 36.3,
+        "sleep_h": 4.7,
+        "mood": null,
+        "reaction_ms": 272.0,
+        "exercise_min": 120.0
+      },
+      "context": {
+        "radiation_mGy": 2.528,
+        "radiation_cum_mGy": 6.39,
+        "cabin_co2_mmHg": 2.29
+      },
+      "missing": [
+        "mood"
+      ],
+      "calibrating": true,
+      "sai": 41,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "yellow",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "sep_event"
+      ]
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 10,
+      "date": "2024-05-10",
+      "env": "mars_transit",
+      "values": {
+        "sys": 122.0,
+        "dia": 61.0,
+        "hr": 73.0,
+        "glucose": 97.0,
+        "temp": 36.3,
+        "sleep_h": 5.9,
+        "mood": 3.0,
+        "reaction_ms": 267.0,
+        "exercise_min": 114.0
+      },
+      "context": {
+        "radiation_mGy": 2.534,
+        "radiation_cum_mGy": 8.93,
+        "cabin_co2_mmHg": 2.04
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 38,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "yellow",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "sep_event"
+      ]
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 11,
+      "date": "2024-05-11",
+      "env": "mars_transit",
+      "values": {
+        "sys": 111.0,
+        "dia": 71.0,
+        "hr": 74.0,
+        "glucose": 102.0,
+        "temp": 36.2,
+        "sleep_h": 5.5,
+        "mood": 4.0,
+        "reaction_ms": 276.0,
+        "exercise_min": 120.0
+      },
+      "context": {
+        "radiation_mGy": 2.481,
+        "radiation_cum_mGy": 11.41,
+        "cabin_co2_mmHg": 2.56
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 34,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "yellow",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "sep_event"
+      ]
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 12,
+      "date": "2024-05-12",
+      "env": "mars_transit",
+      "values": {
+        "sys": 117.0,
+        "dia": 66.0,
+        "hr": 72.0,
+        "glucose": 98.0,
+        "temp": 36.3,
+        "sleep_h": 5.7,
+        "mood": 3.0,
+        "reaction_ms": 275.0,
+        "exercise_min": 134.0
+      },
+      "context": {
+        "radiation_mGy": 0.484,
+        "radiation_cum_mGy": 11.89,
+        "cabin_co2_mmHg": 2.53
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 32,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 13,
+      "date": "2024-05-13",
+      "env": "mars_transit",
+      "values": {
+        "sys": 113.0,
+        "dia": 65.0,
+        "hr": 73.0,
+        "glucose": 103.0,
+        "temp": 36.3,
+        "sleep_h": 5.4,
+        "mood": 4.0,
+        "reaction_ms": 299.0,
+        "exercise_min": 122.0
+      },
+      "context": {
+        "radiation_mGy": 2.515,
+        "radiation_cum_mGy": 14.41,
+        "cabin_co2_mmHg": 2.32
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 30,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "yellow",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "sep_event"
+      ]
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 14,
+      "date": "2024-05-14",
+      "env": "mars_transit",
+      "values": {
+        "sys": 127.0,
+        "dia": 66.0,
+        "hr": 67.0,
+        "glucose": 109.0,
+        "temp": 36.2,
+        "sleep_h": 5.1,
+        "mood": 4.0,
+        "reaction_ms": 265.0,
+        "exercise_min": 14.0
+      },
+      "context": {
+        "radiation_mGy": 0.442,
+        "radiation_cum_mGy": 14.85,
+        "cabin_co2_mmHg": 2.64
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 30,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 15,
+      "date": "2024-05-15",
+      "env": "mars_transit",
+      "values": {
+        "sys": 113.0,
+        "dia": 65.0,
+        "hr": 69.0,
+        "glucose": 104.0,
+        "temp": 36.3,
+        "sleep_h": 4.6,
+        "mood": 3.0,
+        "reaction_ms": null,
+        "exercise_min": 88.0
+      },
+      "context": {
+        "radiation_mGy": 0.453,
+        "radiation_cum_mGy": 15.3,
+        "cabin_co2_mmHg": 2.44
+      },
+      "missing": [
+        "reaction_ms"
+      ],
+      "calibrating": true,
+      "sai": 30,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 16,
+      "date": "2024-05-16",
+      "env": "mars_transit",
+      "values": {
+        "sys": 118.0,
+        "dia": 70.0,
+        "hr": null,
+        "glucose": 104.0,
+        "temp": 36.3,
+        "sleep_h": 5.6,
+        "mood": 4.0,
+        "reaction_ms": 265.0,
+        "exercise_min": 98.0
+      },
+      "context": {
+        "radiation_mGy": 0.493,
+        "radiation_cum_mGy": 15.79,
+        "cabin_co2_mmHg": 2.04
+      },
+      "missing": [
+        "hr"
+      ],
+      "calibrating": true,
+      "sai": 31,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 17,
+      "date": "2024-05-17",
+      "env": "mars_transit",
+      "values": {
+        "sys": 122.0,
+        "dia": 67.0,
+        "hr": 72.0,
+        "glucose": 98.0,
+        "temp": 36.3,
+        "sleep_h": 5.6,
+        "mood": 3.0,
+        "reaction_ms": 257.0,
+        "exercise_min": 84.0
+      },
+      "context": {
+        "radiation_mGy": 0.539,
+        "radiation_cum_mGy": 16.33,
+        "cabin_co2_mmHg": 2.41
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 34,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 18,
+      "date": "2024-05-18",
+      "env": "mars_transit",
+      "values": {
+        "sys": 107.0,
+        "dia": 66.0,
+        "hr": 73.0,
+        "glucose": 96.0,
+        "temp": 36.3,
+        "sleep_h": 5.5,
+        "mood": 4.0,
+        "reaction_ms": 275.0,
+        "exercise_min": 136.0
+      },
+      "context": {
+        "radiation_mGy": 0.489,
+        "radiation_cum_mGy": 16.82,
+        "cabin_co2_mmHg": 2.01
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 37,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 19,
+      "date": "2024-05-19",
+      "env": "mars_transit",
+      "values": {
+        "sys": 114.0,
+        "dia": 65.0,
+        "hr": 70.0,
+        "glucose": 88.0,
+        "temp": 36.1,
+        "sleep_h": 5.1,
+        "mood": 4.0,
+        "reaction_ms": 295.0,
+        "exercise_min": 103.0
+      },
+      "context": {
+        "radiation_mGy": 0.503,
+        "radiation_cum_mGy": 17.32,
+        "cabin_co2_mmHg": 2.56
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 40,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 20,
+      "date": "2024-05-20",
+      "env": "mars_transit",
+      "values": {
+        "sys": 118.0,
+        "dia": 64.0,
+        "hr": 71.0,
+        "glucose": 94.0,
+        "temp": 35.9,
+        "sleep_h": 6.0,
+        "mood": 4.0,
+        "reaction_ms": 269.0,
+        "exercise_min": 112.0
+      },
+      "context": {
+        "radiation_mGy": 0.528,
+        "radiation_cum_mGy": 17.85,
+        "cabin_co2_mmHg": 2.29
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 43,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 21,
+      "date": "2024-05-21",
+      "env": "mars_transit",
+      "values": {
+        "sys": 114.0,
+        "dia": 69.0,
+        "hr": null,
+        "glucose": 98.0,
+        "temp": 36.2,
+        "sleep_h": 6.4,
+        "mood": 4.0,
+        "reaction_ms": 248.0,
+        "exercise_min": 14.0
+      },
+      "context": {
+        "radiation_mGy": 0.553,
+        "radiation_cum_mGy": 18.41,
+        "cabin_co2_mmHg": 2.24
+      },
+      "missing": [
+        "hr"
+      ],
+      "calibrating": true,
+      "sai": 46,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 22,
+      "date": "2024-05-22",
+      "env": "mars_transit",
+      "values": {
+        "sys": 115.0,
+        "dia": 73.0,
+        "hr": 71.0,
+        "glucose": 97.0,
+        "temp": 36.3,
+        "sleep_h": 6.4,
+        "mood": 5.0,
+        "reaction_ms": 267.0,
+        "exercise_min": 110.0
+      },
+      "context": {
+        "radiation_mGy": 0.486,
+        "radiation_cum_mGy": 18.89,
+        "cabin_co2_mmHg": 2.1
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 48,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 23,
+      "date": "2024-05-23",
+      "env": "mars_transit",
+      "values": {
+        "sys": 122.0,
+        "dia": 67.0,
+        "hr": 73.0,
+        "glucose": 97.0,
+        "temp": 36.3,
+        "sleep_h": 4.8,
+        "mood": 3.0,
+        "reaction_ms": 251.0,
+        "exercise_min": 88.0
+      },
+      "context": {
+        "radiation_mGy": 0.5,
+        "radiation_cum_mGy": 19.39,
+        "cabin_co2_mmHg": 2.67
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 49,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 24,
+      "date": "2024-05-24",
+      "env": "mars_transit",
+      "values": {
+        "sys": 117.0,
+        "dia": 67.0,
+        "hr": 80.0,
+        "glucose": 104.0,
+        "temp": 36.1,
+        "sleep_h": 5.2,
+        "mood": 4.0,
+        "reaction_ms": 267.0,
+        "exercise_min": 101.0
+      },
+      "context": {
+        "radiation_mGy": 0.546,
+        "radiation_cum_mGy": 19.94,
+        "cabin_co2_mmHg": 2.25
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 49,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 25,
+      "date": "2024-05-25",
+      "env": "mars_transit",
+      "values": {
+        "sys": 120.0,
+        "dia": 67.0,
+        "hr": 80.0,
+        "glucose": 92.0,
+        "temp": 36.2,
+        "sleep_h": 6.5,
+        "mood": 4.0,
+        "reaction_ms": 285.0,
+        "exercise_min": 122.0
+      },
+      "context": {
+        "radiation_mGy": 0.462,
+        "radiation_cum_mGy": 20.4,
+        "cabin_co2_mmHg": 4.17
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 48,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "yellow"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "co2_high"
+      ]
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 26,
+      "date": "2024-05-26",
+      "env": "mars_transit",
+      "values": {
+        "sys": 121.0,
+        "dia": 68.0,
+        "hr": 76.0,
+        "glucose": 91.0,
+        "temp": 36.3,
+        "sleep_h": 5.1,
+        "mood": 4.0,
+        "reaction_ms": 290.0,
+        "exercise_min": 116.0
+      },
+      "context": {
+        "radiation_mGy": 0.526,
+        "radiation_cum_mGy": 20.93,
+        "cabin_co2_mmHg": 4.28
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 46,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "yellow"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "co2_high"
+      ]
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 27,
+      "date": "2024-05-27",
+      "env": "mars_transit",
+      "values": {
+        "sys": 117.0,
+        "dia": 70.0,
+        "hr": 75.0,
+        "glucose": 101.0,
+        "temp": 36.0,
+        "sleep_h": 5.2,
+        "mood": 3.0,
+        "reaction_ms": 260.0,
+        "exercise_min": 136.0
+      },
+      "context": {
+        "radiation_mGy": 0.475,
+        "radiation_cum_mGy": 21.4,
+        "cabin_co2_mmHg": 2.46
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 44,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 28,
+      "date": "2024-05-28",
+      "env": "mars_transit",
+      "values": {
+        "sys": 121.0,
+        "dia": 66.0,
+        "hr": 70.0,
+        "glucose": 80.0,
+        "temp": 36.1,
+        "sleep_h": 6.5,
+        "mood": 4.0,
+        "reaction_ms": null,
+        "exercise_min": 3.0
+      },
+      "context": {
+        "radiation_mGy": 0.503,
+        "radiation_cum_mGy": 21.9,
+        "cabin_co2_mmHg": 2.41
+      },
+      "missing": [
+        "reaction_ms"
+      ],
+      "calibrating": false,
+      "sai": 40,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 29,
+      "date": "2024-05-29",
+      "env": "mars_transit",
+      "values": {
+        "sys": 111.0,
+        "dia": 67.0,
+        "hr": 71.0,
+        "glucose": 91.0,
+        "temp": 36.3,
+        "sleep_h": 5.3,
+        "mood": 4.0,
+        "reaction_ms": null,
+        "exercise_min": 130.0
+      },
+      "context": {
+        "radiation_mGy": 0.494,
+        "radiation_cum_mGy": 22.4,
+        "cabin_co2_mmHg": 2.42
+      },
+      "missing": [
+        "reaction_ms"
+      ],
+      "calibrating": false,
+      "sai": 37,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A1",
+      "display_name": "Crew Member Alpha",
+      "day": 30,
+      "date": "2024-05-30",
+      "env": "mars_transit",
+      "values": {
+        "sys": 124.0,
+        "dia": 65.0,
+        "hr": 69.0,
+        "glucose": 103.0,
+        "temp": 36.3,
+        "sleep_h": 5.9,
+        "mood": 4.0,
+        "reaction_ms": 288.0,
+        "exercise_min": 122.0
+      },
+      "context": {
+        "radiation_mGy": 0.476,
+        "radiation_cum_mGy": 22.87,
+        "cabin_co2_mmHg": 2.43
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 34,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 1,
+      "date": "2024-05-01",
+      "env": "mars_transit",
+      "values": {
+        "sys": 120.0,
+        "dia": 84.0,
+        "hr": 64.0,
+        "glucose": 82.0,
+        "temp": 36.2,
+        "sleep_h": 6.3,
+        "mood": 4.0,
+        "reaction_ms": 269.0,
+        "exercise_min": 127.0
+      },
+      "context": {
+        "radiation_mGy": 0.476,
+        "radiation_cum_mGy": 0.48,
+        "cabin_co2_mmHg": 2.39
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 2,
+      "date": "2024-05-02",
+      "env": "mars_transit",
+      "values": {
+        "sys": 115.0,
+        "dia": 77.0,
+        "hr": 63.0,
+        "glucose": 83.0,
+        "temp": 36.1,
+        "sleep_h": 6.9,
+        "mood": 4.0,
+        "reaction_ms": 283.0,
+        "exercise_min": 112.0
+      },
+      "context": {
+        "radiation_mGy": 0.444,
+        "radiation_cum_mGy": 0.92,
+        "cabin_co2_mmHg": 1.99
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 3,
+      "date": "2024-05-03",
+      "env": "mars_transit",
+      "values": {
+        "sys": 117.0,
+        "dia": 77.0,
+        "hr": 62.0,
+        "glucose": 85.0,
+        "temp": 36.0,
+        "sleep_h": 7.0,
+        "mood": 3.0,
+        "reaction_ms": 315.0,
+        "exercise_min": 122.0
+      },
+      "context": {
+        "radiation_mGy": 0.481,
+        "radiation_cum_mGy": 1.4,
+        "cabin_co2_mmHg": 2.53
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 4,
+      "date": "2024-05-04",
+      "env": "mars_transit",
+      "values": {
+        "sys": 116.0,
+        "dia": 76.0,
+        "hr": 63.0,
+        "glucose": 86.0,
+        "temp": 36.2,
+        "sleep_h": 7.0,
+        "mood": 4.0,
+        "reaction_ms": 305.0,
+        "exercise_min": 87.0
+      },
+      "context": {
+        "radiation_mGy": 0.488,
+        "radiation_cum_mGy": 1.89,
+        "cabin_co2_mmHg": 2.58
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 5,
+      "date": "2024-05-05",
+      "env": "mars_transit",
+      "values": {
+        "sys": 115.0,
+        "dia": 82.0,
+        "hr": 60.0,
+        "glucose": 84.0,
+        "temp": 36.4,
+        "sleep_h": 7.0,
+        "mood": 4.0,
+        "reaction_ms": 294.0,
+        "exercise_min": 66.0
+      },
+      "context": {
+        "radiation_mGy": 0.503,
+        "radiation_cum_mGy": 2.39,
+        "cabin_co2_mmHg": 1.71
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 6,
+      "date": "2024-05-06",
+      "env": "mars_transit",
+      "values": {
+        "sys": 114.0,
+        "dia": 85.0,
+        "hr": 61.0,
+        "glucose": 84.0,
+        "temp": 36.3,
+        "sleep_h": 7.3,
+        "mood": 3.0,
+        "reaction_ms": 280.0,
+        "exercise_min": 98.0
+      },
+      "context": {
+        "radiation_mGy": 0.491,
+        "radiation_cum_mGy": 2.88,
+        "cabin_co2_mmHg": 1.91
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 7,
+      "date": "2024-05-07",
+      "env": "mars_transit",
+      "values": {
+        "sys": 117.0,
+        "dia": 84.0,
+        "hr": 60.0,
+        "glucose": 90.0,
+        "temp": 36.3,
+        "sleep_h": 6.6,
+        "mood": null,
+        "reaction_ms": null,
+        "exercise_min": 2.0
+      },
+      "context": {
+        "radiation_mGy": 0.505,
+        "radiation_cum_mGy": 3.39,
+        "cabin_co2_mmHg": 2.34
+      },
+      "missing": [
+        "mood",
+        "reaction_ms"
+      ],
+      "calibrating": true,
+      "sai": 47,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 8,
+      "date": "2024-05-08",
+      "env": "mars_transit",
+      "values": {
+        "sys": 114.0,
+        "dia": 86.0,
+        "hr": 59.0,
+        "glucose": 91.0,
+        "temp": 36.4,
+        "sleep_h": 7.1,
+        "mood": 4.0,
+        "reaction_ms": 286.0,
+        "exercise_min": 92.0
+      },
+      "context": {
+        "radiation_mGy": 0.523,
+        "radiation_cum_mGy": 3.91,
+        "cabin_co2_mmHg": 2.21
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 44,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 9,
+      "date": "2024-05-09",
+      "env": "mars_transit",
+      "values": {
+        "sys": 117.0,
+        "dia": 83.0,
+        "hr": 65.0,
+        "glucose": 87.0,
+        "temp": 36.3,
+        "sleep_h": 7.1,
+        "mood": 4.0,
+        "reaction_ms": 291.0,
+        "exercise_min": 112.0
+      },
+      "context": {
+        "radiation_mGy": 2.482,
+        "radiation_cum_mGy": 6.39,
+        "cabin_co2_mmHg": 2.29
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 41,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "yellow",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "sep_event"
+      ]
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 10,
+      "date": "2024-05-10",
+      "env": "mars_transit",
+      "values": {
+        "sys": 116.0,
+        "dia": 75.0,
+        "hr": 65.0,
+        "glucose": 79.0,
+        "temp": 36.3,
+        "sleep_h": 7.7,
+        "mood": 4.0,
+        "reaction_ms": 295.0,
+        "exercise_min": 112.0
+      },
+      "context": {
+        "radiation_mGy": 2.489,
+        "radiation_cum_mGy": 8.88,
+        "cabin_co2_mmHg": 2.04
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 38,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "yellow",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "sep_event"
+      ]
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 11,
+      "date": "2024-05-11",
+      "env": "mars_transit",
+      "values": {
+        "sys": 111.0,
+        "dia": 83.0,
+        "hr": 64.0,
+        "glucose": 80.0,
+        "temp": 36.4,
+        "sleep_h": null,
+        "mood": 4.0,
+        "reaction_ms": 296.0,
+        "exercise_min": 113.0
+      },
+      "context": {
+        "radiation_mGy": 2.487,
+        "radiation_cum_mGy": 11.37,
+        "cabin_co2_mmHg": 2.56
+      },
+      "missing": [
+        "sleep_h"
+      ],
+      "calibrating": true,
+      "sai": 34,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "yellow",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "sep_event"
+      ]
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 12,
+      "date": "2024-05-12",
+      "env": "mars_transit",
+      "values": {
+        "sys": 115.0,
+        "dia": 84.0,
+        "hr": 60.0,
+        "glucose": 81.0,
+        "temp": 36.3,
+        "sleep_h": 6.6,
+        "mood": 4.0,
+        "reaction_ms": 279.0,
+        "exercise_min": 92.0
+      },
+      "context": {
+        "radiation_mGy": 0.484,
+        "radiation_cum_mGy": 11.85,
+        "cabin_co2_mmHg": 2.53
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 32,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 13,
+      "date": "2024-05-13",
+      "env": "mars_transit",
+      "values": {
+        "sys": null,
+        "dia": 88.0,
+        "hr": 59.0,
+        "glucose": 79.0,
+        "temp": null,
+        "sleep_h": null,
+        "mood": 5.0,
+        "reaction_ms": 293.0,
+        "exercise_min": 62.0
+      },
+      "context": {
+        "radiation_mGy": 2.507,
+        "radiation_cum_mGy": 14.36,
+        "cabin_co2_mmHg": 2.32
+      },
+      "missing": [
+        "sys",
+        "temp",
+        "sleep_h"
+      ],
+      "calibrating": true,
+      "sai": 30,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "yellow",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "sep_event"
+      ]
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 14,
+      "date": "2024-05-14",
+      "env": "mars_transit",
+      "values": {
+        "sys": 114.0,
+        "dia": 77.0,
+        "hr": 63.0,
+        "glucose": 78.0,
+        "temp": 36.2,
+        "sleep_h": 5.9,
+        "mood": 4.0,
+        "reaction_ms": 279.0,
+        "exercise_min": 6.0
+      },
+      "context": {
+        "radiation_mGy": 0.507,
+        "radiation_cum_mGy": 14.87,
+        "cabin_co2_mmHg": 2.64
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 30,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 15,
+      "date": "2024-05-15",
+      "env": "mars_transit",
+      "values": {
+        "sys": 106.0,
+        "dia": 81.0,
+        "hr": null,
+        "glucose": 85.0,
+        "temp": 36.4,
+        "sleep_h": 6.9,
+        "mood": null,
+        "reaction_ms": 259.0,
+        "exercise_min": 103.0
+      },
+      "context": {
+        "radiation_mGy": 0.538,
+        "radiation_cum_mGy": 15.41,
+        "cabin_co2_mmHg": 2.44
+      },
+      "missing": [
+        "hr",
+        "mood"
+      ],
+      "calibrating": true,
+      "sai": 30,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 16,
+      "date": "2024-05-16",
+      "env": "mars_transit",
+      "values": {
+        "sys": 114.0,
+        "dia": 82.0,
+        "hr": 60.0,
+        "glucose": 90.0,
+        "temp": 36.3,
+        "sleep_h": 6.1,
+        "mood": 3.0,
+        "reaction_ms": 266.0,
+        "exercise_min": 113.0
+      },
+      "context": {
+        "radiation_mGy": 0.512,
+        "radiation_cum_mGy": 15.92,
+        "cabin_co2_mmHg": 2.04
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 31,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 17,
+      "date": "2024-05-17",
+      "env": "mars_transit",
+      "values": {
+        "sys": 113.0,
+        "dia": 76.0,
+        "hr": 66.0,
+        "glucose": 93.0,
+        "temp": 36.3,
+        "sleep_h": 6.7,
+        "mood": 3.0,
+        "reaction_ms": 275.0,
+        "exercise_min": 108.0
+      },
+      "context": {
+        "radiation_mGy": 0.496,
+        "radiation_cum_mGy": 16.41,
+        "cabin_co2_mmHg": 2.41
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 34,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 18,
+      "date": "2024-05-18",
+      "env": "mars_transit",
+      "values": {
+        "sys": 113.0,
+        "dia": 79.0,
+        "hr": 65.0,
+        "glucose": 80.0,
+        "temp": 36.4,
+        "sleep_h": 7.5,
+        "mood": 4.0,
+        "reaction_ms": 265.0,
+        "exercise_min": 152.0
+      },
+      "context": {
+        "radiation_mGy": 0.465,
+        "radiation_cum_mGy": 16.88,
+        "cabin_co2_mmHg": 2.01
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 37,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 19,
+      "date": "2024-05-19",
+      "env": "mars_transit",
+      "values": {
+        "sys": 120.0,
+        "dia": 70.0,
+        "hr": 62.0,
+        "glucose": 76.0,
+        "temp": 36.1,
+        "sleep_h": 7.2,
+        "mood": 4.0,
+        "reaction_ms": 263.0,
+        "exercise_min": 92.0
+      },
+      "context": {
+        "radiation_mGy": 0.527,
+        "radiation_cum_mGy": 17.41,
+        "cabin_co2_mmHg": 2.56
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 40,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 20,
+      "date": "2024-05-20",
+      "env": "mars_transit",
+      "values": {
+        "sys": 111.0,
+        "dia": 68.0,
+        "hr": 62.0,
+        "glucose": 82.0,
+        "temp": 36.3,
+        "sleep_h": 7.7,
+        "mood": 4.0,
+        "reaction_ms": 267.0,
+        "exercise_min": 169.0
+      },
+      "context": {
+        "radiation_mGy": 0.49,
+        "radiation_cum_mGy": 17.89,
+        "cabin_co2_mmHg": 2.29
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 43,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 21,
+      "date": "2024-05-21",
+      "env": "mars_transit",
+      "values": {
+        "sys": 109.0,
+        "dia": 71.0,
+        "hr": 61.0,
+        "glucose": 83.0,
+        "temp": 36.4,
+        "sleep_h": 6.9,
+        "mood": 3.0,
+        "reaction_ms": 286.0,
+        "exercise_min": 3.0
+      },
+      "context": {
+        "radiation_mGy": 0.5,
+        "radiation_cum_mGy": 18.39,
+        "cabin_co2_mmHg": 2.24
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 46,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 22,
+      "date": "2024-05-22",
+      "env": "mars_transit",
+      "values": {
+        "sys": 107.0,
+        "dia": null,
+        "hr": 64.0,
+        "glucose": 74.0,
+        "temp": 36.5,
+        "sleep_h": 6.6,
+        "mood": 4.0,
+        "reaction_ms": 298.0,
+        "exercise_min": 130.0
+      },
+      "context": {
+        "radiation_mGy": 0.563,
+        "radiation_cum_mGy": 18.96,
+        "cabin_co2_mmHg": 2.1
+      },
+      "missing": [
+        "dia"
+      ],
+      "calibrating": false,
+      "sai": 48,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 23,
+      "date": "2024-05-23",
+      "env": "mars_transit",
+      "values": {
+        "sys": 112.0,
+        "dia": 79.0,
+        "hr": 63.0,
+        "glucose": 92.0,
+        "temp": 36.2,
+        "sleep_h": 7.0,
+        "mood": 5.0,
+        "reaction_ms": 277.0,
+        "exercise_min": 158.0
+      },
+      "context": {
+        "radiation_mGy": 0.49,
+        "radiation_cum_mGy": 19.45,
+        "cabin_co2_mmHg": 2.67
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 49,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 24,
+      "date": "2024-05-24",
+      "env": "mars_transit",
+      "values": {
+        "sys": 113.0,
+        "dia": 85.0,
+        "hr": 64.0,
+        "glucose": 87.0,
+        "temp": 36.1,
+        "sleep_h": 7.0,
+        "mood": 4.0,
+        "reaction_ms": 273.0,
+        "exercise_min": 89.0
+      },
+      "context": {
+        "radiation_mGy": 0.514,
+        "radiation_cum_mGy": 19.96,
+        "cabin_co2_mmHg": 2.25
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 66,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 25,
+      "date": "2024-05-25",
+      "env": "mars_transit",
+      "values": {
+        "sys": 109.0,
+        "dia": 89.0,
+        "hr": 69.0,
+        "glucose": null,
+        "temp": 36.2,
+        "sleep_h": 7.2,
+        "mood": null,
+        "reaction_ms": 284.0,
+        "exercise_min": 103.0
+      },
+      "context": {
+        "radiation_mGy": 0.493,
+        "radiation_cum_mGy": 20.45,
+        "cabin_co2_mmHg": 4.17
+      },
+      "missing": [
+        "glucose",
+        "mood"
+      ],
+      "calibrating": false,
+      "sai": 72,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "yellow"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "co2_high"
+      ]
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 26,
+      "date": "2024-05-26",
+      "env": "mars_transit",
+      "values": {
+        "sys": 107.0,
+        "dia": 80.0,
+        "hr": 70.0,
+        "glucose": 83.0,
+        "temp": 36.3,
+        "sleep_h": 6.8,
+        "mood": 4.0,
+        "reaction_ms": 284.0,
+        "exercise_min": 128.0
+      },
+      "context": {
+        "radiation_mGy": 0.525,
+        "radiation_cum_mGy": 20.98,
+        "cabin_co2_mmHg": 4.28
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 78,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "yellow"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "co2_high"
+      ]
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 27,
+      "date": "2024-05-27",
+      "env": "mars_transit",
+      "values": {
+        "sys": 114.0,
+        "dia": 85.0,
+        "hr": 64.0,
+        "glucose": 81.0,
+        "temp": 36.2,
+        "sleep_h": 6.8,
+        "mood": 4.0,
+        "reaction_ms": 282.0,
+        "exercise_min": 125.0
+      },
+      "context": {
+        "radiation_mGy": 0.516,
+        "radiation_cum_mGy": 21.5,
+        "cabin_co2_mmHg": 2.46
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 84,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 28,
+      "date": "2024-05-28",
+      "env": "mars_transit",
+      "values": {
+        "sys": 118.0,
+        "dia": 91.0,
+        "hr": null,
+        "glucose": 85.0,
+        "temp": 36.3,
+        "sleep_h": 5.9,
+        "mood": 4.0,
+        "reaction_ms": 293.0,
+        "exercise_min": 9.0
+      },
+      "context": {
+        "radiation_mGy": 0.526,
+        "radiation_cum_mGy": 22.02,
+        "cabin_co2_mmHg": 2.41
+      },
+      "missing": [
+        "hr"
+      ],
+      "calibrating": false,
+      "sai": 90,
+      "level": "yellow",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "yellow",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "yellow",
+        "closed_environment": "green"
+      },
+      "prompts": [
+        "repeat_bp_hr_rest"
+      ],
+      "escalation": "self_care",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 29,
+      "date": "2024-05-29",
+      "env": "mars_transit",
+      "values": {
+        "sys": 115.0,
+        "dia": 78.0,
+        "hr": 66.0,
+        "glucose": 81.0,
+        "temp": null,
+        "sleep_h": 6.7,
+        "mood": 3.0,
+        "reaction_ms": 299.0,
+        "exercise_min": 101.0
+      },
+      "context": {
+        "radiation_mGy": 0.471,
+        "radiation_cum_mGy": 22.49,
+        "cabin_co2_mmHg": 2.42
+      },
+      "missing": [
+        "temp"
+      ],
+      "calibrating": false,
+      "sai": 96,
+      "level": "yellow",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "yellow",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "yellow",
+        "closed_environment": "green"
+      },
+      "prompts": [
+        "repeat_bp_hr_rest"
+      ],
+      "escalation": "self_care",
+      "events": []
+    },
+    {
+      "astronaut": "A2",
+      "display_name": "Crew Member Bravo",
+      "day": 30,
+      "date": "2024-05-30",
+      "env": "mars_transit",
+      "values": {
+        "sys": 113.0,
+        "dia": 78.0,
+        "hr": 68.0,
+        "glucose": 82.0,
+        "temp": 36.4,
+        "sleep_h": 6.6,
+        "mood": 4.0,
+        "reaction_ms": 284.0,
+        "exercise_min": 96.0
+      },
+      "context": {
+        "radiation_mGy": 0.512,
+        "radiation_cum_mGy": 23.0,
+        "cabin_co2_mmHg": 2.43
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 99,
+      "level": "yellow",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "hr": 0.4,
+        "sys": 0.25,
+        "dia": 0.15,
+        "sleep_h": 0.1,
+        "other": 0.1
+      },
+      "systems": {
+        "heart": "yellow",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "yellow",
+        "closed_environment": "green"
+      },
+      "prompts": [
+        "repeat_bp_hr_rest"
+      ],
+      "escalation": "self_care",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 1,
+      "date": "2024-05-01",
+      "env": "mars_transit",
+      "values": {
+        "sys": 134.0,
+        "dia": 81.0,
+        "hr": 64.0,
+        "glucose": 93.0,
+        "temp": 36.8,
+        "sleep_h": 6.4,
+        "mood": 4.0,
+        "reaction_ms": 235.0,
+        "exercise_min": 141.0
+      },
+      "context": {
+        "radiation_mGy": 0.496,
+        "radiation_cum_mGy": 0.5,
+        "cabin_co2_mmHg": 2.39
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 2,
+      "date": "2024-05-02",
+      "env": "mars_transit",
+      "values": {
+        "sys": 129.0,
+        "dia": 83.0,
+        "hr": 63.0,
+        "glucose": 93.0,
+        "temp": 36.6,
+        "sleep_h": 6.2,
+        "mood": 4.0,
+        "reaction_ms": 232.0,
+        "exercise_min": 161.0
+      },
+      "context": {
+        "radiation_mGy": 0.537,
+        "radiation_cum_mGy": 1.03,
+        "cabin_co2_mmHg": 1.99
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 3,
+      "date": "2024-05-03",
+      "env": "mars_transit",
+      "values": {
+        "sys": 132.0,
+        "dia": 86.0,
+        "hr": 65.0,
+        "glucose": 105.0,
+        "temp": 36.7,
+        "sleep_h": 5.5,
+        "mood": 3.0,
+        "reaction_ms": 243.0,
+        "exercise_min": 168.0
+      },
+      "context": {
+        "radiation_mGy": 0.511,
+        "radiation_cum_mGy": 1.54,
+        "cabin_co2_mmHg": 2.53
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 4,
+      "date": "2024-05-04",
+      "env": "mars_transit",
+      "values": {
+        "sys": 129.0,
+        "dia": 76.0,
+        "hr": 69.0,
+        "glucose": 84.0,
+        "temp": 36.6,
+        "sleep_h": 7.9,
+        "mood": 4.0,
+        "reaction_ms": 236.0,
+        "exercise_min": 157.0
+      },
+      "context": {
+        "radiation_mGy": 0.518,
+        "radiation_cum_mGy": 2.06,
+        "cabin_co2_mmHg": 2.58
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 5,
+      "date": "2024-05-05",
+      "env": "mars_transit",
+      "values": {
+        "sys": 134.0,
+        "dia": 78.0,
+        "hr": 69.0,
+        "glucose": 84.0,
+        "temp": 36.7,
+        "sleep_h": 6.8,
+        "mood": 4.0,
+        "reaction_ms": 221.0,
+        "exercise_min": 169.0
+      },
+      "context": {
+        "radiation_mGy": 0.5,
+        "radiation_cum_mGy": 2.56,
+        "cabin_co2_mmHg": 1.71
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 6,
+      "date": "2024-05-06",
+      "env": "mars_transit",
+      "values": {
+        "sys": 139.0,
+        "dia": 70.0,
+        "hr": 71.0,
+        "glucose": 104.0,
+        "temp": 36.9,
+        "sleep_h": 6.5,
+        "mood": 4.0,
+        "reaction_ms": 236.0,
+        "exercise_min": 170.0
+      },
+      "context": {
+        "radiation_mGy": 0.48,
+        "radiation_cum_mGy": 3.04,
+        "cabin_co2_mmHg": 1.91
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": null,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {},
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 7,
+      "date": "2024-05-07",
+      "env": "mars_transit",
+      "values": {
+        "sys": 128.0,
+        "dia": null,
+        "hr": 66.0,
+        "glucose": 89.0,
+        "temp": 37.0,
+        "sleep_h": 6.2,
+        "mood": 5.0,
+        "reaction_ms": 206.0,
+        "exercise_min": 4.0
+      },
+      "context": {
+        "radiation_mGy": 0.497,
+        "radiation_cum_mGy": 3.54,
+        "cabin_co2_mmHg": 2.34
+      },
+      "missing": [
+        "dia"
+      ],
+      "calibrating": true,
+      "sai": 47,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 8,
+      "date": "2024-05-08",
+      "env": "mars_transit",
+      "values": {
+        "sys": 131.0,
+        "dia": 67.0,
+        "hr": 66.0,
+        "glucose": 87.0,
+        "temp": 36.7,
+        "sleep_h": 7.1,
+        "mood": 3.0,
+        "reaction_ms": 214.0,
+        "exercise_min": 174.0
+      },
+      "context": {
+        "radiation_mGy": 0.535,
+        "radiation_cum_mGy": 4.07,
+        "cabin_co2_mmHg": 2.21
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 44,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 9,
+      "date": "2024-05-09",
+      "env": "mars_transit",
+      "values": {
+        "sys": 132.0,
+        "dia": 73.0,
+        "hr": 64.0,
+        "glucose": 98.0,
+        "temp": 36.8,
+        "sleep_h": 6.9,
+        "mood": 4.0,
+        "reaction_ms": 248.0,
+        "exercise_min": 187.0
+      },
+      "context": {
+        "radiation_mGy": 2.493,
+        "radiation_cum_mGy": 6.57,
+        "cabin_co2_mmHg": 2.29
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 41,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "yellow",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "sep_event"
+      ]
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 10,
+      "date": "2024-05-10",
+      "env": "mars_transit",
+      "values": {
+        "sys": 133.0,
+        "dia": 88.0,
+        "hr": 65.0,
+        "glucose": 97.0,
+        "temp": 37.0,
+        "sleep_h": 7.2,
+        "mood": 4.0,
+        "reaction_ms": 241.0,
+        "exercise_min": 153.0
+      },
+      "context": {
+        "radiation_mGy": 2.433,
+        "radiation_cum_mGy": 9.0,
+        "cabin_co2_mmHg": 2.04
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 38,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "yellow",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "sep_event"
+      ]
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 11,
+      "date": "2024-05-11",
+      "env": "mars_transit",
+      "values": {
+        "sys": 123.0,
+        "dia": 76.0,
+        "hr": 64.0,
+        "glucose": 81.0,
+        "temp": 37.0,
+        "sleep_h": 6.2,
+        "mood": 3.0,
+        "reaction_ms": 261.0,
+        "exercise_min": 129.0
+      },
+      "context": {
+        "radiation_mGy": 2.508,
+        "radiation_cum_mGy": 11.51,
+        "cabin_co2_mmHg": 2.56
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 34,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "yellow",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "sep_event"
+      ]
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 12,
+      "date": "2024-05-12",
+      "env": "mars_transit",
+      "values": {
+        "sys": 133.0,
+        "dia": 82.0,
+        "hr": 61.0,
+        "glucose": 99.0,
+        "temp": 36.9,
+        "sleep_h": 7.1,
+        "mood": 4.0,
+        "reaction_ms": 245.0,
+        "exercise_min": 102.0
+      },
+      "context": {
+        "radiation_mGy": 0.486,
+        "radiation_cum_mGy": 11.99,
+        "cabin_co2_mmHg": 2.53
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 32,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 13,
+      "date": "2024-05-13",
+      "env": "mars_transit",
+      "values": {
+        "sys": 126.0,
+        "dia": 76.0,
+        "hr": 64.0,
+        "glucose": 101.0,
+        "temp": 36.9,
+        "sleep_h": 7.2,
+        "mood": 3.0,
+        "reaction_ms": 233.0,
+        "exercise_min": 91.0
+      },
+      "context": {
+        "radiation_mGy": 2.434,
+        "radiation_cum_mGy": 14.43,
+        "cabin_co2_mmHg": 2.32
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 30,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "yellow",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "sep_event"
+      ]
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 14,
+      "date": "2024-05-14",
+      "env": "mars_transit",
+      "values": {
+        "sys": 129.0,
+        "dia": 68.0,
+        "hr": 65.0,
+        "glucose": 106.0,
+        "temp": 37.0,
+        "sleep_h": 7.0,
+        "mood": 4.0,
+        "reaction_ms": 234.0,
+        "exercise_min": 3.0
+      },
+      "context": {
+        "radiation_mGy": 0.492,
+        "radiation_cum_mGy": 14.92,
+        "cabin_co2_mmHg": 2.64
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 30,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 15,
+      "date": "2024-05-15",
+      "env": "mars_transit",
+      "values": {
+        "sys": 126.0,
+        "dia": null,
+        "hr": 66.0,
+        "glucose": null,
+        "temp": 37.1,
+        "sleep_h": 6.9,
+        "mood": 4.0,
+        "reaction_ms": 244.0,
+        "exercise_min": 105.0
+      },
+      "context": {
+        "radiation_mGy": 0.492,
+        "radiation_cum_mGy": 15.41,
+        "cabin_co2_mmHg": 2.44
+      },
+      "missing": [
+        "dia",
+        "glucose"
+      ],
+      "calibrating": true,
+      "sai": 30,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 16,
+      "date": "2024-05-16",
+      "env": "mars_transit",
+      "values": {
+        "sys": 128.0,
+        "dia": 71.0,
+        "hr": 62.0,
+        "glucose": 95.0,
+        "temp": 37.0,
+        "sleep_h": 6.7,
+        "mood": null,
+        "reaction_ms": 252.0,
+        "exercise_min": 80.0
+      },
+      "context": {
+        "radiation_mGy": 0.497,
+        "radiation_cum_mGy": 15.91,
+        "cabin_co2_mmHg": 2.04
+      },
+      "missing": [
+        "mood"
+      ],
+      "calibrating": true,
+      "sai": 31,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 17,
+      "date": "2024-05-17",
+      "env": "mars_transit",
+      "values": {
+        "sys": null,
+        "dia": null,
+        "hr": 63.0,
+        "glucose": 102.0,
+        "temp": 36.8,
+        "sleep_h": 6.3,
+        "mood": 5.0,
+        "reaction_ms": 242.0,
+        "exercise_min": 92.0
+      },
+      "context": {
+        "radiation_mGy": 0.511,
+        "radiation_cum_mGy": 16.42,
+        "cabin_co2_mmHg": 2.41
+      },
+      "missing": [
+        "sys",
+        "dia"
+      ],
+      "calibrating": true,
+      "sai": 34,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 18,
+      "date": "2024-05-18",
+      "env": "mars_transit",
+      "values": {
+        "sys": 133.0,
+        "dia": 76.0,
+        "hr": 69.0,
+        "glucose": 105.0,
+        "temp": 37.1,
+        "sleep_h": 4.3,
+        "mood": null,
+        "reaction_ms": 267.0,
+        "exercise_min": 135.0
+      },
+      "context": {
+        "radiation_mGy": 0.491,
+        "radiation_cum_mGy": 16.91,
+        "cabin_co2_mmHg": 2.01
+      },
+      "missing": [
+        "mood"
+      ],
+      "calibrating": true,
+      "sai": 37,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 19,
+      "date": "2024-05-19",
+      "env": "mars_transit",
+      "values": {
+        "sys": 132.0,
+        "dia": 73.0,
+        "hr": 69.0,
+        "glucose": 99.0,
+        "temp": 36.9,
+        "sleep_h": 5.5,
+        "mood": 4.0,
+        "reaction_ms": 276.0,
+        "exercise_min": 135.0
+      },
+      "context": {
+        "radiation_mGy": 0.501,
+        "radiation_cum_mGy": 17.41,
+        "cabin_co2_mmHg": 2.56
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 40,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 20,
+      "date": "2024-05-20",
+      "env": "mars_transit",
+      "values": {
+        "sys": 132.0,
+        "dia": 75.0,
+        "hr": 69.0,
+        "glucose": 104.0,
+        "temp": 36.8,
+        "sleep_h": 5.7,
+        "mood": 4.0,
+        "reaction_ms": 264.0,
+        "exercise_min": 117.0
+      },
+      "context": {
+        "radiation_mGy": 0.477,
+        "radiation_cum_mGy": 17.89,
+        "cabin_co2_mmHg": 2.29
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 43,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 21,
+      "date": "2024-05-21",
+      "env": "mars_transit",
+      "values": {
+        "sys": 140.0,
+        "dia": 76.0,
+        "hr": 71.0,
+        "glucose": 106.0,
+        "temp": 36.8,
+        "sleep_h": 6.2,
+        "mood": 4.0,
+        "reaction_ms": 252.0,
+        "exercise_min": 4.0
+      },
+      "context": {
+        "radiation_mGy": 0.47,
+        "radiation_cum_mGy": 18.36,
+        "cabin_co2_mmHg": 2.24
+      },
+      "missing": [],
+      "calibrating": true,
+      "sai": 46,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 22,
+      "date": "2024-05-22",
+      "env": "mars_transit",
+      "values": {
+        "sys": 141.0,
+        "dia": 73.0,
+        "hr": 72.0,
+        "glucose": 104.0,
+        "temp": 36.7,
+        "sleep_h": 6.1,
+        "mood": 3.0,
+        "reaction_ms": 247.0,
+        "exercise_min": 94.0
+      },
+      "context": {
+        "radiation_mGy": 0.5,
+        "radiation_cum_mGy": 18.86,
+        "cabin_co2_mmHg": 2.1
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 48,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 23,
+      "date": "2024-05-23",
+      "env": "mars_transit",
+      "values": {
+        "sys": 136.0,
+        "dia": 74.0,
+        "hr": 69.0,
+        "glucose": 96.0,
+        "temp": 36.8,
+        "sleep_h": 5.7,
+        "mood": 3.0,
+        "reaction_ms": 263.0,
+        "exercise_min": 106.0
+      },
+      "context": {
+        "radiation_mGy": 0.486,
+        "radiation_cum_mGy": 19.35,
+        "cabin_co2_mmHg": 2.67
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 49,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 24,
+      "date": "2024-05-24",
+      "env": "mars_transit",
+      "values": {
+        "sys": 130.0,
+        "dia": 81.0,
+        "hr": 68.0,
+        "glucose": 84.0,
+        "temp": 37.1,
+        "sleep_h": null,
+        "mood": 4.0,
+        "reaction_ms": 257.0,
+        "exercise_min": 144.0
+      },
+      "context": {
+        "radiation_mGy": 0.484,
+        "radiation_cum_mGy": 19.83,
+        "cabin_co2_mmHg": 2.25
+      },
+      "missing": [
+        "sleep_h"
+      ],
+      "calibrating": false,
+      "sai": 49,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 25,
+      "date": "2024-05-25",
+      "env": "mars_transit",
+      "values": {
+        "sys": 123.0,
+        "dia": 74.0,
+        "hr": 66.0,
+        "glucose": 89.0,
+        "temp": 36.8,
+        "sleep_h": 5.9,
+        "mood": 4.0,
+        "reaction_ms": 251.0,
+        "exercise_min": 129.0
+      },
+      "context": {
+        "radiation_mGy": 0.476,
+        "radiation_cum_mGy": 20.3,
+        "cabin_co2_mmHg": 4.17
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 48,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "yellow"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "co2_high"
+      ]
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 26,
+      "date": "2024-05-26",
+      "env": "mars_transit",
+      "values": {
+        "sys": 131.0,
+        "dia": 68.0,
+        "hr": 65.0,
+        "glucose": 88.0,
+        "temp": 36.8,
+        "sleep_h": 6.6,
+        "mood": 3.0,
+        "reaction_ms": 250.0,
+        "exercise_min": 136.0
+      },
+      "context": {
+        "radiation_mGy": 0.498,
+        "radiation_cum_mGy": 20.8,
+        "cabin_co2_mmHg": 4.28
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 46,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "yellow"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": [
+        "co2_high"
+      ]
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 27,
+      "date": "2024-05-27",
+      "env": "mars_transit",
+      "values": {
+        "sys": 137.0,
+        "dia": 72.0,
+        "hr": 68.0,
+        "glucose": 95.0,
+        "temp": 36.8,
+        "sleep_h": 5.5,
+        "mood": 4.0,
+        "reaction_ms": 273.0,
+        "exercise_min": 109.0
+      },
+      "context": {
+        "radiation_mGy": 0.463,
+        "radiation_cum_mGy": 21.27,
+        "cabin_co2_mmHg": 2.46
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 44,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 28,
+      "date": "2024-05-28",
+      "env": "mars_transit",
+      "values": {
+        "sys": 135.0,
+        "dia": 70.0,
+        "hr": 64.0,
+        "glucose": 99.0,
+        "temp": 36.8,
+        "sleep_h": 5.6,
+        "mood": 4.0,
+        "reaction_ms": 271.0,
+        "exercise_min": 1.0
+      },
+      "context": {
+        "radiation_mGy": 0.48,
+        "radiation_cum_mGy": 21.75,
+        "cabin_co2_mmHg": 2.41
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 40,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 29,
+      "date": "2024-05-29",
+      "env": "mars_transit",
+      "values": {
+        "sys": 140.0,
+        "dia": 72.0,
+        "hr": 63.0,
+        "glucose": 103.0,
+        "temp": 36.6,
+        "sleep_h": 6.2,
+        "mood": 3.0,
+        "reaction_ms": 255.0,
+        "exercise_min": 121.0
+      },
+      "context": {
+        "radiation_mGy": 0.476,
+        "radiation_cum_mGy": 22.22,
+        "cabin_co2_mmHg": 2.42
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 37,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    },
+    {
+      "astronaut": "A3",
+      "display_name": "Crew Member Charlie",
+      "day": 30,
+      "date": "2024-05-30",
+      "env": "mars_transit",
+      "values": {
+        "sys": 132.0,
+        "dia": 82.0,
+        "hr": 61.0,
+        "glucose": 98.0,
+        "temp": 36.8,
+        "sleep_h": 6.2,
+        "mood": 4.0,
+        "reaction_ms": 242.0,
+        "exercise_min": 113.0
+      },
+      "context": {
+        "radiation_mGy": 0.536,
+        "radiation_cum_mGy": 22.76,
+        "cabin_co2_mmHg": 2.43
+      },
+      "missing": [],
+      "calibrating": false,
+      "sai": 34,
+      "level": "green",
+      "rule_alert": false,
+      "univariate_alert": false,
+      "critical": false,
+      "contributions": {
+        "sleep_h": 0.3,
+        "mood": 0.25,
+        "hr": 0.2,
+        "other": 0.25
+      },
+      "systems": {
+        "heart": "green",
+        "metabolism": "green",
+        "mind_sleep": "green",
+        "immune_temp": "green"
+      },
+      "hazards": {
+        "radiation": "green",
+        "isolation": "green",
+        "distance": "info",
+        "gravity": "green",
+        "closed_environment": "green"
+      },
+      "prompts": [],
+      "escalation": "monitor",
+      "events": []
+    }
+  ]
+}

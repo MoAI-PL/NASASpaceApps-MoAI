@@ -1,0 +1,43 @@
+# Astrobalance — detector, scoring and alert configuration
+# Detector chosen by the model-selection benchmark (python -m src.benchmark → outputs/results/benchmark.md):
+# the multivariate personal-drift model beat every autoencoder variant at an equal false-alarm budget.
+detector: drift          # drift (production) | autoencoder (alternative, kept for the benchmark)
+drift:
+  train_split: train_large   # 300 healthy synthetic astronauts
+  regularisation: 0.01
+window_days: 14   # 14-day weighted mean: best detector variant in the benchmark (outputs/results/benchmark.md)
+# Personal normal and alarm logic, chosen by the robustness benchmark on simulator-2 data and the
+# PMData selection half (python -m src.robust_bench --window 14 → outputs/results/robust_bench.md; rule fixed in the
+# script: fewest real alarms among variants at most 5 points below the fixed normal's early detection).
+normal:
+  baseline: robust_ewma        # follows slow change; only days >= gap_days old update it
+  gap_days: 14                 # a developing illness cannot be absorbed within two weeks
+  alpha: 0.0357                # weight of a new day (1/28, half-life ~19 days)
+  winsor_sd: 2.0               # an update moves the normal by at most 2 personal sd
+  sd_floor_scale: 1.0          # personal sd floored at the configured within-person sd
+  autocorrelation_aware: false
+  exclude: [exercise_min]      # exercise is context, not health: shown, but not scored
+architecture:
+  hidden: 32
+  bottleneck: 8
+  dropout: 0.1
+training:
+  seed: 7
+  lr: 0.001
+  batch_size: 64
+  max_epochs: 200
+  patience: 10
+  device: auto   # auto = CUDA if available, else CPU. CPU is the reference for exact reproducibility.
+scoring:
+  # Used only when detector: autoencoder (v1 = reconstruction only; v2 adds the latent distance).
+  components: [reconstruction, latent]
+  day_weights: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]   # latest day of the window weighs most
+  persistence_days: 3   # days in a row at or above P_yellow before Watch starts
+  release_days: 7       # Watch/Act ends after 7 days in a row below the threshold
+  # Percentile thresholds on the Systemic Anomaly Index (SAI). Tuned ONLY on the bench selection split
+  # by `python -m src.evaluate --split bench --tune` (selection split; dev and test untouched)
+  # so that false alarms <= max_false_alarms_per_week per astronaut-week.
+  p_yellow: 94
+  p_orange: 99
+  max_false_alarms_per_week: 0.05
+  system_secondary_share: 0.3

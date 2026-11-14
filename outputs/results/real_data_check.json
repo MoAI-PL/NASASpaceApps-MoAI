@@ -1,0 +1,109 @@
+{
+  "data": "PMData: Thambawita V. et al. (2020), PMData: a sports logging dataset, Proc. ACM MMSys'20, doi:10.1145/3339825.3394926, CC BY 4.0, https://datasets.simula.no/pmdata",
+  "inputs_used": [
+    "hr",
+    "sleep_h",
+    "mood",
+    "exercise_min"
+  ],
+  "inputs_missing": [
+    "sys",
+    "dia",
+    "glucose",
+    "temp",
+    "reaction_ms"
+  ],
+  "share_of_days_observed": {
+    "hr": 0.722,
+    "sleep_h": 0.814,
+    "mood": 0.752,
+    "exercise_min": 0.862
+  },
+  "excluded_participants": [],
+  "settings": {
+    "p_yellow": 94.0,
+    "persistence_days": 3,
+    "calibration_days": 21
+  },
+  "cleaning": {
+    "exercise": "missing on days with no resting heart rate and no sleep record (band not worn)",
+    "sleep_h": "missing outside 1.0–16.0 h (recording artefacts)"
+  },
+  "real": {
+    "people": 16,
+    "person_weeks": 280.1,
+    "alarms_per_person_week": {
+      "Model": 0.0,
+      "B1": 0.021,
+      "B2": 0.068
+    },
+    "share_of_days_in_alarm": {
+      "Model": 0.0,
+      "B1": 0.003,
+      "B2": 0.023
+    },
+    "share_of_people_with_any_alarm": {
+      "Model": 0.0,
+      "B1": 0.25,
+      "B2": 0.375
+    }
+  },
+  "real_alarm_drivers": {},
+  "real_model_alarm_days": {
+    "p01": [],
+    "p02": [],
+    "p03": [],
+    "p04": [],
+    "p05": [],
+    "p06": [],
+    "p07": [],
+    "p08": [],
+    "p09": [],
+    "p10": [],
+    "p11": [],
+    "p12": [],
+    "p13": [],
+    "p14": [],
+    "p15": [],
+    "p16": []
+  },
+  "synthetic_same_inputs": {
+    "people": 50,
+    "person_weeks": 707.1,
+    "alarms_per_person_week": {
+      "Model": 0.011,
+      "B1": 0.037,
+      "B2": 0.171
+    },
+    "share_of_days_in_alarm": {
+      "Model": 0.018,
+      "B1": 0.009,
+      "B2": 0.069
+    },
+    "share_of_people_with_any_alarm": {
+      "Model": 0.14,
+      "B1": 0.2,
+      "B2": 0.64
+    }
+  },
+  "synthetic_all_inputs": {
+    "people": 50,
+    "person_weeks": 707.1,
+    "alarms_per_person_week": {
+      "Model": 0.057,
+      "B1": 0.103,
+      "B2": 0.216
+    },
+    "share_of_days_in_alarm": {
+      "Model": 0.091,
+      "B1": 0.032,
+      "B2": 0.079
+    },
+    "share_of_people_with_any_alarm": {
+      "Model": 0.54,
+      "B1": 0.42,
+      "B2": 0.78
+    }
+  },
+  "note": "Alarm = yellow or worse (model) or a baseline alarm, counted after the 21-day calibration. The PMData people are not labelled healthy (winter, flu season), so their alarms are not all false. Missing inputs enter the model as 'at your normal', which makes it quieter. Synthetic data calibrated on published sources — proof of concept, not clinical validation."
+}

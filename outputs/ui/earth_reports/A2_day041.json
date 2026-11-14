@@ -1,0 +1,31 @@
+{
+  "astronaut": "A2",
+  "display_name": "Crew Member Bravo",
+  "day": 41,
+  "date": "2024-06-10",
+  "env": "mars_transit",
+  "status": "queued_for_downlink",
+  "level": "yellow",
+  "escalation": "crew_medical_officer",
+  "sai_last_7_days": [
+    97,
+    99,
+    97,
+    84,
+    84,
+    79,
+    83
+  ],
+  "top_contributions": {
+    "sleep_h": 0.52,
+    "glucose": 0.2,
+    "reaction_ms": 0.19,
+    "dia": 0.03,
+    "other": 0.06
+  },
+  "open_prompts": [
+    "reaction_test_mood_checkin"
+  ],
+  "events": [],
+  "note": "Synthetic demonstration data. Not medical advice."
+}

@@ -1,0 +1,3942 @@
+{
+  "protocol": "Robustness benchmark: can the model keep its synthetic detection AND stay quiet on real data?\n\nThe real-data check (src/realdata.py) showed that the frozen model alarms ~7x more often on real\neveryday data (PMData) than on synthetic data, mostly because real resting heart rate drifts slowly\nover weeks while the personal normal stays fixed after day 21. This benchmark compares ways of\nkeeping the personal normal up to date, and other variants, under a protocol fixed in advance:\n\n1. Every variant is fitted on healthy synthetic astronauts only (train_large) and its alarm\n   threshold is set on the healthy days of the selection split `bench` to the SAME false-alarm\n   budget as the model-selection benchmark (0.05 per astronaut-week, persistence 3 days).\n2. Synthetic metric: early-detection rate on `bench` (S1-S3, sizes x0.5 and x1.0, alarm within 21\n   days of onset) — identical to src/benchmark.py.\n3. Real metric: alarm episodes per person-week on the SELECTION half of PMData (odd participant\n   numbers p01, p03, ...).\n4. Selection rule: among variants whose early detection is at most 5 points below the current\n   model, pick the one with the lowest real alarm rate on the selection half.\n5. The winner (and the current model, for comparison) is then run ONCE on the CONFIRMATION half of\n   PMData (even participant numbers) and on the dev split. The hold-out split (S5) is never touched.",
+  "budget": 0.05,
+  "persistence": 3,
+  "window_days": 14,
+  "select_half": [
+    "p01",
+    "p03",
+    "p05",
+    "p07",
+    "p09",
+    "p11",
+    "p13",
+    "p15"
+  ],
+  "confirm_half": [
+    "p02",
+    "p04",
+    "p06",
+    "p08",
+    "p10",
+    "p12",
+    "p14",
+    "p16"
+  ],
+  "rows": [
+    {
+      "variant": "Current model (fixed 21-day normal)",
+      "early_detection": 0.656,
+      "detection": 0.894,
+      "real_select": {
+        "alarms_per_person_week": 0.05,
+        "share_of_days_in_alarm": 0.015,
+        "people": 8
+      },
+      "threshold": 17.455413249637648,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.43333333333333335,
+            "detected": 0.8333333333333334,
+            "median_delay": 21.0
+          },
+          "S2": {
+            "early": 0.36666666666666664,
+            "detected": 0.7333333333333333,
+            "median_delay": 21.5
+          },
+          "S3": {
+            "early": 0.4666666666666667,
+            "detected": 0.8,
+            "median_delay": 20.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S2": {
+            "early": 0.8,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 15.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Current model (fixed 21-day normal)",
+        "baseline": "fixed",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Fixed normal, sd floor ×1.0",
+      "early_detection": 0.661,
+      "detection": 0.939,
+      "real_select": {
+        "alarms_per_person_week": 0.043,
+        "share_of_days_in_alarm": 0.015,
+        "people": 8
+      },
+      "threshold": 16.56665154868955,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.43333333333333335,
+            "detected": 0.9666666666666667,
+            "median_delay": 22.0
+          },
+          "S2": {
+            "early": 0.43333333333333335,
+            "detected": 0.8,
+            "median_delay": 19.5
+          },
+          "S3": {
+            "early": 0.43333333333333335,
+            "detected": 0.8666666666666667,
+            "median_delay": 22.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S2": {
+            "early": 0.8,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.5
+          }
+        }
+      },
+      "spec": {
+        "name": "Fixed normal, sd floor ×1.0",
+        "baseline": "fixed",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Rolling normal, gap 14 d, window 28 d",
+      "early_detection": 0.678,
+      "detection": 0.85,
+      "real_select": {
+        "alarms_per_person_week": 0.05,
+        "share_of_days_in_alarm": 0.04,
+        "people": 8
+      },
+      "threshold": 17.420826023482874,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5333333333333333,
+            "detected": 0.9,
+            "median_delay": 20.0
+          },
+          "S2": {
+            "early": 0.3333333333333333,
+            "detected": 0.5,
+            "median_delay": 17.0
+          },
+          "S3": {
+            "early": 0.43333333333333335,
+            "detected": 0.7333333333333333,
+            "median_delay": 20.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.8333333333333334,
+            "detected": 0.9666666666666667,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Rolling normal, gap 14 d, window 28 d",
+        "baseline": "rolling",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Rolling normal, gap 14 d, window 56 d",
+      "early_detection": 0.661,
+      "detection": 0.85,
+      "real_select": {
+        "alarms_per_person_week": 0.05,
+        "share_of_days_in_alarm": 0.025,
+        "people": 8
+      },
+      "threshold": 17.98555745911471,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.9,
+            "median_delay": 20.0
+          },
+          "S2": {
+            "early": 0.26666666666666666,
+            "detected": 0.5333333333333333,
+            "median_delay": 21.0
+          },
+          "S3": {
+            "early": 0.4666666666666667,
+            "detected": 0.7333333333333333,
+            "median_delay": 20.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.8333333333333334,
+            "detected": 0.9333333333333333,
+            "median_delay": 15.5
+          },
+          "S3": {
+            "early": 0.9666666666666667,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Rolling normal, gap 14 d, window 56 d",
+        "baseline": "rolling",
+        "gap": 14,
+        "length": 56,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Rolling normal, gap 21 d, window 28 d",
+      "early_detection": 0.65,
+      "detection": 0.872,
+      "real_select": {
+        "alarms_per_person_week": 0.043,
+        "share_of_days_in_alarm": 0.041,
+        "people": 8
+      },
+      "threshold": 17.23426676835854,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4666666666666667,
+            "detected": 0.9333333333333333,
+            "median_delay": 22.0
+          },
+          "S2": {
+            "early": 0.26666666666666666,
+            "detected": 0.5,
+            "median_delay": 19.0
+          },
+          "S3": {
+            "early": 0.4666666666666667,
+            "detected": 0.8,
+            "median_delay": 20.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.8333333333333334,
+            "detected": 1.0,
+            "median_delay": 15.5
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.5
+          }
+        }
+      },
+      "spec": {
+        "name": "Rolling normal, gap 21 d, window 28 d",
+        "baseline": "rolling",
+        "gap": 21,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Rolling normal, gap 21 d, window 56 d",
+      "early_detection": 0.678,
+      "detection": 0.883,
+      "real_select": {
+        "alarms_per_person_week": 0.035,
+        "share_of_days_in_alarm": 0.025,
+        "people": 8
+      },
+      "threshold": 17.623440756844506,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.9666666666666667,
+            "median_delay": 21.0
+          },
+          "S2": {
+            "early": 0.3,
+            "detected": 0.5666666666666667,
+            "median_delay": 20.0
+          },
+          "S3": {
+            "early": 0.5,
+            "detected": 0.7666666666666667,
+            "median_delay": 20.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9666666666666667,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.8333333333333334,
+            "detected": 1.0,
+            "median_delay": 15.5
+          },
+          "S3": {
+            "early": 0.9666666666666667,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Rolling normal, gap 21 d, window 56 d",
+        "baseline": "rolling",
+        "gap": 21,
+        "length": 56,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Rolling normal, gap 28 d, window 28 d",
+      "early_detection": 0.711,
+      "detection": 0.922,
+      "real_select": {
+        "alarms_per_person_week": 0.043,
+        "share_of_days_in_alarm": 0.038,
+        "people": 8
+      },
+      "threshold": 16.76303852165338,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5333333333333333,
+            "detected": 1.0,
+            "median_delay": 21.0
+          },
+          "S2": {
+            "early": 0.3333333333333333,
+            "detected": 0.6333333333333333,
+            "median_delay": 21.0
+          },
+          "S3": {
+            "early": 0.6333333333333333,
+            "detected": 0.9,
+            "median_delay": 19.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 13.5
+          },
+          "S2": {
+            "early": 0.8333333333333334,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Rolling normal, gap 28 d, window 28 d",
+        "baseline": "rolling",
+        "gap": 28,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Rolling normal, gap 28 d, window 56 d",
+      "early_detection": 0.689,
+      "detection": 0.894,
+      "real_select": {
+        "alarms_per_person_week": 0.043,
+        "share_of_days_in_alarm": 0.027,
+        "people": 8
+      },
+      "threshold": 17.29660789994338,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5333333333333333,
+            "detected": 0.9666666666666667,
+            "median_delay": 20.0
+          },
+          "S2": {
+            "early": 0.3,
+            "detected": 0.6,
+            "median_delay": 21.5
+          },
+          "S3": {
+            "early": 0.5333333333333333,
+            "detected": 0.8,
+            "median_delay": 19.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9666666666666667,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.8333333333333334,
+            "detected": 1.0,
+            "median_delay": 15.5
+          },
+          "S3": {
+            "early": 0.9666666666666667,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Rolling normal, gap 28 d, window 56 d",
+        "baseline": "rolling",
+        "gap": 28,
+        "length": 56,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "EWMA normal, gap 14 d, half-life ~10 d",
+      "early_detection": 0.683,
+      "detection": 0.839,
+      "real_select": {
+        "alarms_per_person_week": 0.057,
+        "share_of_days_in_alarm": 0.025,
+        "people": 8
+      },
+      "threshold": 17.616884873926317,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4666666666666667,
+            "detected": 0.8,
+            "median_delay": 19.5
+          },
+          "S2": {
+            "early": 0.36666666666666664,
+            "detected": 0.5,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 0.4666666666666667,
+            "detected": 0.7666666666666667,
+            "median_delay": 19.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.5
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 0.9666666666666667,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "EWMA normal, gap 14 d, half-life ~10 d",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.07142857142857142,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA normal (±2 sd), gap 14 d, half-life ~10 d",
+      "early_detection": 0.672,
+      "detection": 0.822,
+      "real_select": {
+        "alarms_per_person_week": 0.057,
+        "share_of_days_in_alarm": 0.023,
+        "people": 8
+      },
+      "threshold": 17.868113735013985,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.8333333333333334,
+            "median_delay": 20.0
+          },
+          "S2": {
+            "early": 0.3333333333333333,
+            "detected": 0.4666666666666667,
+            "median_delay": 17.0
+          },
+          "S3": {
+            "early": 0.43333333333333335,
+            "detected": 0.6666666666666666,
+            "median_delay": 17.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.5
+          },
+          "S2": {
+            "early": 0.8333333333333334,
+            "detected": 0.9666666666666667,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA normal (±2 sd), gap 14 d, half-life ~10 d",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.07142857142857142,
+        "winsor": 2.0,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "EWMA normal, gap 14 d, half-life ~19 d",
+      "early_detection": 0.694,
+      "detection": 0.839,
+      "real_select": {
+        "alarms_per_person_week": 0.043,
+        "share_of_days_in_alarm": 0.022,
+        "people": 8
+      },
+      "threshold": 18.060154110862985,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.8666666666666667,
+            "median_delay": 20.0
+          },
+          "S2": {
+            "early": 0.3333333333333333,
+            "detected": 0.43333333333333335,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 0.5,
+            "detected": 0.7333333333333333,
+            "median_delay": 19.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.5
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "EWMA normal, gap 14 d, half-life ~19 d",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA normal (±2 sd), gap 14 d, half-life ~19 d",
+      "early_detection": 0.683,
+      "detection": 0.833,
+      "real_select": {
+        "alarms_per_person_week": 0.05,
+        "share_of_days_in_alarm": 0.019,
+        "people": 8
+      },
+      "threshold": 17.864992243865714,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.9,
+            "median_delay": 21.0
+          },
+          "S2": {
+            "early": 0.3333333333333333,
+            "detected": 0.43333333333333335,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 0.4666666666666667,
+            "detected": 0.7,
+            "median_delay": 20.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.5
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 0.9666666666666667,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA normal (±2 sd), gap 14 d, half-life ~19 d",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "EWMA normal, gap 14 d, half-life ~39 d",
+      "early_detection": 0.683,
+      "detection": 0.844,
+      "real_select": {
+        "alarms_per_person_week": 0.043,
+        "share_of_days_in_alarm": 0.022,
+        "people": 8
+      },
+      "threshold": 17.784946213662725,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.8666666666666667,
+            "median_delay": 20.0
+          },
+          "S2": {
+            "early": 0.3333333333333333,
+            "detected": 0.5,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 0.4666666666666667,
+            "detected": 0.7,
+            "median_delay": 20.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.0
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "EWMA normal, gap 14 d, half-life ~39 d",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.017857142857142856,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA normal (±2 sd), gap 14 d, half-life ~39 d",
+      "early_detection": 0.689,
+      "detection": 0.856,
+      "real_select": {
+        "alarms_per_person_week": 0.035,
+        "share_of_days_in_alarm": 0.016,
+        "people": 8
+      },
+      "threshold": 17.456011533073465,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.9,
+            "median_delay": 20.0
+          },
+          "S2": {
+            "early": 0.3333333333333333,
+            "detected": 0.5,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 0.5,
+            "detected": 0.7333333333333333,
+            "median_delay": 18.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.0
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA normal (±2 sd), gap 14 d, half-life ~39 d",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.017857142857142856,
+        "winsor": 2.0,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "EWMA normal, gap 21 d, half-life ~10 d",
+      "early_detection": 0.672,
+      "detection": 0.85,
+      "real_select": {
+        "alarms_per_person_week": 0.05,
+        "share_of_days_in_alarm": 0.032,
+        "people": 8
+      },
+      "threshold": 17.295740661925663,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.9333333333333333,
+            "median_delay": 20.0
+          },
+          "S2": {
+            "early": 0.26666666666666666,
+            "detected": 0.5,
+            "median_delay": 18.0
+          },
+          "S3": {
+            "early": 0.4666666666666667,
+            "detected": 0.6666666666666666,
+            "median_delay": 17.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "EWMA normal, gap 21 d, half-life ~10 d",
+        "baseline": "ewma",
+        "gap": 21,
+        "length": 28,
+        "alpha": 0.07142857142857142,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA normal (±2 sd), gap 21 d, half-life ~10 d",
+      "early_detection": 0.667,
+      "detection": 0.861,
+      "real_select": {
+        "alarms_per_person_week": 0.05,
+        "share_of_days_in_alarm": 0.019,
+        "people": 8
+      },
+      "threshold": 17.463929558916483,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.9333333333333333,
+            "median_delay": 20.5
+          },
+          "S2": {
+            "early": 0.26666666666666666,
+            "detected": 0.5,
+            "median_delay": 18.0
+          },
+          "S3": {
+            "early": 0.4666666666666667,
+            "detected": 0.7333333333333333,
+            "median_delay": 19.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 13.5
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA normal (±2 sd), gap 21 d, half-life ~10 d",
+        "baseline": "ewma",
+        "gap": 21,
+        "length": 28,
+        "alpha": 0.07142857142857142,
+        "winsor": 2.0,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "EWMA normal, gap 21 d, half-life ~19 d",
+      "early_detection": 0.672,
+      "detection": 0.85,
+      "real_select": {
+        "alarms_per_person_week": 0.035,
+        "share_of_days_in_alarm": 0.019,
+        "people": 8
+      },
+      "threshold": 17.7639498759515,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.9,
+            "median_delay": 20.0
+          },
+          "S2": {
+            "early": 0.26666666666666666,
+            "detected": 0.5,
+            "median_delay": 20.0
+          },
+          "S3": {
+            "early": 0.5,
+            "detected": 0.7,
+            "median_delay": 20.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.8333333333333334,
+            "detected": 1.0,
+            "median_delay": 15.5
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "EWMA normal, gap 21 d, half-life ~19 d",
+        "baseline": "ewma",
+        "gap": 21,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA normal (±2 sd), gap 21 d, half-life ~19 d",
+      "early_detection": 0.689,
+      "detection": 0.867,
+      "real_select": {
+        "alarms_per_person_week": 0.05,
+        "share_of_days_in_alarm": 0.017,
+        "people": 8
+      },
+      "threshold": 17.583686318777886,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.9,
+            "median_delay": 20.0
+          },
+          "S2": {
+            "early": 0.3,
+            "detected": 0.5333333333333333,
+            "median_delay": 18.5
+          },
+          "S3": {
+            "early": 0.5333333333333333,
+            "detected": 0.7666666666666667,
+            "median_delay": 19.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA normal (±2 sd), gap 21 d, half-life ~19 d",
+        "baseline": "ewma",
+        "gap": 21,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "EWMA normal, gap 21 d, half-life ~39 d",
+      "early_detection": 0.706,
+      "detection": 0.878,
+      "real_select": {
+        "alarms_per_person_week": 0.043,
+        "share_of_days_in_alarm": 0.021,
+        "people": 8
+      },
+      "threshold": 17.328595383890892,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.9333333333333333,
+            "median_delay": 20.5
+          },
+          "S2": {
+            "early": 0.3333333333333333,
+            "detected": 0.5333333333333333,
+            "median_delay": 17.0
+          },
+          "S3": {
+            "early": 0.6,
+            "detected": 0.8,
+            "median_delay": 19.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "EWMA normal, gap 21 d, half-life ~39 d",
+        "baseline": "ewma",
+        "gap": 21,
+        "length": 28,
+        "alpha": 0.017857142857142856,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA normal (±2 sd), gap 21 d, half-life ~39 d",
+      "early_detection": 0.7,
+      "detection": 0.872,
+      "real_select": {
+        "alarms_per_person_week": 0.043,
+        "share_of_days_in_alarm": 0.016,
+        "people": 8
+      },
+      "threshold": 17.343450141205512,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.9333333333333333,
+            "median_delay": 20.5
+          },
+          "S2": {
+            "early": 0.3333333333333333,
+            "detected": 0.5,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 0.5666666666666667,
+            "detected": 0.8,
+            "median_delay": 19.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.0
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA normal (±2 sd), gap 21 d, half-life ~39 d",
+        "baseline": "ewma",
+        "gap": 21,
+        "length": 28,
+        "alpha": 0.017857142857142856,
+        "winsor": 2.0,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Fixed normal, trained with slow drift (0.05)",
+      "early_detection": 0.656,
+      "detection": 0.894,
+      "real_select": {
+        "alarms_per_person_week": 0.043,
+        "share_of_days_in_alarm": 0.018,
+        "people": 8
+      },
+      "threshold": 13.326513108728303,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4,
+            "detected": 0.8333333333333334,
+            "median_delay": 22.0
+          },
+          "S2": {
+            "early": 0.43333333333333335,
+            "detected": 0.7666666666666667,
+            "median_delay": 20.0
+          },
+          "S3": {
+            "early": 0.4666666666666667,
+            "detected": 0.7666666666666667,
+            "median_delay": 20.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S2": {
+            "early": 0.8,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Fixed normal, trained with slow drift (0.05)",
+        "baseline": "fixed",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.05,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA (gap 14, ~19 d), trained with slow drift (0.05)",
+      "early_detection": 0.689,
+      "detection": 0.839,
+      "real_select": {
+        "alarms_per_person_week": 0.05,
+        "share_of_days_in_alarm": 0.019,
+        "people": 8
+      },
+      "threshold": 14.984151692818887,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.8666666666666667,
+            "median_delay": 20.5
+          },
+          "S2": {
+            "early": 0.3333333333333333,
+            "detected": 0.4666666666666667,
+            "median_delay": 16.5
+          },
+          "S3": {
+            "early": 0.4666666666666667,
+            "detected": 0.7,
+            "median_delay": 20.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.0
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA (gap 14, ~19 d), trained with slow drift (0.05)",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 0.5,
+        "drift_aug": 0.05,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Fixed normal, trained with slow drift (0.1)",
+      "early_detection": 0.622,
+      "detection": 0.894,
+      "real_select": {
+        "alarms_per_person_week": 0.043,
+        "share_of_days_in_alarm": 0.019,
+        "people": 8
+      },
+      "threshold": 8.430796316931081,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.3333333333333333,
+            "detected": 0.8666666666666667,
+            "median_delay": 23.0
+          },
+          "S2": {
+            "early": 0.43333333333333335,
+            "detected": 0.7666666666666667,
+            "median_delay": 18.0
+          },
+          "S3": {
+            "early": 0.43333333333333335,
+            "detected": 0.7333333333333333,
+            "median_delay": 20.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S2": {
+            "early": 0.8,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 0.8333333333333334,
+            "detected": 1.0,
+            "median_delay": 15.5
+          }
+        }
+      },
+      "spec": {
+        "name": "Fixed normal, trained with slow drift (0.1)",
+        "baseline": "fixed",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.1,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA (gap 14, ~19 d), trained with slow drift (0.1)",
+      "early_detection": 0.678,
+      "detection": 0.861,
+      "real_select": {
+        "alarms_per_person_week": 0.05,
+        "share_of_days_in_alarm": 0.022,
+        "people": 8
+      },
+      "threshold": 10.375309010979338,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.8333333333333334,
+            "median_delay": 21.0
+          },
+          "S2": {
+            "early": 0.36666666666666664,
+            "detected": 0.6333333333333333,
+            "median_delay": 19.0
+          },
+          "S3": {
+            "early": 0.43333333333333335,
+            "detected": 0.7,
+            "median_delay": 20.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.0
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA (gap 14, ~19 d), trained with slow drift (0.1)",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 0.5,
+        "drift_aug": 0.1,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA (gap 14, ~19 d), sd floor ×1.0",
+      "early_detection": 0.678,
+      "detection": 0.878,
+      "real_select": {
+        "alarms_per_person_week": 0.05,
+        "share_of_days_in_alarm": 0.015,
+        "people": 8
+      },
+      "threshold": 16.76918930131707,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4666666666666667,
+            "detected": 0.9666666666666667,
+            "median_delay": 22.0
+          },
+          "S2": {
+            "early": 0.3,
+            "detected": 0.5333333333333333,
+            "median_delay": 20.0
+          },
+          "S3": {
+            "early": 0.5,
+            "detected": 0.7666666666666667,
+            "median_delay": 20.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 13.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA (gap 14, ~19 d), sd floor ×1.0",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Rolling (gap 21, 28 d), sd floor ×1.0",
+      "early_detection": 0.656,
+      "detection": 0.9,
+      "real_select": {
+        "alarms_per_person_week": 0.035,
+        "share_of_days_in_alarm": 0.02,
+        "people": 8
+      },
+      "threshold": 16.337962440295062,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4,
+            "detected": 0.9666666666666667,
+            "median_delay": 22.0
+          },
+          "S2": {
+            "early": 0.3,
+            "detected": 0.5666666666666667,
+            "median_delay": 21.0
+          },
+          "S3": {
+            "early": 0.5333333333333333,
+            "detected": 0.8666666666666667,
+            "median_delay": 20.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 16.5
+          },
+          "S2": {
+            "early": 0.8333333333333334,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 13.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Rolling (gap 21, 28 d), sd floor ×1.0",
+        "baseline": "rolling",
+        "gap": 21,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Missing-aware distance (fixed normal)",
+      "early_detection": 0.667,
+      "detection": 0.911,
+      "real_select": {
+        "alarms_per_person_week": 0.206,
+        "share_of_days_in_alarm": 0.169,
+        "people": 8
+      },
+      "threshold": 17.499488966957358,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.43333333333333335,
+            "detected": 0.8666666666666667,
+            "median_delay": 22.0
+          },
+          "S2": {
+            "early": 0.4,
+            "detected": 0.7333333333333333,
+            "median_delay": 19.5
+          },
+          "S3": {
+            "early": 0.4666666666666667,
+            "detected": 0.8666666666666667,
+            "median_delay": 20.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 15.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Missing-aware distance (fixed normal)",
+        "baseline": "fixed",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "marginal",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Missing-aware, sd floor ×1.0",
+      "early_detection": 0.678,
+      "detection": 0.939,
+      "real_select": {
+        "alarms_per_person_week": 0.199,
+        "share_of_days_in_alarm": 0.182,
+        "people": 8
+      },
+      "threshold": 16.45278288452637,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.43333333333333335,
+            "detected": 0.9666666666666667,
+            "median_delay": 22.0
+          },
+          "S2": {
+            "early": 0.4666666666666667,
+            "detected": 0.8,
+            "median_delay": 19.5
+          },
+          "S3": {
+            "early": 0.43333333333333335,
+            "detected": 0.8666666666666667,
+            "median_delay": 22.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 16.5
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Missing-aware, sd floor ×1.0",
+        "baseline": "fixed",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "marginal",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Missing-aware, robust EWMA (gap 14, ~19 d)",
+      "early_detection": 0.678,
+      "detection": 0.856,
+      "real_select": {
+        "alarms_per_person_week": 0.163,
+        "share_of_days_in_alarm": 0.141,
+        "people": 8
+      },
+      "threshold": 17.514552725272342,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.9,
+            "median_delay": 20.0
+          },
+          "S2": {
+            "early": 0.3333333333333333,
+            "detected": 0.5333333333333333,
+            "median_delay": 15.5
+          },
+          "S3": {
+            "early": 0.5,
+            "detected": 0.7333333333333333,
+            "median_delay": 19.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.0
+          },
+          "S2": {
+            "early": 0.8333333333333334,
+            "detected": 0.9666666666666667,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 0.9666666666666667,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Missing-aware, robust EWMA (gap 14, ~19 d)",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "marginal",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Missing-aware, robust EWMA (gap 14, ~19 d), sd floor ×1.0",
+      "early_detection": 0.694,
+      "detection": 0.883,
+      "real_select": {
+        "alarms_per_person_week": 0.177,
+        "share_of_days_in_alarm": 0.135,
+        "people": 8
+      },
+      "threshold": 16.63035562285023,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4666666666666667,
+            "detected": 0.9666666666666667,
+            "median_delay": 22.0
+          },
+          "S2": {
+            "early": 0.3333333333333333,
+            "detected": 0.5333333333333333,
+            "median_delay": 20.0
+          },
+          "S3": {
+            "early": 0.5666666666666667,
+            "detected": 0.8,
+            "median_delay": 17.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 12.5
+          }
+        }
+      },
+      "spec": {
+        "name": "Missing-aware, robust EWMA (gap 14, ~19 d), sd floor ×1.0",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "marginal",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Missing-aware, robust EWMA (gap 21, ~39 d), sd floor ×1.0",
+      "early_detection": 0.672,
+      "detection": 0.889,
+      "real_select": {
+        "alarms_per_person_week": 0.206,
+        "share_of_days_in_alarm": 0.159,
+        "people": 8
+      },
+      "threshold": 16.70113530392466,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4666666666666667,
+            "detected": 1.0,
+            "median_delay": 22.5
+          },
+          "S2": {
+            "early": 0.3333333333333333,
+            "detected": 0.6,
+            "median_delay": 20.0
+          },
+          "S3": {
+            "early": 0.4666666666666667,
+            "detected": 0.7333333333333333,
+            "median_delay": 19.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.5
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 0.9666666666666667,
+            "detected": 1.0,
+            "median_delay": 13.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Missing-aware, robust EWMA (gap 21, ~39 d), sd floor ×1.0",
+        "baseline": "ewma",
+        "gap": 21,
+        "length": 28,
+        "alpha": 0.017857142857142856,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "marginal",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Missing-aware, covariance shrinkage 0.3",
+      "early_detection": 0.678,
+      "detection": 0.906,
+      "real_select": {
+        "alarms_per_person_week": 0.206,
+        "share_of_days_in_alarm": 0.17,
+        "people": 8
+      },
+      "threshold": 16.973842665698815,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.43333333333333335,
+            "detected": 0.9,
+            "median_delay": 23.0
+          },
+          "S2": {
+            "early": 0.4,
+            "detected": 0.7333333333333333,
+            "median_delay": 18.5
+          },
+          "S3": {
+            "early": 0.5333333333333333,
+            "detected": 0.8,
+            "median_delay": 19.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 14.5
+          }
+        }
+      },
+      "spec": {
+        "name": "Missing-aware, covariance shrinkage 0.3",
+        "baseline": "fixed",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "marginal",
+        "min_obs": 2,
+        "shrink": 0.3,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Missing-aware, robust EWMA (gap 14, ~19 d), floor ×1.0, shrinkage 0.3",
+      "early_detection": 0.706,
+      "detection": 0.883,
+      "real_select": {
+        "alarms_per_person_week": 0.163,
+        "share_of_days_in_alarm": 0.13,
+        "people": 8
+      },
+      "threshold": 15.88705339938528,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.9666666666666667,
+            "median_delay": 21.0
+          },
+          "S2": {
+            "early": 0.36666666666666664,
+            "detected": 0.5666666666666667,
+            "median_delay": 19.0
+          },
+          "S3": {
+            "early": 0.5666666666666667,
+            "detected": 0.7666666666666667,
+            "median_delay": 16.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 12.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Missing-aware, robust EWMA (gap 14, ~19 d), floor ×1.0, shrinkage 0.3",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "marginal",
+        "min_obs": 2,
+        "shrink": 0.3,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Missing-aware, covariance shrinkage 0.6",
+      "early_detection": 0.672,
+      "detection": 0.894,
+      "real_select": {
+        "alarms_per_person_week": 0.177,
+        "share_of_days_in_alarm": 0.16,
+        "people": 8
+      },
+      "threshold": 17.057905365032973,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4,
+            "detected": 0.8666666666666667,
+            "median_delay": 23.0
+          },
+          "S2": {
+            "early": 0.43333333333333335,
+            "detected": 0.7333333333333333,
+            "median_delay": 17.5
+          },
+          "S3": {
+            "early": 0.5,
+            "detected": 0.7666666666666667,
+            "median_delay": 19.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 17.0
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 14.0
+          },
+          "S3": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Missing-aware, covariance shrinkage 0.6",
+        "baseline": "fixed",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "marginal",
+        "min_obs": 2,
+        "shrink": 0.6,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Missing-aware, robust EWMA (gap 14, ~19 d), floor ×1.0, shrinkage 0.6",
+      "early_detection": 0.7,
+      "detection": 0.889,
+      "real_select": {
+        "alarms_per_person_week": 0.149,
+        "share_of_days_in_alarm": 0.116,
+        "people": 8
+      },
+      "threshold": 16.334809477850147,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4666666666666667,
+            "detected": 0.9666666666666667,
+            "median_delay": 22.0
+          },
+          "S2": {
+            "early": 0.43333333333333335,
+            "detected": 0.6333333333333333,
+            "median_delay": 19.0
+          },
+          "S3": {
+            "early": 0.5,
+            "detected": 0.7333333333333333,
+            "median_delay": 16.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.0
+          },
+          "S3": {
+            "early": 0.9666666666666667,
+            "detected": 1.0,
+            "median_delay": 12.5
+          }
+        }
+      },
+      "spec": {
+        "name": "Missing-aware, robust EWMA (gap 14, ~19 d), floor ×1.0, shrinkage 0.6",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "marginal",
+        "min_obs": 2,
+        "shrink": 0.6,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Autocorrelation-aware (fixed normal)",
+      "early_detection": 0.583,
+      "detection": 0.883,
+      "real_select": {
+        "alarms_per_person_week": 0.043,
+        "share_of_days_in_alarm": 0.015,
+        "people": 8
+      },
+      "threshold": 18.42318839731348,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.3,
+            "detected": 0.8333333333333334,
+            "median_delay": 25.0
+          },
+          "S2": {
+            "early": 0.3333333333333333,
+            "detected": 0.7,
+            "median_delay": 22.0
+          },
+          "S3": {
+            "early": 0.3333333333333333,
+            "detected": 0.7666666666666667,
+            "median_delay": 22.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 19.0
+          },
+          "S2": {
+            "early": 0.8333333333333334,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 0.8,
+            "detected": 1.0,
+            "median_delay": 16.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Autocorrelation-aware (fixed normal)",
+        "baseline": "fixed",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": true,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Autocorrelation-aware, sd floor ×1.0",
+      "early_detection": 0.606,
+      "detection": 0.917,
+      "real_select": {
+        "alarms_per_person_week": 0.064,
+        "share_of_days_in_alarm": 0.018,
+        "people": 8
+      },
+      "threshold": 17.305271880189338,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4,
+            "detected": 0.9333333333333333,
+            "median_delay": 25.0
+          },
+          "S2": {
+            "early": 0.4,
+            "detected": 0.7666666666666667,
+            "median_delay": 19.0
+          },
+          "S3": {
+            "early": 0.3333333333333333,
+            "detected": 0.8,
+            "median_delay": 25.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.8333333333333334,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S2": {
+            "early": 0.8,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 14.5
+          }
+        }
+      },
+      "spec": {
+        "name": "Autocorrelation-aware, sd floor ×1.0",
+        "baseline": "fixed",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": true,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Autocorrelation-aware, robust EWMA (gap 14, ~19 d)",
+      "early_detection": 0.656,
+      "detection": 0.839,
+      "real_select": {
+        "alarms_per_person_week": 0.043,
+        "share_of_days_in_alarm": 0.021,
+        "people": 8
+      },
+      "threshold": 18.43756519103511,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4666666666666667,
+            "detected": 0.8333333333333334,
+            "median_delay": 21.0
+          },
+          "S2": {
+            "early": 0.3333333333333333,
+            "detected": 0.5333333333333333,
+            "median_delay": 17.5
+          },
+          "S3": {
+            "early": 0.4666666666666667,
+            "detected": 0.7,
+            "median_delay": 20.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 15.5
+          },
+          "S3": {
+            "early": 0.8666666666666667,
+            "detected": 0.9666666666666667,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Autocorrelation-aware, robust EWMA (gap 14, ~19 d)",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": true,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Autocorrelation-aware, robust EWMA (gap 14, ~19 d), floor ×1.0",
+      "early_detection": 0.65,
+      "detection": 0.85,
+      "real_select": {
+        "alarms_per_person_week": 0.043,
+        "share_of_days_in_alarm": 0.017,
+        "people": 8
+      },
+      "threshold": 17.34829643399453,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.9333333333333333,
+            "median_delay": 21.0
+          },
+          "S2": {
+            "early": 0.3,
+            "detected": 0.4666666666666667,
+            "median_delay": 17.5
+          },
+          "S3": {
+            "early": 0.43333333333333335,
+            "detected": 0.7,
+            "median_delay": 20.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.5
+          },
+          "S2": {
+            "early": 0.8333333333333334,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 13.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Autocorrelation-aware, robust EWMA (gap 14, ~19 d), floor ×1.0",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": true,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Personal score scale (fixed normal)",
+      "early_detection": 0.667,
+      "detection": 0.894,
+      "real_select": {
+        "alarms_per_person_week": 0.064,
+        "share_of_days_in_alarm": 0.025,
+        "people": 8
+      },
+      "threshold": 16.1306131692874,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.43333333333333335,
+            "detected": 0.8666666666666667,
+            "median_delay": 21.0
+          },
+          "S2": {
+            "early": 0.4,
+            "detected": 0.7,
+            "median_delay": 19.0
+          },
+          "S3": {
+            "early": 0.5,
+            "detected": 0.8,
+            "median_delay": 19.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.5
+          },
+          "S2": {
+            "early": 0.8333333333333334,
+            "detected": 1.0,
+            "median_delay": 15.5
+          },
+          "S3": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.5
+          }
+        }
+      },
+      "spec": {
+        "name": "Personal score scale (fixed normal)",
+        "baseline": "fixed",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": true,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Personal score scale, robust EWMA (gap 14, ~19 d), floor ×1.0",
+      "early_detection": 0.689,
+      "detection": 0.856,
+      "real_select": {
+        "alarms_per_person_week": 0.05,
+        "share_of_days_in_alarm": 0.022,
+        "people": 8
+      },
+      "threshold": 15.804469640852695,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4666666666666667,
+            "detected": 0.9,
+            "median_delay": 21.0
+          },
+          "S2": {
+            "early": 0.4,
+            "detected": 0.5333333333333333,
+            "median_delay": 17.0
+          },
+          "S3": {
+            "early": 0.5333333333333333,
+            "detected": 0.7666666666666667,
+            "median_delay": 18.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 0.9666666666666667,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 0.9666666666666667,
+            "detected": 0.9666666666666667,
+            "median_delay": 13.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Personal score scale, robust EWMA (gap 14, ~19 d), floor ×1.0",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": true,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Autocorrelation-aware + personal score scale",
+      "early_detection": 0.594,
+      "detection": 0.861,
+      "real_select": {
+        "alarms_per_person_week": 0.05,
+        "share_of_days_in_alarm": 0.016,
+        "people": 8
+      },
+      "threshold": 17.22816667791153,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.43333333333333335,
+            "detected": 0.8666666666666667,
+            "median_delay": 21.0
+          },
+          "S2": {
+            "early": 0.3,
+            "detected": 0.6666666666666666,
+            "median_delay": 23.5
+          },
+          "S3": {
+            "early": 0.3,
+            "detected": 0.6666666666666666,
+            "median_delay": 24.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 18.0
+          },
+          "S2": {
+            "early": 0.8333333333333334,
+            "detected": 0.9666666666666667,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 0.8,
+            "detected": 1.0,
+            "median_delay": 16.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Autocorrelation-aware + personal score scale",
+        "baseline": "fixed",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": true,
+        "selfscale": true,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Autocorrelation-aware + personal score scale, robust EWMA, floor ×1.0",
+      "early_detection": 0.661,
+      "detection": 0.839,
+      "real_select": {
+        "alarms_per_person_week": 0.05,
+        "share_of_days_in_alarm": 0.021,
+        "people": 8
+      },
+      "threshold": 16.016446185239555,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.9,
+            "median_delay": 21.0
+          },
+          "S2": {
+            "early": 0.3333333333333333,
+            "detected": 0.5333333333333333,
+            "median_delay": 18.5
+          },
+          "S3": {
+            "early": 0.43333333333333335,
+            "detected": 0.6666666666666666,
+            "median_delay": 20.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.5
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 0.9666666666666667,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 0.9,
+            "detected": 0.9666666666666667,
+            "median_delay": 13.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Autocorrelation-aware + personal score scale, robust EWMA, floor ×1.0",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": true,
+        "selfscale": true,
+        "persistence": 3,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA, floor ×1.0, alarm ends after 7 quiet days",
+      "early_detection": 0.711,
+      "detection": 0.889,
+      "real_select": {
+        "alarms_per_person_week": 0.05,
+        "share_of_days_in_alarm": 0.072,
+        "people": 8
+      },
+      "threshold": 16.107506003634796,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.9666666666666667,
+            "median_delay": 21.0
+          },
+          "S2": {
+            "early": 0.36666666666666664,
+            "detected": 0.5333333333333333,
+            "median_delay": 18.5
+          },
+          "S3": {
+            "early": 0.6,
+            "detected": 0.8333333333333334,
+            "median_delay": 16.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 14.0
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 13.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA, floor ×1.0, alarm ends after 7 quiet days",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 7,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA, floor ×1.0, persistence 5",
+      "early_detection": 0.706,
+      "detection": 0.9,
+      "real_select": {
+        "alarms_per_person_week": 0.028,
+        "share_of_days_in_alarm": 0.015,
+        "people": 8
+      },
+      "threshold": 14.545731199620791,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5,
+            "detected": 0.9666666666666667,
+            "median_delay": 21.0
+          },
+          "S2": {
+            "early": 0.36666666666666664,
+            "detected": 0.5333333333333333,
+            "median_delay": 18.5
+          },
+          "S3": {
+            "early": 0.5666666666666667,
+            "detected": 0.9,
+            "median_delay": 19.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 16.5
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 16.5
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.5
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA, floor ×1.0, persistence 5",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 5,
+        "release": 0,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA, floor ×1.0, persistence 5, ends after 7 quiet days",
+      "early_detection": 0.711,
+      "detection": 0.906,
+      "real_select": {
+        "alarms_per_person_week": 0.028,
+        "share_of_days_in_alarm": 0.048,
+        "people": 8
+      },
+      "threshold": 14.45864602185932,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.5333333333333333,
+            "detected": 0.9666666666666667,
+            "median_delay": 21.0
+          },
+          "S2": {
+            "early": 0.36666666666666664,
+            "detected": 0.5333333333333333,
+            "median_delay": 18.5
+          },
+          "S3": {
+            "early": 0.5666666666666667,
+            "detected": 0.9333333333333333,
+            "median_delay": 19.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 16.5
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA, floor ×1.0, persistence 5, ends after 7 quiet days",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 5,
+        "release": 7,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA, floor ×1.0, without exercise",
+      "early_detection": 0.694,
+      "detection": 0.867,
+      "real_select": {
+        "alarms_per_person_week": 0.0,
+        "share_of_days_in_alarm": 0.0,
+        "people": 8
+      },
+      "threshold": 15.302540794715343,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.43333333333333335,
+            "detected": 0.8333333333333334,
+            "median_delay": 20.0
+          },
+          "S2": {
+            "early": 0.4,
+            "detected": 0.5333333333333333,
+            "median_delay": 17.0
+          },
+          "S3": {
+            "early": 0.5666666666666667,
+            "detected": 0.8333333333333334,
+            "median_delay": 18.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 18.0
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 13.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA, floor ×1.0, without exercise",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 0,
+        "drop": [
+          "exercise_min"
+        ],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA, floor ×1.0, without exercise, ends after 7 quiet days",
+      "early_detection": 0.706,
+      "detection": 0.889,
+      "real_select": {
+        "alarms_per_person_week": 0.0,
+        "share_of_days_in_alarm": 0.0,
+        "people": 8
+      },
+      "threshold": 14.739020407523087,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.43333333333333335,
+            "detected": 0.8333333333333334,
+            "median_delay": 20.0
+          },
+          "S2": {
+            "early": 0.43333333333333335,
+            "detected": 0.6,
+            "median_delay": 16.5
+          },
+          "S3": {
+            "early": 0.6,
+            "detected": 0.9,
+            "median_delay": 17.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 13.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA, floor ×1.0, without exercise, ends after 7 quiet days",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 7,
+        "drop": [
+          "exercise_min"
+        ],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA, floor ×1.0, without exercise, persistence 5, ends after 7 quiet days",
+      "early_detection": 0.683,
+      "detection": 0.9,
+      "real_select": {
+        "alarms_per_person_week": 0.0,
+        "share_of_days_in_alarm": 0.0,
+        "people": 8
+      },
+      "threshold": 13.036787987362283,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.43333333333333335,
+            "detected": 0.8666666666666667,
+            "median_delay": 21.5
+          },
+          "S2": {
+            "early": 0.43333333333333335,
+            "detected": 0.6,
+            "median_delay": 18.5
+          },
+          "S3": {
+            "early": 0.5666666666666667,
+            "detected": 0.9333333333333333,
+            "median_delay": 18.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.7666666666666667,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 16.5
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 13.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA, floor ×1.0, without exercise, persistence 5, ends after 7 quiet days",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 5,
+        "release": 7,
+        "drop": [
+          "exercise_min"
+        ],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Autocorrelation-aware, robust EWMA, floor ×1.0, without exercise, ends after 7 quiet days",
+      "early_detection": 0.656,
+      "detection": 0.867,
+      "real_select": {
+        "alarms_per_person_week": 0.0,
+        "share_of_days_in_alarm": 0.0,
+        "people": 8
+      },
+      "threshold": 15.4054260954902,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.36666666666666664,
+            "detected": 0.8,
+            "median_delay": 22.0
+          },
+          "S2": {
+            "early": 0.4,
+            "detected": 0.6333333333333333,
+            "median_delay": 18.0
+          },
+          "S3": {
+            "early": 0.5666666666666667,
+            "detected": 0.7666666666666667,
+            "median_delay": 15.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.8333333333333334,
+            "detected": 1.0,
+            "median_delay": 17.5
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 15.0
+          },
+          "S3": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 12.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Autocorrelation-aware, robust EWMA, floor ×1.0, without exercise, ends after 7 quiet days",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": true,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 7,
+        "drop": [
+          "exercise_min"
+        ],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA, floor ×1.0, without exercise, persistence 5",
+      "early_detection": 0.672,
+      "detection": 0.894,
+      "real_select": {
+        "alarms_per_person_week": 0.0,
+        "share_of_days_in_alarm": 0.0,
+        "people": 8
+      },
+      "threshold": 13.088298821099453,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4,
+            "detected": 0.8666666666666667,
+            "median_delay": 22.0
+          },
+          "S2": {
+            "early": 0.43333333333333335,
+            "detected": 0.6,
+            "median_delay": 18.5
+          },
+          "S3": {
+            "early": 0.5333333333333333,
+            "detected": 0.9,
+            "median_delay": 19.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.7666666666666667,
+            "detected": 1.0,
+            "median_delay": 17.5
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 16.5
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA, floor ×1.0, without exercise, persistence 5",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 5,
+        "release": 0,
+        "drop": [
+          "exercise_min"
+        ],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA, floor ×1.0, without exercise, persistence 5, ends after 3 quiet days",
+      "early_detection": 0.672,
+      "detection": 0.894,
+      "real_select": {
+        "alarms_per_person_week": 0.0,
+        "share_of_days_in_alarm": 0.0,
+        "people": 8
+      },
+      "threshold": 13.036787987362283,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4,
+            "detected": 0.8666666666666667,
+            "median_delay": 22.0
+          },
+          "S2": {
+            "early": 0.43333333333333335,
+            "detected": 0.6,
+            "median_delay": 18.5
+          },
+          "S3": {
+            "early": 0.5333333333333333,
+            "detected": 0.9,
+            "median_delay": 18.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.7666666666666667,
+            "detected": 1.0,
+            "median_delay": 17.5
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 16.5
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA, floor ×1.0, without exercise, persistence 5, ends after 3 quiet days",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 5,
+        "release": 3,
+        "drop": [
+          "exercise_min"
+        ],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA, floor ×1.0, without exercise, persistence 4",
+      "early_detection": 0.678,
+      "detection": 0.878,
+      "real_select": {
+        "alarms_per_person_week": 0.0,
+        "share_of_days_in_alarm": 0.0,
+        "people": 8
+      },
+      "threshold": 14.343839457304712,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.36666666666666664,
+            "detected": 0.8333333333333334,
+            "median_delay": 23.0
+          },
+          "S2": {
+            "early": 0.43333333333333335,
+            "detected": 0.5666666666666667,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 0.5666666666666667,
+            "detected": 0.8666666666666667,
+            "median_delay": 17.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.8,
+            "detected": 1.0,
+            "median_delay": 18.0
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA, floor ×1.0, without exercise, persistence 4",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 4,
+        "release": 0,
+        "drop": [
+          "exercise_min"
+        ],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Autocorrelation-aware, robust EWMA, floor ×1.0, without exercise, persistence 5",
+      "early_detection": 0.594,
+      "detection": 0.861,
+      "real_select": {
+        "alarms_per_person_week": 0.0,
+        "share_of_days_in_alarm": 0.0,
+        "people": 8
+      },
+      "threshold": 13.926291810728431,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.3333333333333333,
+            "detected": 0.8,
+            "median_delay": 23.0
+          },
+          "S2": {
+            "early": 0.36666666666666664,
+            "detected": 0.6333333333333333,
+            "median_delay": 20.0
+          },
+          "S3": {
+            "early": 0.4,
+            "detected": 0.7333333333333333,
+            "median_delay": 18.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.6666666666666666,
+            "detected": 1.0,
+            "median_delay": 18.0
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 17.0
+          },
+          "S3": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 15.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Autocorrelation-aware, robust EWMA, floor ×1.0, without exercise, persistence 5",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": true,
+        "selfscale": false,
+        "persistence": 5,
+        "release": 0,
+        "drop": [
+          "exercise_min"
+        ],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Autocorrelation-aware, robust EWMA, floor ×1.0, without exercise, persistence 5, ends after 7 quiet days",
+      "early_detection": 0.644,
+      "detection": 0.878,
+      "real_select": {
+        "alarms_per_person_week": 0.0,
+        "share_of_days_in_alarm": 0.0,
+        "people": 8
+      },
+      "threshold": 13.509814733747548,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.43333333333333335,
+            "detected": 0.8333333333333334,
+            "median_delay": 16.0
+          },
+          "S2": {
+            "early": 0.36666666666666664,
+            "detected": 0.6333333333333333,
+            "median_delay": 20.0
+          },
+          "S3": {
+            "early": 0.4666666666666667,
+            "detected": 0.8,
+            "median_delay": 17.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.7333333333333333,
+            "detected": 1.0,
+            "median_delay": 16.5
+          },
+          "S2": {
+            "early": 0.9,
+            "detected": 1.0,
+            "median_delay": 16.0
+          },
+          "S3": {
+            "early": 0.9666666666666667,
+            "detected": 1.0,
+            "median_delay": 13.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Autocorrelation-aware, robust EWMA, floor ×1.0, without exercise, persistence 5, ends after 7 quiet days",
+        "baseline": "ewma",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": true,
+        "selfscale": false,
+        "persistence": 5,
+        "release": 7,
+        "drop": [
+          "exercise_min"
+        ],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Robust EWMA (gap 21, ~39 d), floor ×1.0, without exercise, persistence 5",
+      "early_detection": 0.672,
+      "detection": 0.917,
+      "real_select": {
+        "alarms_per_person_week": 0.0,
+        "share_of_days_in_alarm": 0.0,
+        "people": 8
+      },
+      "threshold": 12.971876029235492,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4,
+            "detected": 0.8666666666666667,
+            "median_delay": 22.5
+          },
+          "S2": {
+            "early": 0.5,
+            "detected": 0.7333333333333333,
+            "median_delay": 19.5
+          },
+          "S3": {
+            "early": 0.5333333333333333,
+            "detected": 0.9,
+            "median_delay": 18.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.7333333333333333,
+            "detected": 1.0,
+            "median_delay": 18.5
+          },
+          "S2": {
+            "early": 0.8666666666666667,
+            "detected": 1.0,
+            "median_delay": 16.5
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Robust EWMA (gap 21, ~39 d), floor ×1.0, without exercise, persistence 5",
+        "baseline": "ewma",
+        "gap": 21,
+        "length": 28,
+        "alpha": 0.017857142857142856,
+        "winsor": 2.0,
+        "floor_scale": 1.0,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 5,
+        "release": 0,
+        "drop": [
+          "exercise_min"
+        ],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Fixed normal, ends after 7 quiet days",
+      "early_detection": 0.7,
+      "detection": 0.922,
+      "real_select": {
+        "alarms_per_person_week": 0.057,
+        "share_of_days_in_alarm": 0.075,
+        "people": 8
+      },
+      "threshold": 16.431367434012884,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4666666666666667,
+            "detected": 0.9,
+            "median_delay": 21.0
+          },
+          "S2": {
+            "early": 0.43333333333333335,
+            "detected": 0.7666666666666667,
+            "median_delay": 19.0
+          },
+          "S3": {
+            "early": 0.5666666666666667,
+            "detected": 0.8666666666666667,
+            "median_delay": 19.0
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 15.5
+          },
+          "S2": {
+            "early": 0.8333333333333334,
+            "detected": 1.0,
+            "median_delay": 14.5
+          },
+          "S3": {
+            "early": 0.9666666666666667,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Fixed normal, ends after 7 quiet days",
+        "baseline": "fixed",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 7,
+        "drop": [],
+        "notes": ""
+      }
+    },
+    {
+      "variant": "Fixed normal, without exercise, ends after 7 quiet days",
+      "early_detection": 0.678,
+      "detection": 0.917,
+      "real_select": {
+        "alarms_per_person_week": 0.007,
+        "share_of_days_in_alarm": 0.007,
+        "people": 8
+      },
+      "threshold": 14.744448335066632,
+      "by_scale": {
+        "0.5": {
+          "S1": {
+            "early": 0.4,
+            "detected": 0.8,
+            "median_delay": 21.5
+          },
+          "S2": {
+            "early": 0.4666666666666667,
+            "detected": 0.7666666666666667,
+            "median_delay": 18.0
+          },
+          "S3": {
+            "early": 0.5,
+            "detected": 0.9333333333333333,
+            "median_delay": 20.5
+          }
+        },
+        "1.0": {
+          "S1": {
+            "early": 0.7666666666666667,
+            "detected": 1.0,
+            "median_delay": 17.5
+          },
+          "S2": {
+            "early": 0.9333333333333333,
+            "detected": 1.0,
+            "median_delay": 14.5
+          },
+          "S3": {
+            "early": 1.0,
+            "detected": 1.0,
+            "median_delay": 14.0
+          }
+        }
+      },
+      "spec": {
+        "name": "Fixed normal, without exercise, ends after 7 quiet days",
+        "baseline": "fixed",
+        "gap": 14,
+        "length": 28,
+        "alpha": 0.03571428571428571,
+        "winsor": null,
+        "floor_scale": 0.5,
+        "drift_aug": 0.0,
+        "missing": "zero",
+        "min_obs": 2,
+        "shrink": 0.0,
+        "acf": false,
+        "selfscale": false,
+        "persistence": 3,
+        "release": 7,
+        "drop": [
+          "exercise_min"
+        ],
+        "notes": ""
+      }
+    }
+  ],
+  "winner": "Robust EWMA, floor ×1.0, without exercise, ends after 7 quiet days",
+  "confirmation": {
+    "Current model (fixed 21-day normal)": {
+      "real_confirm": {
+        "alarms_per_person_week": 0.007,
+        "share_of_days_in_alarm": 0.01,
+        "people": 8
+      },
+      "real_all": {
+        "alarms_per_person_week": 0.029,
+        "share_of_days_in_alarm": 0.013,
+        "people": 16
+      },
+      "dev_detection": {
+        "S1": {
+          "early": 0.9,
+          "detected": 1.0,
+          "median_delay": 15.0
+        },
+        "S2": {
+          "early": 0.9,
+          "detected": 1.0,
+          "median_delay": 14.0
+        },
+        "S3": {
+          "early": 0.9,
+          "detected": 1.0,
+          "median_delay": 14.5
+        }
+      },
+      "dev_false_alarms_per_week": 0.045
+    },
+    "Robust EWMA, floor ×1.0, without exercise, ends after 7 quiet days": {
+      "real_confirm": {
+        "alarms_per_person_week": 0.0,
+        "share_of_days_in_alarm": 0.0,
+        "people": 8
+      },
+      "real_all": {
+        "alarms_per_person_week": 0.0,
+        "share_of_days_in_alarm": 0.0,
+        "people": 16
+      },
+      "dev_detection": {
+        "S1": {
+          "early": 1.0,
+          "detected": 1.0,
+          "median_delay": 12.0
+        },
+        "S2": {
+          "early": 0.9,
+          "detected": 1.0,
+          "median_delay": 13.5
+        },
+        "S3": {
+          "early": 1.0,
+          "detected": 1.0,
+          "median_delay": 8.0
+        }
+      },
+      "dev_false_alarms_per_week": 0.069
+    }
+  },
+  "runtime_s": 158.6
+}

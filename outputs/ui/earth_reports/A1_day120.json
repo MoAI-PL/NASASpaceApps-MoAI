@@ -1,0 +1,29 @@
+{
+  "astronaut": "A1",
+  "display_name": "Crew Member Alpha",
+  "day": 120,
+  "date": "2024-08-28",
+  "env": "mars_transit",
+  "status": "queued_for_downlink",
+  "level": "green",
+  "escalation": "monitor",
+  "sai_last_7_days": [
+    41,
+    44,
+    20,
+    57,
+    61,
+    70,
+    44
+  ],
+  "top_contributions": {
+    "hr": 0.27,
+    "sleep_h": 0.25,
+    "reaction_ms": 0.19,
+    "temp": 0.17,
+    "other": 0.12
+  },
+  "open_prompts": [],
+  "events": [],
+  "note": "Synthetic demonstration data. Not medical advice."
+}

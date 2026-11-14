@@ -1,0 +1,678 @@
+{
+  "product": "Astrobalance",
+  "sample": false,
+  "disclaimer": "Prototype — synthetic data — not medical advice. Synthetic data calibrated on published sources — proof of concept, not clinical validation.",
+  "mission": {
+    "start_date": "2024-05-01",
+    "days": 120,
+    "calibration_days": 21
+  },
+  "index": {
+    "name": "Systemic Anomaly Index",
+    "short": "SAI",
+    "range": [
+      0,
+      100
+    ],
+    "p_yellow": 94,
+    "p_orange": 99,
+    "persistence_days": 3,
+    "release_days": 7,
+    "window_days": 14,
+    "model_version": 2
+  },
+  "features": {
+    "sys": {
+      "name": "Systolic blood pressure",
+      "unit": "mmHg",
+      "system": "heart"
+    },
+    "dia": {
+      "name": "Diastolic blood pressure",
+      "unit": "mmHg",
+      "system": "heart"
+    },
+    "hr": {
+      "name": "Resting heart rate",
+      "unit": "bpm",
+      "system": "heart"
+    },
+    "glucose": {
+      "name": "Fasting blood glucose",
+      "unit": "mg/dL",
+      "system": "metabolism"
+    },
+    "temp": {
+      "name": "Body temperature",
+      "unit": "°C",
+      "system": "immune_temp"
+    },
+    "sleep_h": {
+      "name": "Sleep",
+      "unit": "h",
+      "system": "mind_sleep"
+    },
+    "mood": {
+      "name": "Mood",
+      "unit": "1–5",
+      "system": "mind_sleep"
+    },
+    "reaction_ms": {
+      "name": "Reaction time",
+      "unit": "ms",
+      "system": "mind_sleep"
+    },
+    "exercise_min": {
+      "name": "Exercise",
+      "unit": "min",
+      "system": null
+    }
+  },
+  "systems": {
+    "heart": {
+      "name": "Heart & circulation",
+      "features": [
+        "sys",
+        "dia",
+        "hr"
+      ],
+      "hazard": "gravity"
+    },
+    "metabolism": {
+      "name": "Metabolism",
+      "features": [
+        "glucose"
+      ],
+      "hazard": null
+    },
+    "mind_sleep": {
+      "name": "Mind & sleep",
+      "features": [
+        "sleep_h",
+        "mood",
+        "reaction_ms"
+      ],
+      "hazard": "isolation"
+    },
+    "immune_temp": {
+      "name": "Immune & temperature",
+      "features": [
+        "temp"
+      ],
+      "hazard": "closed_environment"
+    }
+  },
+  "hazards": {
+    "radiation": {
+      "name": "Space radiation",
+      "source": "https://www.nasa.gov/hrp/hazards/"
+    },
+    "isolation": {
+      "name": "Isolation & confinement",
+      "source": "https://www.nasa.gov/hrp/hazards/"
+    },
+    "distance": {
+      "name": "Distance from Earth",
+      "source": "https://www.nasa.gov/hrp/hazards/"
+    },
+    "gravity": {
+      "name": "Gravity fields",
+      "source": "https://www.nasa.gov/hrp/hazards/"
+    },
+    "closed_environment": {
+      "name": "Hostile & closed environment",
+      "source": "https://www.nasa.gov/hrp/hazards/"
+    }
+  },
+  "prompts": {
+    "repeat_bp_hr_rest": {
+      "system": "heart"
+    },
+    "repeat_glucose_fasting": {
+      "system": "metabolism"
+    },
+    "reaction_test_mood_checkin": {
+      "system": "mind_sleep"
+    },
+    "repeat_temperature_evening": {
+      "system": "immune_temp"
+    }
+  },
+  "environments": {
+    "iss": {
+      "name": "Space station (low Earth orbit)",
+      "one_way_delay_text": "near real-time",
+      "one_way_delay_s": [
+        0,
+        1
+      ]
+    },
+    "lunar_base": {
+      "name": "Lunar surface base",
+      "one_way_delay_text": "~1.3 s",
+      "one_way_delay_s": [
+        1.2,
+        1.4
+      ],
+      "source": "Light travel time over the mean Earth–Moon distance (~384,400 km / c ≈ 1.28 s); NASA ASCEND paper describes few-second maximum delays just beyond the Moon. https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf"
+    },
+    "mars_transit": {
+      "name": "Mars transit",
+      "one_way_delay_text": "up to ~22 min",
+      "one_way_delay_s": [
+        0,
+        1320
+      ],
+      "source": "NASA ASCEND paper: Earth–Mars one-way delays vary from 0 to 22 minutes over a mission. https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf"
+    },
+    "mars_rover": {
+      "name": "Mars surface rover",
+      "one_way_delay_text": "up to ~22 min",
+      "one_way_delay_s": [
+        0,
+        1320
+      ],
+      "source": "NASA ASCEND paper: Earth–Mars one-way delays vary from 0 to 22 minutes over a mission (a pressurized rover on Mars reaches Earth through the surface base or an orbiter; that relay is a team assumption). https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf"
+    }
+  },
+  "default_environment": "mars_transit",
+  "levels": [
+    "green",
+    "yellow",
+    "orange",
+    "red"
+  ],
+  "crew": [
+    {
+      "id": "A1",
+      "display_name": "Crew Member Alpha",
+      "scenario": null
+    },
+    {
+      "id": "A2",
+      "display_name": "Crew Member Bravo",
+      "scenario": {
+        "id": "S1",
+        "name": "Cardiovascular deconditioning",
+        "start_day": 50
+      }
+    },
+    {
+      "id": "A3",
+      "display_name": "Crew Member Charlie",
+      "scenario": {
+        "id": "S2",
+        "name": "Isolation and stress",
+        "start_day": 70
+      }
+    }
+  ],
+  "normal_bands": {
+    "A1": {
+      "sys": [
+        107.18,
+        126.82
+      ],
+      "dia": [
+        60.53,
+        73.09
+      ],
+      "hr": [
+        67.72,
+        74.91
+      ],
+      "glucose": [
+        87.33,
+        108.29
+      ],
+      "temp": [
+        36.0,
+        36.48
+      ],
+      "sleep_h": [
+        4.46,
+        6.31
+      ],
+      "mood": [
+        2.98,
+        4.62
+      ],
+      "reaction_ms": [
+        244.32,
+        304.78
+      ],
+      "exercise_min": [
+        19.8,
+        187.06
+      ]
+    },
+    "A2": {
+      "sys": [
+        107.6,
+        121.1
+      ],
+      "dia": [
+        68.45,
+        90.41
+      ],
+      "hr": [
+        57.87,
+        66.53
+      ],
+      "glucose": [
+        74.59,
+        92.84
+      ],
+      "temp": [
+        36.05,
+        36.51
+      ],
+      "sleep_h": [
+        5.95,
+        7.89
+      ],
+      "mood": [
+        2.72,
+        4.86
+      ],
+      "reaction_ms": [
+        252.35,
+        312.25
+      ],
+      "exercise_min": [
+        4.02,
+        181.02
+      ]
+    },
+    "A3": {
+      "sys": [
+        122.91,
+        139.39
+      ],
+      "dia": [
+        64.7,
+        88.07
+      ],
+      "hr": [
+        60.07,
+        71.83
+      ],
+      "glucose": [
+        80.52,
+        112.68
+      ],
+      "temp": [
+        36.56,
+        37.16
+      ],
+      "sleep_h": [
+        4.9,
+        8.03
+      ],
+      "mood": [
+        2.76,
+        5.03
+      ],
+      "reaction_ms": [
+        208.05,
+        275.95
+      ],
+      "exercise_min": [
+        4.8,
+        231.1
+      ]
+    }
+  },
+  "cabin_co2_limit_mmHg": 3.0,
+  "space_weather": {
+    "source": "NASA DONKI SEP events",
+    "status": "cached",
+    "event_days": [
+      9,
+      10,
+      11,
+      13,
+      39,
+      43,
+      84,
+      92,
+      97
+    ],
+    "events": [
+      {
+        "day": 9,
+        "time": "2024-05-09T13:59Z",
+        "id": "2024-05-09T13:59:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30609/-1"
+      },
+      {
+        "day": 9,
+        "time": "2024-05-09T14:25Z",
+        "id": "2024-05-09T14:25:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30610/-1"
+      },
+      {
+        "day": 10,
+        "time": "2024-05-10T12:59Z",
+        "id": "2024-05-10T12:59:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30675/-1"
+      },
+      {
+        "day": 10,
+        "time": "2024-05-10T13:02Z",
+        "id": "2024-05-10T13:02:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30676/-1"
+      },
+      {
+        "day": 10,
+        "time": "2024-05-10T13:35Z",
+        "id": "2024-05-10T13:35:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30677/-1"
+      },
+      {
+        "day": 10,
+        "time": "2024-05-10T14:50Z",
+        "id": "2024-05-10T14:50:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30684/-1"
+      },
+      {
+        "day": 11,
+        "time": "2024-05-11T02:10Z",
+        "id": "2024-05-11T02:10:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30714/-1"
+      },
+      {
+        "day": 11,
+        "time": "2024-05-11T04:07Z",
+        "id": "2024-05-11T04:07:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30717/-1"
+      },
+      {
+        "day": 13,
+        "time": "2024-05-13T12:44Z",
+        "id": "2024-05-13T12:44:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30811/-1"
+      },
+      {
+        "day": 13,
+        "time": "2024-05-13T13:10Z",
+        "id": "2024-05-13T13:10:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30807/-1"
+      },
+      {
+        "day": 13,
+        "time": "2024-05-13T14:00Z",
+        "id": "2024-05-13T14:00:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30817/-1"
+      },
+      {
+        "day": 13,
+        "time": "2024-05-13T16:19Z",
+        "id": "2024-05-13T16:19:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30820/-1"
+      },
+      {
+        "day": 13,
+        "time": "2024-05-13T18:07Z",
+        "id": "2024-05-13T18:07:00-SEP-002",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30825/-1"
+      },
+      {
+        "day": 13,
+        "time": "2024-05-13T18:07Z",
+        "id": "2024-05-13T18:07:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30824/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T02:25Z",
+        "id": "2024-06-08T02:25:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31338/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T02:55Z",
+        "id": "2024-06-08T02:55:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31343/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T03:09Z",
+        "id": "2024-06-08T03:09:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31359/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T03:34Z",
+        "id": "2024-06-08T03:34:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31348/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T03:36Z",
+        "id": "2024-06-08T03:36:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31349/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T04:14Z",
+        "id": "2024-06-08T04:14:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31351/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T04:14Z",
+        "id": "2024-06-08T04:14:00-SEP-002",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31360/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T04:20Z",
+        "id": "2024-06-08T04:20:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31357/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T04:48Z",
+        "id": "2024-06-08T04:48:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31358/-1"
+      },
+      {
+        "day": 43,
+        "time": "2024-06-12T00:21Z",
+        "id": "2024-06-12T00:21:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31435/-1"
+      },
+      {
+        "day": 43,
+        "time": "2024-06-12T00:30Z",
+        "id": "2024-06-12T00:30:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31437/-1"
+      },
+      {
+        "day": 43,
+        "time": "2024-06-12T02:58Z",
+        "id": "2024-06-12T02:58:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31441/-1"
+      },
+      {
+        "day": 43,
+        "time": "2024-06-12T04:03Z",
+        "id": "2024-06-12T04:03:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31452/-1"
+      },
+      {
+        "day": 84,
+        "time": "2024-07-23T01:20Z",
+        "id": "2024-07-23T01:20:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32110/-1"
+      },
+      {
+        "day": 84,
+        "time": "2024-07-23T02:05Z",
+        "id": "2024-07-23T02:05:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32115/-1"
+      },
+      {
+        "day": 84,
+        "time": "2024-07-23T02:28Z",
+        "id": "2024-07-23T02:28:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32122/-1"
+      },
+      {
+        "day": 84,
+        "time": "2024-07-23T02:32Z",
+        "id": "2024-07-23T02:32:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32121/-1"
+      },
+      {
+        "day": 84,
+        "time": "2024-07-23T02:47Z",
+        "id": "2024-07-23T02:47:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32114/-1"
+      },
+      {
+        "day": 84,
+        "time": "2024-07-23T02:55Z",
+        "id": "2024-07-23T02:55:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32138/-1"
+      },
+      {
+        "day": 84,
+        "time": "2024-07-23T03:00Z",
+        "id": "2024-07-23T03:00:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32118/-1"
+      },
+      {
+        "day": 92,
+        "time": "2024-07-31T20:10Z",
+        "id": "2024-07-31T20:10:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32396/-1"
+      },
+      {
+        "day": 92,
+        "time": "2024-07-31T20:10Z",
+        "id": "2024-07-31T20:10:00-SEP-002",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32397/-1"
+      },
+      {
+        "day": 97,
+        "time": "2024-08-05T17:26Z",
+        "id": "2024-08-05T17:26:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32560/-1"
+      }
+    ]
+  },
+  "rules": {
+    "critical": [
+      {
+        "feature": "temp",
+        "op": "ge",
+        "value": 39.5,
+        "source": null,
+        "assumption": true
+      },
+      {
+        "feature": "sys",
+        "op": "gt",
+        "value": 180,
+        "source": "American Heart Association — hypertensive crisis: systolic above 180 and/or diastolic above 120 mmHg. https://heart.org/bplevels",
+        "assumption": false
+      },
+      {
+        "feature": "dia",
+        "op": "gt",
+        "value": 120,
+        "source": "American Heart Association — hypertensive crisis. https://heart.org/bplevels",
+        "assumption": false
+      },
+      {
+        "feature": "glucose",
+        "op": "lt",
+        "value": 54,
+        "source": "American Diabetes Association — Level 2 hypoglycemia: glucose < 54 mg/dL. https://professional.diabetes.org/sites/dpro/files/2025-05/hypoglycemia-hcp-5-27-25.pdf",
+        "assumption": false
+      },
+      {
+        "feature": "hr",
+        "op": "gt",
+        "value": 130,
+        "source": null,
+        "assumption": true
+      },
+      {
+        "feature": "hr",
+        "op": "lt",
+        "value": 40,
+        "source": null,
+        "assumption": true
+      }
+    ],
+    "b1": [
+      {
+        "feature": "temp",
+        "op": "ge",
+        "value": 38.0,
+        "persistence_days": 2,
+        "source": "MedlinePlus (U.S. National Library of Medicine), Body temperature norms: a temperature over 100.4 °F (38 °C) most often means a fever. https://medlineplus.gov/ency/article/001982.htm",
+        "assumption": false
+      },
+      {
+        "feature": "hr",
+        "op": "gt",
+        "value": 100,
+        "persistence_days": 2,
+        "source": "Mayo Clinic, Heart rate: What's normal? — a normal resting heart rate for adults ranges from 60 to 100 beats per minute. https://www.mayoclinic.org/healthy-lifestyle/fitness/expert-answers/heart-rate",
+        "assumption": false
+      },
+      {
+        "feature": "sys",
+        "op": "ge",
+        "value": 140,
+        "persistence_days": 2,
+        "source": "American Heart Association, Understanding Blood Pressure Readings — Stage 2 hypertension: systolic >= 140 or diastolic >= 90 mmHg. https://heart.org/bplevels",
+        "assumption": false
+      },
+      {
+        "feature": "dia",
+        "op": "ge",
+        "value": 90,
+        "persistence_days": 2,
+        "source": "American Heart Association, Understanding Blood Pressure Readings — Stage 2 hypertension. https://heart.org/bplevels",
+        "assumption": false
+      },
+      {
+        "feature": "glucose",
+        "op": "ge",
+        "value": 126,
+        "persistence_days": 2,
+        "source": null,
+        "assumption": true
+      },
+      {
+        "feature": "glucose",
+        "op": "lt",
+        "value": 70,
+        "persistence_days": 2,
+        "source": "American Diabetes Association, Hypoglycemia (HCP) — Level 1 hypoglycemia: glucose < 70 mg/dL. https://professional.diabetes.org/sites/dpro/files/2025-05/hypoglycemia-hcp-5-27-25.pdf",
+        "assumption": false
+      },
+      {
+        "feature": "sleep_h",
+        "op": "lt",
+        "value": 5.0,
+        "persistence_days": 3,
+        "source": null,
+        "assumption": true
+      },
+      {
+        "feature": "mood",
+        "op": "le",
+        "value": 2,
+        "persistence_days": 3,
+        "source": null,
+        "assumption": true
+      }
+    ]
+  }
+}
