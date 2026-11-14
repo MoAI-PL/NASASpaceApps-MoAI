@@ -1,3 +1,6 @@
+# Astrobalance — NASA Space Apps Challenge 2026
+# AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
+#
 # Astrobalance — detector, scoring and alert configuration
 # Detector chosen by the model-selection benchmark (python -m src.benchmark → outputs/results/benchmark.md):
 # the multivariate personal-drift model beat every autoencoder variant at an equal false-alarm budget.

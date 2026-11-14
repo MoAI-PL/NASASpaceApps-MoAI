@@ -244,7 +244,7 @@ The same offline, personal-baseline monitoring fits isolated crews on Earth: Ant
 - Model selection used synthetic scenarios designed by the team; the winning model's advantage may partly reflect the linear-Gaussian simulator (see 7.3).
 - Radiation dose values are illustrative; SEP event dates are real only after `src.donki` has been run with internet access.
 
-## 10. Use of AI (Super Intelligence, SI)
+## 10. Use of AI
 
 Generative AI was used in this project, as required to be disclosed by the NASA Space Apps rules:
 - **Claude (Anthropic)**, including via Claude Code, drafted the Python code, tests, configuration files, the concept UI, the figures, this README, the demo slides and the project-page texts (`docs/submission.md`), and helped search for and verify sources. Every source file carries the header "AI-assisted: drafted with Claude (Anthropic), reviewed by the team".
