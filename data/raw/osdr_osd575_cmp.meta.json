@@ -1,0 +1,8 @@
+{
+  "study": "OSD-575",
+  "study_url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-575",
+  "file": "LSDS-8_Comprehensive_Metabolic_Panel_CMP.upload_SUBMITTED.csv",
+  "url": "https://osdr.nasa.gov/geode-py/ws/studies/OSD-575/download?source=datamanager&file=LSDS-8_Comprehensive_Metabolic_Panel_CMP.upload_SUBMITTED.csv",
+  "citation": "Overbey E.G. et al. (2024) The Space Omics and Medical Atlas (SOMA) and international astronaut biobank. Nature. doi:10.1038/s41586-024-07639-y",
+  "retrieved": "2026-11-14T22:16:42+00:00"
+}

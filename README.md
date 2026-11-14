@@ -200,6 +200,18 @@ Real wearable resting heart rate is smoothed (day-to-day autocorrelation ~0.75) 
 
 The chosen normal catches more changes early and raises fewer real alarms, at a somewhat higher synthetic false-alarm rate on dev. (The dev column uses each variant's own benchmark threshold; with the production threshold P_yellow = 94 the chosen model has 0.065 false alarms per astronaut-week on dev, 7.2.) Full table and protocol notes (including a missing-data fix made after the first confirmation, and the rounds in which the grid was built): [`outputs/results/robust_bench.md`](outputs/results/robust_bench.md) (`python -m src.robust_bench --window 14`).
 
+### 7.6 Plausibility check — simulated glucose vs real astronaut blood tests (NASA OSDR, Inspiration4)
+
+Real astronaut data, used only to compare, never to calibrate: the comprehensive metabolic panel of the four Inspiration4 crew members from NASA OSDR study [OSD-575](https://osdr.nasa.gov/bio/repo/data/studies/OSD-575) (Overbey et al. 2024, *Nature*). Glucose is the one of our nine inputs in that panel; the three pre-flight draws (L-92, L-44, L-3) are compared with the simulator's healthy parameters, which stay frozen.
+
+| | Real pre-flight draws (4 crew, 12 draws) | Simulator (healthy) |
+|---|---|---|
+| Mean (mg/dL) | 75.3 (range 56–100) | 90 |
+| Spread between people (sd) | 3.8 | 8 |
+| Spread within a person (sd) | 12.6 (draws weeks apart) | 6 (day to day) |
+
+**Partly consistent.** The real mean lies inside the simulated healthy population (±2 sd), but 14.7 mg/dL below the simulated mean, and a person's real values vary about twice as much as our day-to-day noise. Caveats: 4 people, 3 draws each, weeks to months apart, fasting state not stated. Post-flight draws are not a healthy baseline and are not compared; three R+45 values below 50 mg/dL are flagged as implausible for healthy people and left uncorrected. The blood count (OSD-569) has no counterpart among our daily inputs and is not used. Table and JSON: [`outputs/results/osdr_check.md`](outputs/results/osdr_check.md) (`python -m src.osdr --download`, then `python -m src.osdr`).
+
 Figures (1600 × 900, slide-ready): `benchmark.png`, `lead_time_test.png`, `lead_time_dev.png`, `timeline_demo.png` (Crew Member Bravo: one false alarm on day 37, model alarm on day 65 after the change starts on day 50, fixed clinical thresholds on day 72), `real_data_check.png`, `healthy_check.png`.
 
 ## 8. Earth spin-off
@@ -234,6 +246,7 @@ Data and scientific sources
 - NASA Human Research Program — Ongoing HRP Research in Space: https://www.nasa.gov/hrp/ongoing-hrp-research/
 - Thambawita V., Hicks S.A., Borgli H., Stensland H.K., Jha D., Svensen M.K., Pettersen S.A., Johansen D., Johansen H.D., Pettersen S.D., Nordvang S., Pedersen S., Gjerdrum A., Grønli T.-M., Fredriksen P.M., Eg R., Hansen K., Fagernes S., Claudi C., Biørn-Hansen A., Nguyen D.T.D., Kupka T., Hammer H.L., Jain R., Riegler M.A., Halvorsen P. (2020), PMData: a sports logging dataset, Proc. 11th ACM Multimedia Systems Conference (MMSys'20), doi:10.1145/3339825.3394926 — dataset under CC BY 4.0: https://datasets.simula.no/pmdata (daily files read from the public mirror https://github.com/itsalamhere/sports-logs, which states PMData as its source)
 - NASA CCMC DONKI — Solar Energetic Particle events API: https://ccmc.gsfc.nasa.gov/tools/DONKI/
+- NASA Open Science Data Repository — OSD-575, SpaceX Inspiration4 Blood Serum Metabolic Panel (CMP): https://osdr.nasa.gov/bio/repo/data/studies/OSD-575 · Overbey E.G. et al. (2024), The Space Omics and Medical Atlas (SOMA) and international astronaut biobank, Nature, doi:10.1038/s41586-024-07639-y
 - NASA/JPL Solar System Dynamics — Horizons System (Earth–Mars ephemeris, API): https://ssd.jpl.nasa.gov/horizons/ · API docs: https://ssd-api.jpl.nasa.gov/doc/horizons.html
 - NASA OCHMO Technical Brief OCHMO-TB-004, Carbon Dioxide: https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-004-carbon-dioxide.pdf
 - NASA ASCEND paper, Communication Delays, Disruptions, and Blackouts for Crewed Mars Missions: https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf

@@ -74,6 +74,7 @@ File header (Python):
 conda env create -f environment.yml && conda activate spaceapps
 python -m src.donki --start 2024-05-01 --days 120          # cache real SEP events (M1)
 python -m src.horizons --start 2024-05-01 --days 120       # cache real Earth–Mars delay (JPL Horizons, UI only)
+python -m src.osdr --download                              # Inspiration4 glucose vs simulator (NASA OSDR, comparison only)
 python -m src.simulate --config config/simulation.yaml       # synthetic crews (M1)
 python -m src.train --config config/model.yaml               # fit the configured detector (M2)
 python -m src.benchmark                                      # model-selection benchmark (bench split)
