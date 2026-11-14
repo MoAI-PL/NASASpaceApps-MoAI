@@ -1,7 +1,7 @@
 // Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
-import { META } from "../data.js";
+import { META, oneWayText } from "../data.js";
 import { SOURCES } from "../content/texts.js";
 import { TapButton } from "../components/ui.jsx";
 
@@ -27,7 +27,7 @@ export function EnvIcon({ id, size = 28 }) {
 
 /** Crew member (one tap to switch between the three demo cases) and mission environment. On wide
  *  screens both live in the sidebar's bottom-left corner (SidebarPicker), so this block hides there. */
-export function DemoControls({ astronaut, onAstronaut, env, onEnv }) {
+export function DemoControls({ astronaut, onAstronaut, env, onEnv, day }) {
   return (
     <div className="mt-3 lg:hidden">
       <div className="grid grid-cols-3 gap-2" role="group" aria-label="Crew member">
@@ -47,7 +47,7 @@ export function DemoControls({ astronaut, onAstronaut, env, onEnv }) {
           <TapButton key={id} active={id === env} onClick={() => onEnv(id)} className="text-center! px-2! py-2 flex flex-col items-center justify-center gap-1">
             <EnvIcon id={id} />
             <span className="text-base leading-tight">{ENV_SHORT[id] ?? e.name}</span>
-            <span className="text-xs text-ink-2 leading-tight">Earth {e.one_way_delay_text}</span>
+            <span className="text-xs text-ink-2 leading-tight">Earth {oneWayText(id, day)}</span>
           </TapButton>
         ))}
       </div>
@@ -66,8 +66,7 @@ function SmallButton({ active, className = "", ...props }) {
 }
 
 /** Crew member and mission environment in the sidebar's bottom-left corner (wide screens). */
-export function SidebarPicker({ astronaut, onAstronaut, env, onEnv }) {
-  const where = META.environments[env];
+export function SidebarPicker({ astronaut, onAstronaut, env, onEnv, day }) {
   return (
     <div className="px-1 grid gap-1">
       <p className="px-1 text-xs text-ink-2">Crew member</p>
@@ -87,7 +86,7 @@ export function SidebarPicker({ astronaut, onAstronaut, env, onEnv }) {
           </SmallButton>
         ))}
       </div>
-      <p className="px-1 text-xs text-ink-2" aria-live="polite">Earth {where.one_way_delay_text} one way</p>
+      <p className="px-1 text-xs text-ink-2" aria-live="polite">Earth {oneWayText(env, day)} one way</p>
     </div>
   );
 }

@@ -39,9 +39,27 @@ export function fmt(id, value) {
   return value == null ? null : Number(value).toFixed(DECIMALS[id] ?? 0);
 }
 
-/** Longest round trip of a message to Earth and back for an environment, as short text
- *  (2 × the maximum one-way delay in meta.environments; signal travel only, no reply time). */
-export function roundTripText(env) {
+/** Real one-way signal delay (s) to Earth on a mission day for a crew on the Mars surface:
+ *  Earth–Mars distance from NASA/JPL Horizons / speed of light (meta.mars_delay). Null for other
+ *  environments (a ship in transit is somewhere between the planets) or without the data. */
+export function realDelaySeconds(env, day) {
+  if (env !== "mars_rover") return null;
+  return META.mars_delay?.one_way_s?.[day - 1] ?? null;
+}
+
+const delayWords = (s) => (s < 120 ? `~${Math.round(s)} s` : `~${Math.round(s / 60)} min`);
+
+/** One-way delay as short text: today's real value on Mars, else the configured range. */
+export function oneWayText(env, day) {
+  const real = realDelaySeconds(env, day);
+  return real != null ? `${delayWords(real)} today` : META.environments[env].one_way_delay_text;
+}
+
+/** Round trip of a message to Earth and back, as short text (signal travel only, no reply time):
+ *  today's real value on Mars, else 2 × the maximum one-way delay in meta.environments. */
+export function roundTripText(env, day) {
+  const real = realDelaySeconds(env, day);
+  if (real != null) return `${delayWords(2 * real)} today`;
   const s = 2 * (META.environments[env]?.one_way_delay_s?.[1] ?? 0);
   if (s < 2) return "a few seconds or less";
   return s < 120 ? `up to ~${Math.round(s)} s` : `up to ~${Math.round(s / 60)} min`;

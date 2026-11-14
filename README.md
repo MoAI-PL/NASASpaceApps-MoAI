@@ -29,7 +29,7 @@ Every NASA Human Research Program hazard is visible in the product:
 |---|---|---|
 | Space radiation | daily and cumulative absorbed dose, alerts on solar particle events | real NASA DONKI SEP events + assumed dose model |
 | Isolation & confinement | mind & sleep system (sleep, mood, reaction time); the model detects joint drift | synthetic |
-| Distance from Earth | escalation ladder and Earth-report queue use the one-way communication delay; reports to Earth in SBAR form; comms-blackout mode for Mars solar conjunction | config per environment |
+| Distance from Earth | escalation ladder and Earth-report queue use the one-way communication delay (for a crew on Mars: the real Earth–Mars light time of each mission day from NASA/JPL Horizons); reports to Earth in SBAR form; comms-blackout mode for Mars solar conjunction | config per environment |
 | Gravity fields | heart & circulation system (blood pressure, heart rate, exercise) | synthetic |
 | Hostile & closed environment | cabin CO₂ against the NASA limit; infection onset via temperature and heart rate | synthetic |
 
@@ -40,6 +40,7 @@ Bone loss cannot be tracked with daily self-measurements and is out of scope (se
 ```bash
 conda env create -f environment.yml && conda activate spaceapps
 python -m src.donki --start 2024-05-01 --days 120   # needs internet once: caches real NASA DONKI SEP events
+python -m src.horizons --start 2024-05-01 --days 120  # needs internet once: caches the real Earth–Mars delay (JPL Horizons)
 python -m src.run_all                               # simulate → fit → tune on bench → confirm on dev → export → figures
 python -m src.run_all --benchmark                   # same, plus the model-selection benchmark (~5 min on CPU)
 python -m src.robust_bench --window 14              # robustness benchmark: synthetic detection vs real-data alarms (7.5)
@@ -93,6 +94,7 @@ There is no labelled dataset of astronaut illnesses: crews are tiny, serious eve
 ## 6. Data & sources
 
 - **Real data:** NASA DONKI solar energetic particle events for the mission window (`python -m src.donki`). If the cache is missing, no SEP events are simulated and `meta.json` reports `space_weather.status = "missing"`.
+- **Real data:** NASA/JPL Horizons ephemeris — Earth–Mars distance for each mission day (`python -m src.horizons`, cached in `data/raw/horizons_earth_mars.json`). One-way delay = distance / speed of light: 16.4 min on day 1 falling to 12.1 min on day 120 (Mars approaching Earth); the Sun–Earth–Mars angle stays between 41° and 70°, so this window has no solar conjunction. Used only by the UI for a crew on the Mars surface; the model and simulator never read it.
 - **Real everyday data:** PMData (Thambawita et al. 2020, CC BY 4.0) — Fitbit resting heart rate, sleep and active minutes plus a daily mood rating from 16 people. The odd-numbered half calibrates the simulator's noise and drift and selects the personal-normal variant (7.5); the even-numbered half is used only to confirm; the model itself is never fitted on it.
 - **Synthetic crews (simulator 2):** individual astronaut records are privacy-protected, so every astronaut is simulated from `config/simulation.yaml`. Day-to-day variation is correlated through two latent factors (fatigue, training load); each input's own noise is autocorrelated and every healthy baseline drifts slowly, with both effects estimated from real everyday data (PMData, selection half only: resting heart rate autocorrelation 0.75, drift 0.13 personal sd per √day) and flagged as assumptions where PMData does not measure the input. Scenario sizes were fixed **before** any evaluation.
 
@@ -232,6 +234,7 @@ Data and scientific sources
 - NASA Human Research Program — Ongoing HRP Research in Space: https://www.nasa.gov/hrp/ongoing-hrp-research/
 - Thambawita V., Hicks S.A., Borgli H., Stensland H.K., Jha D., Svensen M.K., Pettersen S.A., Johansen D., Johansen H.D., Pettersen S.D., Nordvang S., Pedersen S., Gjerdrum A., Grønli T.-M., Fredriksen P.M., Eg R., Hansen K., Fagernes S., Claudi C., Biørn-Hansen A., Nguyen D.T.D., Kupka T., Hammer H.L., Jain R., Riegler M.A., Halvorsen P. (2020), PMData: a sports logging dataset, Proc. 11th ACM Multimedia Systems Conference (MMSys'20), doi:10.1145/3339825.3394926 — dataset under CC BY 4.0: https://datasets.simula.no/pmdata (daily files read from the public mirror https://github.com/itsalamhere/sports-logs, which states PMData as its source)
 - NASA CCMC DONKI — Solar Energetic Particle events API: https://ccmc.gsfc.nasa.gov/tools/DONKI/
+- NASA/JPL Solar System Dynamics — Horizons System (Earth–Mars ephemeris, API): https://ssd.jpl.nasa.gov/horizons/ · API docs: https://ssd-api.jpl.nasa.gov/doc/horizons.html
 - NASA OCHMO Technical Brief OCHMO-TB-004, Carbon Dioxide: https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-004-carbon-dioxide.pdf
 - NASA ASCEND paper, Communication Delays, Disruptions, and Blackouts for Crewed Mars Missions: https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf
 - Canadian Space Agency — Monitoring Radiation for Astronaut Health: https://www.asc-csa.gc.ca/eng/news/articles/2026/2026-02-26-monitoring-radiation-astronaut-health.asp

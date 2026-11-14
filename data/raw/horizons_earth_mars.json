@@ -1,0 +1,861 @@
+{
+  "source": "https://ssd.jpl.nasa.gov/api/horizons.api",
+  "query": {
+    "format": "text",
+    "COMMAND": "'499'",
+    "OBJ_DATA": "'NO'",
+    "MAKE_EPHEM": "'YES'",
+    "EPHEM_TYPE": "'OBSERVER'",
+    "CENTER": "'500@399'",
+    "START_TIME": "'2024-05-01'",
+    "STOP_TIME": "'2024-08-28'",
+    "STEP_SIZE": "'1 d'",
+    "QUANTITIES": "'20,23'",
+    "CSV_FORMAT": "'YES'"
+  },
+  "start": "2024-05-01",
+  "days": 120,
+  "retrieved": "2026-11-14T22:12:00+00:00",
+  "rows": [
+    {
+      "day": 1,
+      "date": "2024-05-01",
+      "distance_au": 1.976603,
+      "one_way_s": 986.3,
+      "sun_angle_deg": 40.858
+    },
+    {
+      "day": 2,
+      "date": "2024-05-02",
+      "distance_au": 1.972841,
+      "one_way_s": 984.5,
+      "sun_angle_deg": 41.058
+    },
+    {
+      "day": 3,
+      "date": "2024-05-03",
+      "distance_au": 1.969079,
+      "one_way_s": 982.6,
+      "sun_angle_deg": 41.2579
+    },
+    {
+      "day": 4,
+      "date": "2024-05-04",
+      "distance_au": 1.965315,
+      "one_way_s": 980.7,
+      "sun_angle_deg": 41.458
+    },
+    {
+      "day": 5,
+      "date": "2024-05-05",
+      "distance_au": 1.96155,
+      "one_way_s": 978.8,
+      "sun_angle_deg": 41.6581
+    },
+    {
+      "day": 6,
+      "date": "2024-05-06",
+      "distance_au": 1.957784,
+      "one_way_s": 976.9,
+      "sun_angle_deg": 41.8583
+    },
+    {
+      "day": 7,
+      "date": "2024-05-07",
+      "distance_au": 1.954015,
+      "one_way_s": 975.1,
+      "sun_angle_deg": 42.0586
+    },
+    {
+      "day": 8,
+      "date": "2024-05-08",
+      "distance_au": 1.950245,
+      "one_way_s": 973.2,
+      "sun_angle_deg": 42.259
+    },
+    {
+      "day": 9,
+      "date": "2024-05-09",
+      "distance_au": 1.946472,
+      "one_way_s": 971.3,
+      "sun_angle_deg": 42.4595
+    },
+    {
+      "day": 10,
+      "date": "2024-05-10",
+      "distance_au": 1.942698,
+      "one_way_s": 969.4,
+      "sun_angle_deg": 42.6601
+    },
+    {
+      "day": 11,
+      "date": "2024-05-11",
+      "distance_au": 1.938923,
+      "one_way_s": 967.5,
+      "sun_angle_deg": 42.8609
+    },
+    {
+      "day": 12,
+      "date": "2024-05-12",
+      "distance_au": 1.935145,
+      "one_way_s": 965.6,
+      "sun_angle_deg": 43.0618
+    },
+    {
+      "day": 13,
+      "date": "2024-05-13",
+      "distance_au": 1.931367,
+      "one_way_s": 963.8,
+      "sun_angle_deg": 43.2628
+    },
+    {
+      "day": 14,
+      "date": "2024-05-14",
+      "distance_au": 1.927587,
+      "one_way_s": 961.9,
+      "sun_angle_deg": 43.464
+    },
+    {
+      "day": 15,
+      "date": "2024-05-15",
+      "distance_au": 1.923805,
+      "one_way_s": 960.0,
+      "sun_angle_deg": 43.6654
+    },
+    {
+      "day": 16,
+      "date": "2024-05-16",
+      "distance_au": 1.920022,
+      "one_way_s": 958.1,
+      "sun_angle_deg": 43.8669
+    },
+    {
+      "day": 17,
+      "date": "2024-05-17",
+      "distance_au": 1.916238,
+      "one_way_s": 956.2,
+      "sun_angle_deg": 44.0686
+    },
+    {
+      "day": 18,
+      "date": "2024-05-18",
+      "distance_au": 1.912452,
+      "one_way_s": 954.3,
+      "sun_angle_deg": 44.2705
+    },
+    {
+      "day": 19,
+      "date": "2024-05-19",
+      "distance_au": 1.908664,
+      "one_way_s": 952.4,
+      "sun_angle_deg": 44.4726
+    },
+    {
+      "day": 20,
+      "date": "2024-05-20",
+      "distance_au": 1.904875,
+      "one_way_s": 950.5,
+      "sun_angle_deg": 44.675
+    },
+    {
+      "day": 21,
+      "date": "2024-05-21",
+      "distance_au": 1.901083,
+      "one_way_s": 948.6,
+      "sun_angle_deg": 44.8777
+    },
+    {
+      "day": 22,
+      "date": "2024-05-22",
+      "distance_au": 1.897288,
+      "one_way_s": 946.8,
+      "sun_angle_deg": 45.0806
+    },
+    {
+      "day": 23,
+      "date": "2024-05-23",
+      "distance_au": 1.893491,
+      "one_way_s": 944.9,
+      "sun_angle_deg": 45.2838
+    },
+    {
+      "day": 24,
+      "date": "2024-05-24",
+      "distance_au": 1.889691,
+      "one_way_s": 943.0,
+      "sun_angle_deg": 45.4874
+    },
+    {
+      "day": 25,
+      "date": "2024-05-25",
+      "distance_au": 1.885886,
+      "one_way_s": 941.1,
+      "sun_angle_deg": 45.6913
+    },
+    {
+      "day": 26,
+      "date": "2024-05-26",
+      "distance_au": 1.882078,
+      "one_way_s": 939.2,
+      "sun_angle_deg": 45.8957
+    },
+    {
+      "day": 27,
+      "date": "2024-05-27",
+      "distance_au": 1.878264,
+      "one_way_s": 937.3,
+      "sun_angle_deg": 46.1004
+    },
+    {
+      "day": 28,
+      "date": "2024-05-28",
+      "distance_au": 1.874445,
+      "one_way_s": 935.4,
+      "sun_angle_deg": 46.3056
+    },
+    {
+      "day": 29,
+      "date": "2024-05-29",
+      "distance_au": 1.87062,
+      "one_way_s": 933.4,
+      "sun_angle_deg": 46.5114
+    },
+    {
+      "day": 30,
+      "date": "2024-05-30",
+      "distance_au": 1.866789,
+      "one_way_s": 931.5,
+      "sun_angle_deg": 46.7176
+    },
+    {
+      "day": 31,
+      "date": "2024-05-31",
+      "distance_au": 1.862949,
+      "one_way_s": 929.6,
+      "sun_angle_deg": 46.9244
+    },
+    {
+      "day": 32,
+      "date": "2024-06-01",
+      "distance_au": 1.859102,
+      "one_way_s": 927.7,
+      "sun_angle_deg": 47.1318
+    },
+    {
+      "day": 33,
+      "date": "2024-06-02",
+      "distance_au": 1.855247,
+      "one_way_s": 925.8,
+      "sun_angle_deg": 47.3398
+    },
+    {
+      "day": 34,
+      "date": "2024-06-03",
+      "distance_au": 1.851382,
+      "one_way_s": 923.8,
+      "sun_angle_deg": 47.5484
+    },
+    {
+      "day": 35,
+      "date": "2024-06-04",
+      "distance_au": 1.847508,
+      "one_way_s": 921.9,
+      "sun_angle_deg": 47.7577
+    },
+    {
+      "day": 36,
+      "date": "2024-06-05",
+      "distance_au": 1.843625,
+      "one_way_s": 920.0,
+      "sun_angle_deg": 47.9677
+    },
+    {
+      "day": 37,
+      "date": "2024-06-06",
+      "distance_au": 1.839731,
+      "one_way_s": 918.0,
+      "sun_angle_deg": 48.1783
+    },
+    {
+      "day": 38,
+      "date": "2024-06-07",
+      "distance_au": 1.835828,
+      "one_way_s": 916.1,
+      "sun_angle_deg": 48.3897
+    },
+    {
+      "day": 39,
+      "date": "2024-06-08",
+      "distance_au": 1.831915,
+      "one_way_s": 914.1,
+      "sun_angle_deg": 48.6017
+    },
+    {
+      "day": 40,
+      "date": "2024-06-09",
+      "distance_au": 1.827993,
+      "one_way_s": 912.2,
+      "sun_angle_deg": 48.8145
+    },
+    {
+      "day": 41,
+      "date": "2024-06-10",
+      "distance_au": 1.82406,
+      "one_way_s": 910.2,
+      "sun_angle_deg": 49.0279
+    },
+    {
+      "day": 42,
+      "date": "2024-06-11",
+      "distance_au": 1.820117,
+      "one_way_s": 908.2,
+      "sun_angle_deg": 49.2421
+    },
+    {
+      "day": 43,
+      "date": "2024-06-12",
+      "distance_au": 1.816165,
+      "one_way_s": 906.3,
+      "sun_angle_deg": 49.4571
+    },
+    {
+      "day": 44,
+      "date": "2024-06-13",
+      "distance_au": 1.812202,
+      "one_way_s": 904.3,
+      "sun_angle_deg": 49.6727
+    },
+    {
+      "day": 45,
+      "date": "2024-06-14",
+      "distance_au": 1.808229,
+      "one_way_s": 902.3,
+      "sun_angle_deg": 49.8892
+    },
+    {
+      "day": 46,
+      "date": "2024-06-15",
+      "distance_au": 1.804246,
+      "one_way_s": 900.3,
+      "sun_angle_deg": 50.1064
+    },
+    {
+      "day": 47,
+      "date": "2024-06-16",
+      "distance_au": 1.800252,
+      "one_way_s": 898.3,
+      "sun_angle_deg": 50.3244
+    },
+    {
+      "day": 48,
+      "date": "2024-06-17",
+      "distance_au": 1.796247,
+      "one_way_s": 896.3,
+      "sun_angle_deg": 50.5432
+    },
+    {
+      "day": 49,
+      "date": "2024-06-18",
+      "distance_au": 1.792231,
+      "one_way_s": 894.3,
+      "sun_angle_deg": 50.7629
+    },
+    {
+      "day": 50,
+      "date": "2024-06-19",
+      "distance_au": 1.788203,
+      "one_way_s": 892.3,
+      "sun_angle_deg": 50.9834
+    },
+    {
+      "day": 51,
+      "date": "2024-06-20",
+      "distance_au": 1.784164,
+      "one_way_s": 890.3,
+      "sun_angle_deg": 51.2047
+    },
+    {
+      "day": 52,
+      "date": "2024-06-21",
+      "distance_au": 1.780113,
+      "one_way_s": 888.3,
+      "sun_angle_deg": 51.427
+    },
+    {
+      "day": 53,
+      "date": "2024-06-22",
+      "distance_au": 1.776049,
+      "one_way_s": 886.3,
+      "sun_angle_deg": 51.6502
+    },
+    {
+      "day": 54,
+      "date": "2024-06-23",
+      "distance_au": 1.771972,
+      "one_way_s": 884.2,
+      "sun_angle_deg": 51.8743
+    },
+    {
+      "day": 55,
+      "date": "2024-06-24",
+      "distance_au": 1.76788,
+      "one_way_s": 882.2,
+      "sun_angle_deg": 52.0994
+    },
+    {
+      "day": 56,
+      "date": "2024-06-25",
+      "distance_au": 1.763775,
+      "one_way_s": 880.1,
+      "sun_angle_deg": 52.3255
+    },
+    {
+      "day": 57,
+      "date": "2024-06-26",
+      "distance_au": 1.759654,
+      "one_way_s": 878.1,
+      "sun_angle_deg": 52.5527
+    },
+    {
+      "day": 58,
+      "date": "2024-06-27",
+      "distance_au": 1.755516,
+      "one_way_s": 876.0,
+      "sun_angle_deg": 52.7809
+    },
+    {
+      "day": 59,
+      "date": "2024-06-28",
+      "distance_au": 1.751363,
+      "one_way_s": 873.9,
+      "sun_angle_deg": 53.0103
+    },
+    {
+      "day": 60,
+      "date": "2024-06-29",
+      "distance_au": 1.747191,
+      "one_way_s": 871.9,
+      "sun_angle_deg": 53.2409
+    },
+    {
+      "day": 61,
+      "date": "2024-06-30",
+      "distance_au": 1.743002,
+      "one_way_s": 869.8,
+      "sun_angle_deg": 53.4726
+    },
+    {
+      "day": 62,
+      "date": "2024-07-01",
+      "distance_au": 1.738794,
+      "one_way_s": 867.7,
+      "sun_angle_deg": 53.7056
+    },
+    {
+      "day": 63,
+      "date": "2024-07-02",
+      "distance_au": 1.734567,
+      "one_way_s": 865.6,
+      "sun_angle_deg": 53.9398
+    },
+    {
+      "day": 64,
+      "date": "2024-07-03",
+      "distance_au": 1.730321,
+      "one_way_s": 863.4,
+      "sun_angle_deg": 54.1753
+    },
+    {
+      "day": 65,
+      "date": "2024-07-04",
+      "distance_au": 1.726056,
+      "one_way_s": 861.3,
+      "sun_angle_deg": 54.412
+    },
+    {
+      "day": 66,
+      "date": "2024-07-05",
+      "distance_au": 1.72177,
+      "one_way_s": 859.2,
+      "sun_angle_deg": 54.6501
+    },
+    {
+      "day": 67,
+      "date": "2024-07-06",
+      "distance_au": 1.717465,
+      "one_way_s": 857.0,
+      "sun_angle_deg": 54.8895
+    },
+    {
+      "day": 68,
+      "date": "2024-07-07",
+      "distance_au": 1.71314,
+      "one_way_s": 854.9,
+      "sun_angle_deg": 55.1302
+    },
+    {
+      "day": 69,
+      "date": "2024-07-08",
+      "distance_au": 1.708794,
+      "one_way_s": 852.7,
+      "sun_angle_deg": 55.3722
+    },
+    {
+      "day": 70,
+      "date": "2024-07-09",
+      "distance_au": 1.704429,
+      "one_way_s": 850.5,
+      "sun_angle_deg": 55.6156
+    },
+    {
+      "day": 71,
+      "date": "2024-07-10",
+      "distance_au": 1.700043,
+      "one_way_s": 848.3,
+      "sun_angle_deg": 55.8604
+    },
+    {
+      "day": 72,
+      "date": "2024-07-11",
+      "distance_au": 1.695638,
+      "one_way_s": 846.1,
+      "sun_angle_deg": 56.1065
+    },
+    {
+      "day": 73,
+      "date": "2024-07-12",
+      "distance_au": 1.691211,
+      "one_way_s": 843.9,
+      "sun_angle_deg": 56.354
+    },
+    {
+      "day": 74,
+      "date": "2024-07-13",
+      "distance_au": 1.686765,
+      "one_way_s": 841.7,
+      "sun_angle_deg": 56.6029
+    },
+    {
+      "day": 75,
+      "date": "2024-07-14",
+      "distance_au": 1.682297,
+      "one_way_s": 839.5,
+      "sun_angle_deg": 56.8532
+    },
+    {
+      "day": 76,
+      "date": "2024-07-15",
+      "distance_au": 1.677809,
+      "one_way_s": 837.2,
+      "sun_angle_deg": 57.1049
+    },
+    {
+      "day": 77,
+      "date": "2024-07-16",
+      "distance_au": 1.6733,
+      "one_way_s": 835.0,
+      "sun_angle_deg": 57.3581
+    },
+    {
+      "day": 78,
+      "date": "2024-07-17",
+      "distance_au": 1.66877,
+      "one_way_s": 832.7,
+      "sun_angle_deg": 57.6127
+    },
+    {
+      "day": 79,
+      "date": "2024-07-18",
+      "distance_au": 1.664218,
+      "one_way_s": 830.5,
+      "sun_angle_deg": 57.8687
+    },
+    {
+      "day": 80,
+      "date": "2024-07-19",
+      "distance_au": 1.659644,
+      "one_way_s": 828.2,
+      "sun_angle_deg": 58.1263
+    },
+    {
+      "day": 81,
+      "date": "2024-07-20",
+      "distance_au": 1.655048,
+      "one_way_s": 825.9,
+      "sun_angle_deg": 58.3854
+    },
+    {
+      "day": 82,
+      "date": "2024-07-21",
+      "distance_au": 1.65043,
+      "one_way_s": 823.6,
+      "sun_angle_deg": 58.646
+    },
+    {
+      "day": 83,
+      "date": "2024-07-22",
+      "distance_au": 1.645788,
+      "one_way_s": 821.3,
+      "sun_angle_deg": 58.9083
+    },
+    {
+      "day": 84,
+      "date": "2024-07-23",
+      "distance_au": 1.641122,
+      "one_way_s": 818.9,
+      "sun_angle_deg": 59.1721
+    },
+    {
+      "day": 85,
+      "date": "2024-07-24",
+      "distance_au": 1.636432,
+      "one_way_s": 816.6,
+      "sun_angle_deg": 59.4376
+    },
+    {
+      "day": 86,
+      "date": "2024-07-25",
+      "distance_au": 1.631716,
+      "one_way_s": 814.2,
+      "sun_angle_deg": 59.7047
+    },
+    {
+      "day": 87,
+      "date": "2024-07-26",
+      "distance_au": 1.626974,
+      "one_way_s": 811.9,
+      "sun_angle_deg": 59.9737
+    },
+    {
+      "day": 88,
+      "date": "2024-07-27",
+      "distance_au": 1.622206,
+      "one_way_s": 809.5,
+      "sun_angle_deg": 60.2444
+    },
+    {
+      "day": 89,
+      "date": "2024-07-28",
+      "distance_au": 1.61741,
+      "one_way_s": 807.1,
+      "sun_angle_deg": 60.5169
+    },
+    {
+      "day": 90,
+      "date": "2024-07-29",
+      "distance_au": 1.612587,
+      "one_way_s": 804.7,
+      "sun_angle_deg": 60.7912
+    },
+    {
+      "day": 91,
+      "date": "2024-07-30",
+      "distance_au": 1.607736,
+      "one_way_s": 802.3,
+      "sun_angle_deg": 61.0675
+    },
+    {
+      "day": 92,
+      "date": "2024-07-31",
+      "distance_au": 1.602856,
+      "one_way_s": 799.8,
+      "sun_angle_deg": 61.3456
+    },
+    {
+      "day": 93,
+      "date": "2024-08-01",
+      "distance_au": 1.597948,
+      "one_way_s": 797.4,
+      "sun_angle_deg": 61.6257
+    },
+    {
+      "day": 94,
+      "date": "2024-08-02",
+      "distance_au": 1.59301,
+      "one_way_s": 794.9,
+      "sun_angle_deg": 61.9078
+    },
+    {
+      "day": 95,
+      "date": "2024-08-03",
+      "distance_au": 1.588044,
+      "one_way_s": 792.4,
+      "sun_angle_deg": 62.1919
+    },
+    {
+      "day": 96,
+      "date": "2024-08-04",
+      "distance_au": 1.583049,
+      "one_way_s": 789.9,
+      "sun_angle_deg": 62.478
+    },
+    {
+      "day": 97,
+      "date": "2024-08-05",
+      "distance_au": 1.578024,
+      "one_way_s": 787.4,
+      "sun_angle_deg": 62.766
+    },
+    {
+      "day": 98,
+      "date": "2024-08-06",
+      "distance_au": 1.572971,
+      "one_way_s": 784.9,
+      "sun_angle_deg": 63.0562
+    },
+    {
+      "day": 99,
+      "date": "2024-08-07",
+      "distance_au": 1.567889,
+      "one_way_s": 782.4,
+      "sun_angle_deg": 63.3484
+    },
+    {
+      "day": 100,
+      "date": "2024-08-08",
+      "distance_au": 1.562778,
+      "one_way_s": 779.8,
+      "sun_angle_deg": 63.6426
+    },
+    {
+      "day": 101,
+      "date": "2024-08-09",
+      "distance_au": 1.557638,
+      "one_way_s": 777.3,
+      "sun_angle_deg": 63.9389
+    },
+    {
+      "day": 102,
+      "date": "2024-08-10",
+      "distance_au": 1.552469,
+      "one_way_s": 774.7,
+      "sun_angle_deg": 64.2374
+    },
+    {
+      "day": 103,
+      "date": "2024-08-11",
+      "distance_au": 1.547271,
+      "one_way_s": 772.1,
+      "sun_angle_deg": 64.5379
+    },
+    {
+      "day": 104,
+      "date": "2024-08-12",
+      "distance_au": 1.542044,
+      "one_way_s": 769.5,
+      "sun_angle_deg": 64.8406
+    },
+    {
+      "day": 105,
+      "date": "2024-08-13",
+      "distance_au": 1.536788,
+      "one_way_s": 766.9,
+      "sun_angle_deg": 65.1454
+    },
+    {
+      "day": 106,
+      "date": "2024-08-14",
+      "distance_au": 1.531503,
+      "one_way_s": 764.2,
+      "sun_angle_deg": 65.4524
+    },
+    {
+      "day": 107,
+      "date": "2024-08-15",
+      "distance_au": 1.526189,
+      "one_way_s": 761.6,
+      "sun_angle_deg": 65.7616
+    },
+    {
+      "day": 108,
+      "date": "2024-08-16",
+      "distance_au": 1.520846,
+      "one_way_s": 758.9,
+      "sun_angle_deg": 66.0729
+    },
+    {
+      "day": 109,
+      "date": "2024-08-17",
+      "distance_au": 1.515473,
+      "one_way_s": 756.2,
+      "sun_angle_deg": 66.3865
+    },
+    {
+      "day": 110,
+      "date": "2024-08-18",
+      "distance_au": 1.510071,
+      "one_way_s": 753.5,
+      "sun_angle_deg": 66.7024
+    },
+    {
+      "day": 111,
+      "date": "2024-08-19",
+      "distance_au": 1.504639,
+      "one_way_s": 750.8,
+      "sun_angle_deg": 67.0206
+    },
+    {
+      "day": 112,
+      "date": "2024-08-20",
+      "distance_au": 1.499176,
+      "one_way_s": 748.1,
+      "sun_angle_deg": 67.341
+    },
+    {
+      "day": 113,
+      "date": "2024-08-21",
+      "distance_au": 1.493682,
+      "one_way_s": 745.4,
+      "sun_angle_deg": 67.6639
+    },
+    {
+      "day": 114,
+      "date": "2024-08-22",
+      "distance_au": 1.488157,
+      "one_way_s": 742.6,
+      "sun_angle_deg": 67.9892
+    },
+    {
+      "day": 115,
+      "date": "2024-08-23",
+      "distance_au": 1.482599,
+      "one_way_s": 739.8,
+      "sun_angle_deg": 68.3169
+    },
+    {
+      "day": 116,
+      "date": "2024-08-24",
+      "distance_au": 1.477009,
+      "one_way_s": 737.0,
+      "sun_angle_deg": 68.6472
+    },
+    {
+      "day": 117,
+      "date": "2024-08-25",
+      "distance_au": 1.471386,
+      "one_way_s": 734.2,
+      "sun_angle_deg": 68.9801
+    },
+    {
+      "day": 118,
+      "date": "2024-08-26",
+      "distance_au": 1.465729,
+      "one_way_s": 731.4,
+      "sun_angle_deg": 69.3155
+    },
+    {
+      "day": 119,
+      "date": "2024-08-27",
+      "distance_au": 1.460039,
+      "one_way_s": 728.6,
+      "sun_angle_deg": 69.6537
+    },
+    {
+      "day": 120,
+      "date": "2024-08-28",
+      "distance_au": 1.454315,
+      "one_way_s": 725.7,
+      "sun_angle_deg": 69.9946
+    }
+  ]
+}
