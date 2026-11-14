@@ -2,7 +2,11 @@
 
 **NASA Space Apps Challenge 2026 · Challenge: _Create Health Monitoring Software for Astronauts on Space Missions_ (author: Brazilian Space Agency)**
 
+**Team MoAI:** Jan Domański (backend developer) · Kamila Bąk (frontend developer) · Zuzanna Marciniak (UX/UI designer)
+
 **▶ Live app (works offline after the first visit, no login): https://moai-pl.github.io/NASASpaceApps-MoAI/**
+
+**▶ Demo (7 slides, PDF): [`docs/demo/Astrobalance-demo-slides.pdf`](docs/demo/Astrobalance-demo-slides.pdf)**
 
 > **Prototype — not medical advice.** Model results come from synthetic data calibrated on published sources, plus one alarm-rate check on real everyday data (PMData) — proof of concept, not clinical validation. Not a medical device.
 
@@ -185,12 +189,12 @@ Data cleaning, fixed before scoring and applied to everyone alike: exercise minu
 
 Real wearable resting heart rate is smoothed (day-to-day autocorrelation ~0.75) and drifts by a few bpm over weeks; a normal fixed after day 21 reads that as deviation. 58 variants of the personal normal and the alarm logic (fixed, rolling, EWMA, robust EWMA, autocorrelation-aware, missing-aware distance, personal score scale, persistence, alarm hold, inputs left out) were compared on the 14-day detector under a rule fixed in advance: each variant's threshold is set on the synthetic selection split to 0.05 false alarms per astronaut-week; among variants whose early detection is at most 5 points below the fixed normal, pick the one with the fewest alarms on **half** of the PMData people (p01, p03, …); then run it **once** on the other half and on the dev split.
 
-| Model | Early detection, synthetic (bench) | Real alarms per person-week: selection half → confirmation half | Dev false alarms per astronaut-week |
+| Model | Early detection, synthetic (bench) | Real alarms per person-week: selection half → confirmation half | Dev false alarms per astronaut-week (benchmark threshold) |
 |---|---|---|---|
 | Fixed 21-day normal | 66% | 0.050 → 0.007 | 0.045 |
 | **Robust EWMA normal, exercise not scored, alarm held 7 days (chosen)** | **71%** | **0.000 → 0.000** | 0.069 |
 
-The chosen normal catches more changes early and raises fewer real alarms, at a somewhat higher synthetic false-alarm rate on dev. Full table and protocol notes (including a missing-data fix made after the first confirmation, and the rounds in which the grid was built): [`outputs/results/robust_bench.md`](outputs/results/robust_bench.md) (`python -m src.robust_bench --window 14`).
+The chosen normal catches more changes early and raises fewer real alarms, at a somewhat higher synthetic false-alarm rate on dev. (The dev column uses each variant's own benchmark threshold; with the production threshold P_yellow = 94 the chosen model has 0.065 false alarms per astronaut-week on dev, 7.2.) Full table and protocol notes (including a missing-data fix made after the first confirmation, and the rounds in which the grid was built): [`outputs/results/robust_bench.md`](outputs/results/robust_bench.md) (`python -m src.robust_bench --window 14`).
 
 Figures (1600 × 900, slide-ready): `benchmark.png`, `lead_time_test.png`, `lead_time_dev.png`, `timeline_demo.png` (Crew Member Bravo: one false alarm on day 37, model alarm on day 65 after the change starts on day 50, fixed clinical thresholds on day 72), `real_data_check.png`, `healthy_check.png`.
 
@@ -213,7 +217,7 @@ The same offline, personal-baseline monitoring fits isolated crews on Earth: Ant
 ## 10. Use of AI (Super Intelligence, SI)
 
 Generative AI was used in this project, as required to be disclosed by the NASA Space Apps rules:
-- **Claude (Anthropic)**, including via Claude Code, drafted the Python code, tests, configuration files, the concept UI, the figures and this README, and helped search for and verify sources. Every source file carries the header "AI-assisted: drafted with Claude (Anthropic), reviewed by the team".
+- **Claude (Anthropic)**, including via Claude Code, drafted the Python code, tests, configuration files, the concept UI, the figures, this README, the demo slides and the project-page texts (`docs/submission.md`), and helped search for and verify sources. Every source file carries the header "AI-assisted: drafted with Claude (Anthropic), reviewed by the team".
 - The team defined the concept, made the design decisions, reviewed and ran all code, and checked every cited source.
 - No AI-generated images are used. No NASA logos or branding are used anywhere.
 
@@ -250,6 +254,7 @@ Software (open-source licenses)
 - Methods: Mahalanobis distance / Hotelling T² statistic (classical multivariate statistics); autoencoders for anomaly detection (benchmarked alternative).
 - Python packages: NumPy (BSD-3-Clause), pandas (BSD-3-Clause), PyTorch (BSD-3-Clause), Matplotlib (Matplotlib license, PSF-based), PyYAML (MIT), Requests (Apache-2.0), jsonschema (MIT), pytest (MIT).
 - Concept UI: React and ReactDOM 18 (MIT, bundled in `ui/concept/vendor/`), Tailwind CSS 3 (MIT, build time), Babel (MIT, build time).
+- Demo slides (`docs/demo/`): Space Grotesk and Inter typefaces (SIL Open Font License 1.1), embedded in the PDF; screenshots of our own app.
 - UI app (`ui/app/`): React and ReactDOM 18 (MIT, bundled into the build), Vite 6 (MIT, build time), @vitejs/plugin-react (MIT, build time), Tailwind CSS 4 and @tailwindcss/vite (MIT, build time). No web fonts, icons or images from third parties: system fonts and our own SVG.
 
 ## 12. License and disclaimer
