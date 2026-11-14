@@ -1,5 +1,7 @@
 # Astrobalance — personal-baseline health monitoring for deep-space crews
 
+[![Tests](https://github.com/MoAI-PL/NASASpaceApps-MoAI/actions/workflows/tests.yml/badge.svg)](https://github.com/MoAI-PL/NASASpaceApps-MoAI/actions/workflows/tests.yml)
+
 **NASA Space Apps Challenge 2026 · Challenge: _Create Health Monitoring Software for Astronauts on Space Missions_ (author: Brazilian Space Agency)**
 
 **Team MoAI:** Jan Domański (backend developer) · Kamila Bąk (frontend developer) · Zuzanna Marciniak (UX/UI designer)
