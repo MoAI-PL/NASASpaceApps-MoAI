@@ -12,6 +12,19 @@
 
 > **Prototype — not medical advice.** Model results come from synthetic data calibrated on published sources, plus one alarm-rate check on real everyday data (PMData) — proof of concept, not clinical validation. Not a medical device.
 
+
+## For judges — the 2-minute path
+
+| | |
+|---|---|
+| **Try it** | Live app (offline after the first visit, no login): https://moai-pl.github.io/NASASpaceApps-MoAI/ |
+| **Main result** — hold-out S5 (infection onset), a scenario type never seen in development, **run once** | Model detected **10 of 10**, median **+5 days earlier** than fixed clinical limits, with **0.055** false alarms per astronaut-week (clinical limits 0.121). Record: [`final_test.json`](outputs/results/final_test.json) (timestamp, commit, config hashes) · table: [`final_test.md`](outputs/results/final_test.md) · figure: [`lead_time_test.png`](outputs/figures/lead_time_test.png) · discussion: [7.3](#73-hold-out-test--infection-onset-s5-evaluated-once) |
+| **Where it does not win** | Personal single-value limits alarm ~3.5 days earlier on S5 but with 4.4× the false alarms ([7.3](#73-hold-out-test--infection-onset-s5-evaluated-once)) |
+| **Real data** | No alarm in 280 person-weeks of real everyday data (PMData, [7.4](#74-real-data-check--alarm-rate-on-real-everyday-data-pmdata)) · real NASA DONKI solar events · real Earth–Mars delay per day (NASA/JPL Horizons) · simulator checked against Inspiration4 blood tests (NASA OSDR, [7.6](#76-plausibility-check--simulated-glucose-vs-real-astronaut-blood-tests-nasa-osdr-inspiration4)) |
+| **Every number's source** | [`config_sources.md`](outputs/results/config_sources.md): each config value is SOURCED or an ASSUMPTION; later-verified sources in [`config/sources_extra.yaml`](config/sources_extra.yaml) |
+| **Reproduce everything** | `python -m src.run_all` (simulate → fit → tune on the selection split → confirm on dev → export → figures; the hold-out is excluded) · `pytest -q` (runs in CI on Linux and Windows, badge above) |
+| **Hold-out discipline** | `src.evaluate --split test --final` refuses a second run; tests check that refusal and that the configs still hash to the values recorded with the result ([`tests/test_holdout.py`](tests/test_holdout.py)). The recorded commit `0fc28fe` is from the first repository; see 7.3 |
+
 ---
 
 ## 1. Overview
