@@ -1,0 +1,15 @@
+# Astrobalance — NASA Space Apps Challenge 2026
+# AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
+#
+# For pip users without conda (the conda environment is environment.yml). Enough to run the
+# production pipeline, the real-data checks and the tests: `python -m pip install -r requirements.txt`.
+# PyTorch is only needed for the alternative autoencoder detector and the model-selection
+# benchmark (src.train with detector: autoencoder, src.benchmark): install it separately from
+# https://pytorch.org/get-started/locally/ if you want to rerun those.
+numpy
+pandas
+matplotlib
+pyyaml
+requests
+jsonschema>=4.18
+pytest

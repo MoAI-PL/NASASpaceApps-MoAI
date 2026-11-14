@@ -83,6 +83,7 @@ python -m src.evaluate --split dev                           # confirmation with
 python -m src.export --sample                                # contract sample for the UI (M0)
 python -m src.export --crew demo                             # JSON for the UI + ui/concept/data.js (M3)
 python -m src.realdata                                       # alarm rates of the frozen model on real data (PMData)
+python -m src.robust_bench --window 14                        # robustness benchmark of the personal normal (README 7.5)
 python -m src.figures --all                                  # slide figures (M1/M3)
 cd ui/app && npm install && npm run dev                      # UI app dev server (reads outputs/ui/)
 cd ui/app && npm run build                                   # UI app static build → ui/app/dist/

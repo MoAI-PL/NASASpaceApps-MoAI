@@ -1,6 +1,7 @@
 # Astrobalance — NASA Space Apps Challenge 2026
 # AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
-"""Evaluate the autoencoder against baselines B1 (fixed thresholds) and B2 (personal univariate).
+"""Evaluate the configured detector (production: the personal-drift model; alternative: the autoencoder)
+against baselines B1 (fixed thresholds) and B2 (personal univariate).
 
 Usage:
     python -m src.evaluate --split dev --tune      # tune P_yellow on dev only, then evaluate dev
@@ -190,7 +191,7 @@ def git_commit() -> str:
 
 # ===== Main =====
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Evaluate the autoencoder against B1 and B2.")
+    parser = argparse.ArgumentParser(description="Evaluate the configured detector against B1 and B2.")
     parser.add_argument("--split", default="dev", choices=["bench", "dev", "dev_s4", "test"])
     parser.add_argument("--tune", action="store_true", help="Tune P_yellow on dev and write it to config/model.yaml.")
     parser.add_argument("--final", action="store_true", help="Required for the one-time hold-out test.")

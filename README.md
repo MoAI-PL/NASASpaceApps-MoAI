@@ -24,7 +24,7 @@
 | **Real data** | No alarm in 280 person-weeks of real everyday data (PMData, [7.4](#74-real-data-check--alarm-rate-on-real-everyday-data-pmdata)) · real NASA DONKI solar events · real Earth–Mars delay per day (NASA/JPL Horizons) · simulator checked against Inspiration4 blood tests (NASA OSDR, [7.6](#76-plausibility-check--simulated-glucose-vs-real-astronaut-blood-tests-nasa-osdr-inspiration4)) |
 | **Every number's source** | [`config_sources.md`](outputs/results/config_sources.md): each config value is SOURCED or an ASSUMPTION; later-verified sources in [`config/sources_extra.yaml`](config/sources_extra.yaml) |
 | **Reproduce everything** | `python -m src.run_all` (simulate → fit → tune on the selection split → confirm on dev → export → figures; the hold-out is excluded) · `pytest -q` (runs in CI on Linux and Windows, badge above) |
-| **Hold-out discipline** | `src.evaluate --split test --final` refuses a second run; tests check that refusal and that the configs still hash to the values recorded with the result ([`tests/test_holdout.py`](tests/test_holdout.py)). The recorded commit `0fc28fe` is from the first repository; see 7.3 |
+| **Hold-out discipline** | `src.evaluate --split test --final` refuses a second run; tests check that refusal and that the configs still hash to the values recorded with the result ([`tests/test_holdout.py`](tests/test_holdout.py)). The recorded commit `0fc28fe` is in the team's first repository, which is not public; the config hashes are the check you can run here (7.3) |
 
 ---
 
@@ -52,7 +52,7 @@ Bone loss cannot be tracked with daily self-measurements and is out of scope (se
 ## 2. Quick start
 
 ```bash
-conda env create -f environment.yml && conda activate spaceapps
+conda env create -f environment.yml && conda activate spaceapps   # or, without conda: python -m pip install -r requirements.txt
 python -m src.donki --start 2024-05-01 --days 120   # needs internet once: caches real NASA DONKI SEP events
 python -m src.horizons --start 2024-05-01 --days 120  # needs internet once: caches the real Earth–Mars delay (JPL Horizons)
 python -m src.run_all                               # simulate → fit → tune on bench → confirm on dev → export → figures
@@ -179,7 +179,7 @@ False alarms per astronaut-week: model 0.065, B1 0.121, B2 0.183. Single-value l
 
 ![Hold-out](outputs/figures/lead_time_test.png)
 
-S5 was never seen during development and was evaluated once (`outputs/results/final_test.json`, with timestamp and commit hash). The recorded commit `0fc28fe` is from the project's first repository (MoAI-PL/NASASpaceApps-Health); the frozen content has git tree `843e3d1`.
+S5 was never seen during development and was evaluated once (`outputs/results/final_test.json`, with timestamp and commit hash). The recorded commit `0fc28fe` is from the project's first repository, which is not public, so it cannot be opened from here. What can be checked here: `final_test.json` also records a hash of each frozen config (model, simulator, rules), and the configs in this repository still produce exactly those hashes — `tests/test_holdout.py` checks this on every push (CI).
 
 **What this shows — and what it does not:**
 - Against fixed clinical thresholds the hypothesis holds on this synthetic data: earlier detection, including on a scenario type the model never saw, with half the false alarms.
