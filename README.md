@@ -254,7 +254,7 @@ Software (open-source licenses)
 - Methods: Mahalanobis distance / Hotelling T² statistic (classical multivariate statistics); autoencoders for anomaly detection (benchmarked alternative).
 - Python packages: NumPy (BSD-3-Clause), pandas (BSD-3-Clause), PyTorch (BSD-3-Clause), Matplotlib (Matplotlib license, PSF-based), PyYAML (MIT), Requests (Apache-2.0), jsonschema (MIT), pytest (MIT).
 - Concept UI: React and ReactDOM 18 (MIT, bundled in `ui/concept/vendor/`), Tailwind CSS 3 (MIT, build time), Babel (MIT, build time).
-- Demo slides (`docs/demo/`): Space Grotesk and Inter typefaces (SIL Open Font License 1.1), embedded in the PDF; screenshots of our own app.
+- Demo slides (`docs/demo/`): Inter typeface (SIL Open Font License 1.1), embedded in the PDF; screenshots of our own app and our own backdrop image.
 - UI app (`ui/app/`): React and ReactDOM 18 (MIT, bundled into the build), Vite 6 (MIT, build time), @vitejs/plugin-react (MIT, build time), Tailwind CSS 4 and @tailwindcss/vite (MIT, build time). No web fonts, icons or images from third parties: system fonts and our own SVG.
 
 ## 12. License and disclaimer
