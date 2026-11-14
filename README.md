@@ -10,7 +10,7 @@
 
 **▶ Demo (7 slides, PDF): [`docs/demo/Astrobalance-demo-slides.pdf`](docs/demo/Astrobalance-demo-slides.pdf)**
 
-> **Prototype — not medical advice.** Model results come from synthetic data calibrated on published sources, plus one alarm-rate check on real everyday data (PMData) — proof of concept, not clinical validation. Not a medical device.
+> **Prototype — not medical advice.** Model results come from synthetic data calibrated on published sources, plus one alarm-rate check on real everyday data (PMData) and a plausibility check against real astronaut blood tests (NASA OSDR, Inspiration4) — proof of concept, not clinical validation. Not a medical device.
 
 
 ## For judges — the 2-minute path
@@ -19,6 +19,7 @@
 |---|---|
 | **Try it** | Live app (offline after the first visit, no login): https://moai-pl.github.io/NASASpaceApps-MoAI/ |
 | **Main result** — hold-out S5 (infection onset), a scenario type never seen in development, **run once** | Model detected **10 of 10**, median **+5 days earlier** than fixed clinical limits, with **0.055** false alarms per astronaut-week (clinical limits 0.121). Record: [`final_test.json`](outputs/results/final_test.json) (timestamp, commit, config hashes) · table: [`final_test.md`](outputs/results/final_test.md) · figure: [`lead_time_test.png`](outputs/figures/lead_time_test.png) · discussion: [7.3](#73-hold-out-test--infection-onset-s5-evaluated-once) |
+| **Model choice** | Benchmark of 42 configurations at one false-alarm budget: the chosen model catches **71%** of simulated changes within 21 days (autoencoders ≤ 59%, clinical limits 44%); 65% → 71% is explained in [7.1](#71-model-selection-benchmark) |
 | **Where it does not win** | Personal single-value limits alarm ~3.5 days earlier on S5 but with 4.4× the false alarms ([7.3](#73-hold-out-test--infection-onset-s5-evaluated-once)) |
 | **Real data** | No alarm in 280 person-weeks of real everyday data (PMData, [7.4](#74-real-data-check--alarm-rate-on-real-everyday-data-pmdata)) · real NASA DONKI solar events · real Earth–Mars delay per day (NASA/JPL Horizons) · simulator checked against Inspiration4 blood tests (NASA OSDR, [7.6](#76-plausibility-check--simulated-glucose-vs-real-astronaut-blood-tests-nasa-osdr-inspiration4)) |
 | **Every number's source** | [`config_sources.md`](outputs/results/config_sources.md): each config value is SOURCED or an ASSUMPTION; later-verified sources in [`config/sources_extra.yaml`](config/sources_extra.yaml) |
@@ -155,7 +156,7 @@ Testing on new people from the same data generator shows that a method generalis
 | Personal single-indicator thresholds (B2, smoothed) | 43 % | 74 % |
 | Fixed clinical thresholds (B1, own false-alarm rate 0.106) | 44 % | 62 % |
 
-42 configurations at the 0.05 budget (architecture, training-set size, score components, smoothing, persistence, ensembles, fine-tuning, hybrids): [`outputs/results/benchmark.md`](outputs/results/benchmark.md). The second stage (7.5) then chose how the personal normal is kept up to date; with it the chosen model reaches 71%.
+42 configurations at the 0.05 budget (architecture, training-set size, score components, smoothing, persistence, ensembles, fine-tuning, hybrids): [`outputs/results/benchmark.md`](outputs/results/benchmark.md). The second stage (7.5) then chose how the personal normal is kept up to date. The three detection figures in this README are steps on one path, not competing claims: **65%** here (stage 1, fixed 21-day normal), **66%** for the same fixed normal re-run in the stage-2 grid with its own threshold, and **71%** with the adaptive normal finally chosen.
 
 ### 7.2 Confirmation split (thresholds frozen)
 

@@ -10,6 +10,11 @@
 // 2026-11-14. Third-party pages are linked, not redistributed.
 export const SOURCES = {
   hrp_hazards: { title: "NASA Human Research Program — 5 Hazards of Human Spaceflight", url: "https://www.nasa.gov/hrp/hazards/" },
+  jpl_horizons: { title: "NASA/JPL Horizons — Earth–Mars distance per mission day (the real one-way delay shown for a crew on Mars)", url: "https://ssd.jpl.nasa.gov/horizons/" },
+  osdr_575: { title: "NASA OSDR OSD-575 — Inspiration4 blood metabolic panel (simulator check, README 7.6)", url: "https://osdr.nasa.gov/bio/repo/data/studies/OSD-575" },
+  obermeyer_2017: { title: "Obermeyer et al. (2017) BMJ — normal body temperature, mean 36.6 °C (simulator check)", url: "https://pubmed.ncbi.nlm.nih.gov/29237616/" },
+  quer_2020: { title: "Quer et al. (2020) PLOS ONE — resting heart rate, mean 65 bpm (simulator check)", url: "https://doi.org/10.1371/journal.pone.0227709" },
+  pmdata: { title: "PMData (Thambawita et al. 2020, CC BY 4.0) — real everyday data for the alarm-rate check", url: "https://datasets.simula.no/pmdata" },
   hrp_risks: { title: "NASA Human Research Program — Risks of Human Spaceflight", url: "https://www.nasa.gov/hrp/risks/" },
   hrp_distance: { title: "NASA HRP — Hazard: Distance from Earth", url: "https://www.nasa.gov/hrp/hazard-distance-from-earth/" },
   nasa_conjunction: { title: "NASA — What's Mars Solar Conjunction, and Why Does It Matter? (about every two years; commands paused for about two weeks)", url: "https://www.nasa.gov/solar-system/whats-mars-solar-conjunction-and-why-does-it-matter/" },

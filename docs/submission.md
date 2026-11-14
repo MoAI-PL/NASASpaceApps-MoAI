@@ -44,6 +44,8 @@ https://moai-pl.github.io/NASASpaceApps-MoAI/
 
 ## NASA Data
 
+- **NASA/JPL Horizons** — real Earth–Mars distance for each mission day; the app shows the true one-way delay of that day for a crew on Mars (16 min on day 1 falling to 12 min on day 120): https://ssd.jpl.nasa.gov/horizons/
+- **NASA Open Science Data Repository, OSD-575 (Inspiration4 blood metabolic panel)** — real astronaut glucose values used to check the simulator, not to calibrate it: partly consistent (real pre-flight mean 75 mg/dL vs simulated 90): https://osdr.nasa.gov/bio/repo/data/studies/OSD-575
 - **NASA DONKI (CCMC) solar energetic particle events** — real events for the mission window are shown on the mission timeline and drive the radiation alerts: https://ccmc.gsfc.nasa.gov/tools/DONKI/
 - **NASA Human Research Program — 5 Hazards of Human Spaceflight and Risks** — the product maps every hazard (radiation, isolation and confinement, distance from Earth, gravity fields, hostile and closed environments) to a feature; risk pages inform the crew guidance: https://www.nasa.gov/hrp/hazards/ and https://www.nasa.gov/hrp/risks/
 - **NASA OCHMO Technical Brief TB-004, Carbon Dioxide** — cabin CO₂ limit: https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-004-carbon-dioxide.pdf
