@@ -66,7 +66,7 @@ https://moai-pl.github.io/NASASpaceApps-MoAI/
 All data, sources and software with licenses are listed in the README: https://github.com/MoAI-PL/NASASpaceApps-MoAI#11-references
 
 - Software: NumPy, pandas, PyTorch (BSD-3-Clause); Matplotlib (Matplotlib license); PyYAML, jsonschema, pytest (MIT); Requests (Apache-2.0); React, Vite, Tailwind CSS (MIT).
-- Demo slides: Inter typeface (SIL Open Font License 1.1); screenshots of our own app.
+- Demo slides: Inter typeface (SIL Open Font License 1.1); screenshots of our own app; QR code generated with python-qrcode (BSD).
 - No NASA logos or branding are used. No AI-generated images are used. Every astronaut is synthetic ("Crew Member Alpha, Bravo, Charlie").
 
 ## Use of Artificial Intelligence (AI)
